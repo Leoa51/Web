@@ -4,7 +4,7 @@ use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
-require __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 // Create Container
 $container = new Container();
@@ -12,8 +12,9 @@ AppFactory::setContainer($container);
 
 // Set view in Container
 $container->set('view', function() {
-    return Twig::create('templates', ['cache' => 'templates_cache']);
+    return Twig::create(__DIR__ . '/src/templates', ['cache' => __DIR__ . '/../cache']);
 });
+
 
 // Create App
 $app = AppFactory::create();
@@ -27,6 +28,11 @@ $app->get('/', function ($request, $response, $args) {
     ]);
 })->setName('profile');
 
+
+$app->get('/entreprise', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'entreprise.twig', [
+    ]);
+})->setName('entreprise');
 
 // Define named route
 $app->get('/test', function ($request, $response, $args) {

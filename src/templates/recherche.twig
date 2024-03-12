@@ -1,0 +1,15 @@
+<?php
+require_once 'vendor/autoload.php'; // Inclure l'autoloader de Composer
+
+// Créer un chargeur de templates Twig
+$loader = new \Twig\Loader\FilesystemLoader(__DIR__.'C:\Users\jorda\PhpstormProjects\untitled\PROJET WEB\templates');
+$twig = new \Twig\Environment($loader);
+
+// Charger le template Twig
+$template = $twig->load('recherche.twig');
+
+// Définir les données que vous souhaitez passer au template Twig (par exemple, $resultats)
+$resultats = [/* Vos résultats de recherche ici */];
+
+// Rendre le template avec les données
+echo $template->render(['resultats' => $resultats]);
