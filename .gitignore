@@ -1,6 +1,6 @@
-vendor
-templates_cache
-node_modules
 package-lock.json
-composer.lock
+node_modules
 .idea
+templates_cache
+vendor
+composer.lock

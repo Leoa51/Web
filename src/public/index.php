@@ -4,7 +4,9 @@ use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
-require_once __DIR__ . '/vendor/autoload.php';
+
+require __DIR__ . '\..\..\vendor\autoload.php';
+
 
 // Create Container
 $container = new Container();
@@ -12,7 +14,9 @@ AppFactory::setContainer($container);
 
 // Set view in Container
 $container->set('view', function() {
-    return Twig::create(__DIR__ . '/src/templates', ['cache' => __DIR__ . '/../cache']);
+
+    return Twig::create('../templates', ['cache' => 'templates_cache']);
+
 });
 
 
@@ -34,9 +38,18 @@ $app->get('/entreprise', function ($request, $response, $args) {
     ]);
 })->setName('entreprise');
 
+$app->get('/base', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'base.twig', [
+    ]);
+})->setName('base');
 // Define named route
 $app->get('/test', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'test.html', [
+    return $this->get('view')->render($response, 'test.twig', [
+    ]);
+})->setName('profile');
+
+$app->get('/test2', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'test2.html', [
     ]);
 })->setName('profile');
 
@@ -51,6 +64,8 @@ $app->get('/hi/{name}', function ($request, $response, $args) {
     $response->getBody()->write($str);
     return $response;
 });
+
+
 
 // Run app
 $app->run();
