@@ -4,7 +4,7 @@ use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 // Create Container
 $container = new Container();
@@ -12,7 +12,7 @@ AppFactory::setContainer($container);
 
 // Set view in Container
 $container->set('view', function() {
-    return Twig::create('templates', ['cache' => 'templates_cache']);
+    return Twig::create('../templates', ['cache' => '../templates_cache']);
 });
 
 // Create App
@@ -45,6 +45,8 @@ $app->get('/hi/{name}', function ($request, $response, $args) {
     $response->getBody()->write($str);
     return $response;
 });
+
+
 
 // Run app
 $app->run();
