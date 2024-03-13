@@ -7,4 +7,4 @@ use Slim\Views\TwigMiddleware;
 return function (App $app) {
 
     $app->add(TwigMiddleware::createFromContainer($app, Twig::class));
-}
+};
