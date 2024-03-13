@@ -22,35 +22,7 @@ $app = AppFactory::create();
 $app->add(TwigMiddleware::createFromContainer($app));
 
 
-$app->get('/', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'Accueil.html', [
-    ]);
-})->setName('profile');
-
-
-// Define named route
-$app->get('/test', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'test.twig', [
-    ]);
-})->setName('profile');
-
-$app->get('/test2', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'test2.html', [
-    ]);
-})->setName('profile');
-
-// Render from string
-$app->get('/hi/{name}', function ($request, $response, $args) {
-    $str = $this->get('view')->fetchFromString(
-        '<p>Hi, my name is {{ name }}.</p>',
-        [
-            'name' => $args['name']
-        ]
-    );
-    $response->getBody()->write($str);
-    return $response;
-});
-
+require_once __DIR__ . '/../route.php';
 
 
 // Run app
