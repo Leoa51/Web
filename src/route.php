@@ -46,6 +46,16 @@ $app->get('/statsCompany', function ($request, $response, $args) {
     ]);
 })->setName('Stats company');
 
+$app->get('/publishOffers', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'templates/publishOffers.twig', [
+    ]);
+})->setName('Publish Offers');
+
+$app->get('/listOffers', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'templates/listOffers.twig', [
+    ]);
+})->setName('list of offers');
+
 // Render from string
 $app->get('/hi/{name}', function ($request, $response, $args) {
 $str = $this->get('view')->fetchFromString(
