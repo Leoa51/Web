@@ -1,0 +1,54 @@
+{% extends "templates/headerFooter.twig" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 flex flex-col"> <!-- Ajoutez les classes "flex" et "flex-col" -->
+    <h2 class="text-2xl font-semibold mt-4 w-full text-center"> Informations Etudiants</h2>
+    <div class="h-96 mt-10 overflow-y-auto">
+        <table class="w-full text-left table-auto border-collapse">
+            <thead>
+            <tr class="bg-gray-100 sticky top-0">
+                <th class="px-4 py-2 border">Nom</th>
+                <th class="px-4 py-2 border">Prénom</th>
+                <th class="px-4 py-2 border">Centre</th>
+                <th class="px-4 py-2 border">Promotion</th>
+                <th class="px-4 py-2 border">Stage en wishlist</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr class="border-b even:bg-gray-50 odd:bg-white">
+                <td class="px-4 py-2">GOUJIL</td>
+                <td class="px-4 py-2">Yanis</td>
+                <td class="px-4 py-2">Reims</td>
+                <td class="px-4 py-2">A2</td>
+                <td class="px-4 py-2">Orange</td>
+            </tr>
+
+            <tr class="border-b even:bg-gray-50 odd:bg-white">
+                <td class="px-4 py-2">DELAMOTTE</td>
+                <td class="px-4 py-2">Gabriel</td>
+                <td class="px-4 py-2">Reims</td>
+                <td class="px-4 py-2">A2</td>
+                <td class="px-4 py-2">Google</td>
+            </tr>
+
+            <tr class="border-b even:bg-gray-50 odd:bg-white">
+                <td class="px-4 py-2">AERTS</td>
+                <td class="px-4 py-2">Léo</td>
+                <td class="px-4 py-2">Reims</td>
+                <td class="px-4 py-2">A2</td>
+                <td class="px-4 py-2">Amazon</td>
+            </tr>
+
+            <tr class="border-b even:bg-gray-50 odd:bg-white">
+                <td class="px-4 py-2">FOGOU</td>
+                <td class="px-4 py-2">Jordan</td>
+                <td class="px-4 py-2">Reims</td>
+                <td class="px-4 py-2">A2</td>
+                <td class="px-4 py-2">Facebook</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

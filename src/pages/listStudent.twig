@@ -1,0 +1,58 @@
+{% include "templates/basePage.twig" %}
+{% include "templates/searchbar.twig" %}
+
+{% block content %}
+    <div class=" container mx-auto px-4 py-8 flex flex-col "> <!-- Ajoutez les classes "flex" et "flex-col" -->
+        <h2 class="text-2xl font-semibold w-full text-center"> Liste Etudiants</h2>
+        <div class="h-192 mt-10 overflow-y-auto">
+            <table class="w-full text-left table-auto border-collapse">
+                <thead>
+                <tr class="border-b even:bg-gray-100 odd:bg-white">
+                    <th class="px-4 py-2 border">Nom</th>
+                    <th class="px-4 py-2 border">Prénom</th>
+                    <th class="px-4 py-2 border">Centre</th>
+                    <th class="px-4 py-2 border">Promotion</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr class="border-b even:bg-gray-50 odd:bg-white">
+                    <td class="px-4 py-2">GOUJIL</td>
+                    <td class="px-4 py-2">Yanis</td>
+                    <td class="px-4 py-2">Reims</td>
+                    <td class="px-4 py-2">A2</td>
+                </tr>
+
+                <tr class="border-b even:bg-gray-50 odd:bg-white">
+                    <td class="px-4 py-2">DELAMOTTE</td>
+                    <td class="px-4 py-2">Gabriel</td>
+                    <td class="px-4 py-2">Reims</td>
+                    <td class="px-4 py-2">A2</td>
+                </tr>
+
+                <tr class="border-b even:bg-gray-50 odd:bg-white">
+                    <td class="px-4 py-2">AERTS</td>
+                    <td class="px-4 py-2">Léo</td>
+                    <td class="px-4 py-2">Reims</td>
+                    <td class="px-4 py-2">A2</td>
+                </tr>
+
+                <tr class="border-b even:bg-gray-50 odd:bg-white">
+                    <td class="px-4 py-2">FOGOU</td>
+                    <td class="px-4 py-2">Jordan</td>
+                    <td class="px-4 py-2">Reims</td>
+                    <td class="px-4 py-2">A2</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class=" flex justify-center default gap-6 mt-[5%]">
+                <button type="submit" class="px-4 py-2 font-semibold text-sm bg-blue-700 text-white rounded-md shadow-sm opacity-100">Créer un compte étudiant</button>
+                <button type="submit" class="px-4 py-2 font-semibold text-sm bg-blue-700 text-white rounded-md shadow-sm opacity-100">Modifier un compte étudiant</button>
+                <button type="submit" class="px-4 py-2 font-semibold text-sm bg-blue-700 text-white rounded-md shadow-sm opacity-100">Supprimer un compte étudiant</button>
+                <a href="/statsStudent" class="px-4 py-2 font-semibold text-sm bg-blue-700 text-white rounded-md shadow-sm opacity-100">Consulter statistique</a>
+            </div>
+        </div>
+        </div>
+{% endblock %}
+
