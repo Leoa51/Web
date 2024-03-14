@@ -1,78 +1,29 @@
+{% include 'templates/header.twig' %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des étudiants</title>
+    <title>Connexion</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        /* Ajoutez ce style pour mettre en surbrillance la ligne sélectionnée */
-        .selected {
-            background-color: rgba(156, 163, 175);
-        }
-    </style>
-    <script>
-        function handleRowClick(event) {
-            const row = event.currentTarget;
-            const id = row.dataset.id;
-
-            // Supprimer la classe "selected" de toutes les lignes
-            const rows = document.querySelectorAll("tr.selected");
-            rows.forEach((r) => r.classList.remove("selected"));
-
-            // Ajouter la classe "selected" à la ligne actuelle
-            row.classList.add("selected");
-
-            // Gérez la sélection ici en utilisant l'identifiant (id)
-            console.log(`La ligne ${id} a été sélectionnée.`);
-        }
-    </script>
 </head>
-<body>
-<div class="container mx-auto px-4 py-8">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Liste des étudiants</h2>
-    <table class="w-full text-left table-auto border-collapse">
-        <thead>
-        <tr class="bg-gray-100">
-            <th class="px-4 py-2 border">Nom de l'entreprise</th>
-            <th class="px-4 py-2 border">Compétences demandées</th>
-            <th class="px-4 py-2 border">Localisation</th>
-            <th class="px-4 py-2 border">Promotions concernées</th>
-            <th class="px-4 py-2 border">Durée du stage</th>
-            <th class="px-4 py-2 border">Rémunération</th>
-            <th class="px-4 py-2 border">Date de publication de l'offre</th>
-            <th class="px-4 py-2 border">Nombre de places disponibles</th>
-
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Ajoutez autant de lignes que nécessaire -->
-        <tr class="border-b even:bg-gray-50 odd:bg-white cursor-pointer" data-id="1" onclick="handleRowClick(event)">
-            <td class="px-4 py-2 border">ABC Corp</td>
-            <td class="px-4 py-2 border">Développement Web, Analyse de données</td>
-            <td class="px-4 py-2 border">Paris, France</td>
-            <td class="px-4 py-2 border">Étudiants en informatique</td>
-            <td class="px-4 py-2 border">6 mois</td>
-            <td class="px-4 py-2 border">Non rémunéré</td>
-            <td class="px-4 py-2 border">2024-03-13</td>
-            <td class="px-4 py-2 border">5</td>
-        </tr>
-        <tr class="border-b even:bg-gray-50 odd:bg-white cursor-pointer" data-id="1" onclick="handleRowClick(event)">
-            <td class="px-4 py-2 border">XYZ Entreprise</td>
-            <td class="px-4 py-2 border">Marketing, Communication</td>
-            <td class="px-4 py-2 border">New York, États-Unis</td>
-            <td class="px-4 py-2 border">Étudiants en commerce</td>
-            <td class="px-4 py-2 border">3 mois</td>
-            <td class="px-4 py-2 border">1000$ par mois</td>
-            <td class="px-4 py-2 border">2024-03-10</td>
-            <td class="px-4 py-2 border">8</td>
-        </tr>
-        </tbody>
-    </table>
-    <div class="flex justify-center space-x-4 mt-8">
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Créer une offre de stage</button>
-        <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Modifier une offre de stage</button>
-        <button class="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Supprimer une offre de stage</button>
+<body class="bg-gray-100">
+<div class="container mx-auto flex justify-center items-center h-screen">
+    <div class="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Connexion</h2>
+        <form>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-semibold mb-2" for="email">Adresse e-mail</label>
+                <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Entrez votre adresse e-mail">
+            </div>
+            <div class="mb-6">
+                <label class="block text-gray-700 font-semibold mb-2" for="password">Mot de passe</label>
+                <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Entrez votre mot de passe">
+            </div>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" type="submit">Se connecter</button>
+        </form>
     </div>
 </div>
 </body>
