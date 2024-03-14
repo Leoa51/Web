@@ -1,0 +1,41 @@
+{% include 'templates/header.twig' %}
+
+{% include 'templates/searchbar.twig' %}
+
+<div class="container mx-auto px-4 py-8">
+    <a href="/showCompanyDetails" class="bg-white shadow-md rounded-lg p-6 flex items-center">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/1200px-Orange_logo.svg.png" alt="Company Logo" class="w-24 h-24 rounded-full mr-6">
+        <div>
+            <h2 class="text-2xl font-semibold text-gray-800">Orange</h2>
+            <p class="text-gray-600">Localité: Reims</p>
+            <p class="text-gray-600">Domaine d'expertise: Réseaux Telecom, vente</p>
+        </div>
+    </a>
+    <br>
+    <a href="/showCompanyDetails" class="bg-white shadow-md rounded-lg p-6 flex items-center">
+        <img src="https://www.facebook.com/images/fb_icon_325x325.png" alt="Company Logo" class="w-24 h-24 rounded-full mr-6">
+        <div>
+            <h2 class="text-2xl font-semibold text-gray-800">Facebook</h2>
+            <p class="text-gray-600">Localité: Paris</p>
+            <p class="text-gray-600">Domaine d'expertise: Développement Full-Stack</p>
+        </div>
+    </a>
+    <br>
+    <a href="/showCompanyDetails" class="bg-white shadow-md rounded-lg p-6 flex items-center">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1024px-Google_%22G%22_logo.svg.png" alt="Company Logo" class="w-24 h-24 rounded-full mr-6">
+        <div>
+            <h2 class="text-2xl font-semibold text-gray-800">Google</h2>
+            <p class="text-gray-600">Localité: Rennes</p>
+            <p class="text-gray-600">Domaine d'expertise: Gestion de cloud</p>
+        </div>
+    </a>
+    <div class="flex justify-center space-x-4 mt-8">
+        <a href="/statsCompany" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+            Stats des entreprises
+        </a>
+    </div>
+</div>
+
+
+{#footer à remettre quand on aura réussi à le mettre en bas de la page et non en sticky#}
+{#{% include 'templates/footer.twig' %}#}
