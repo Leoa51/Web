@@ -15,7 +15,7 @@ AppFactory::setContainer($container);
 // Set view in Container
 $container->set('view', function() {
 
-    return Twig::create('../templates', ['cache' => 'templates_cache']);
+    return Twig::create('../pages', ['cache' => false]);
 
 });
 
@@ -33,8 +33,13 @@ $app->get('/', function ($request, $response, $args) {
 })->setName('profile');
 
 
-$app->get('/entreprise', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'entreprise.twig', [
+$app->get('/listCompany', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'listCompany.twig', [
+    ]);
+})->setName('entreprise');
+
+$app->get('/publishCompany', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'publishCompany.twig', [
     ]);
 })->setName('entreprise');
 
