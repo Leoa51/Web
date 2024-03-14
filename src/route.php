@@ -8,6 +8,7 @@ $app->get('/', function ($request, $response, $args) {
 
 $app->get('/test', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'test.twig', [
+        'x' => 10
     ]);
 })->setName('test');
 
