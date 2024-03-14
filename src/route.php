@@ -86,6 +86,31 @@ $app->get('/publishCompany', function ($request, $response, $args) {
     ]);
 })->setName('Publication of company');
 
+$app->get('/profilStudents', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'templates/profilStudents.twig', [
+    ]);
+})->setName('Profil of students');
+
+$app->get('/application', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'templates/application.twig', [
+    ]);
+})->setName('application');
+
+$app->get('/statsOffers', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'templates/statsOffers.twig', [
+    ]);
+})->setName('Stats of Offers');
+
+$app->get('/listPilotes', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'templates/listPilotes.twig', [
+    ]);
+})->setName('list of pilotes');
+
+$app->get('/creationPilote', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'templates/creationPilote.twig', [
+    ]);
+})->setName('creation of pilotes');
+
 // Render from string
 $app->get('/hi/{name}', function ($request, $response, $args) {
 $str = $this->get('view')->fetchFromString(

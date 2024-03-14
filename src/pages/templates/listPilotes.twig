@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des offres de stage</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Ajoutez ce style pour mettre en surbrillance la ligne sélectionnée */
+        .selected {
+            background-color: rgba(156, 163, 175);
+        }
+    </style>
+    <script>
+        function handleRowClick(event) {
+            const row = event.currentTarget;
+            const id = row.dataset.id;
+
+            // Supprimer la classe "selected" de toutes les lignes
+            const rows = document.querySelectorAll("tr.selected");
+            rows.forEach((r) => r.classList.remove("selected"));
+
+            // Ajouter la classe "selected" à la ligne actuelle
+            row.classList.add("selected");
+
+            // Gérez la sélection ici en utilisant l'identifiant (id)
+            console.log(`La ligne ${id} a été sélectionnée.`);
+        }
+    </script>
+</head>
+{% include 'templates/header.twig' %}
+{#{% include 'templates/searchbar.twig' %}}#}
+<body>
+<div class="container mx-auto px-4 py-8">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Liste des pilotes</h2>
+    <table class="w-full text-left table-auto border-collapse">
+        <thead>
+        <tr class="bg-gray-100">
+            <th class="px-4 py-2 border">Nom</th>
+            <th class="px-4 py-2 border">Prénom</th>
+            <th class="px-4 py-2 border">Centre</th>
+            <th class="px-4 py-2 border">Promotions assignées</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr class="border-b even:bg-gray-50 odd:bg-white cursor-pointer" data-id="1" onclick="handleRowClick(event)">
+            <td class="px-4 py-2 border">Daoudi</td>
+            <td class="px-4 py-2 border">Zak</td>
+            <td class="px-4 py-2 border">Reims</td>
+            <td class="px-4 py-2 border">A2</td>
+        </tr>
+        <tr class="border-b even:bg-gray-50 odd:bg-white cursor-pointer" data-id="1" onclick="handleRowClick(event)">
+            <td class="px-4 py-2 border">Thomas</td>
+            <td class="px-4 py-2 border">Kevin</td>
+            <td class="px-4 py-2 border">Reims</td>
+            <td class="px-4 py-2 border">A3</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="flex justify-center space-x-4 mt-8">
+        <a href="/creationPilote" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Créer un pilote</a>
+        <a href="#" class="bg-yellow-500 hover:bg-yellow-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Modifier les informations d'un pilote</a>
+        <a href="#" class="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Supprimer un pilote</a>
+    </div>
+</div>
+</body>
+</html>
