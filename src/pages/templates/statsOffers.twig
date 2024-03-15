@@ -1,0 +1,46 @@
+{% include 'templates/header.twig' %}
+
+<div class="container mx-auto px-4 py-8 flex flex-col">
+    <h2 class="text-2xl font-semibold mt-4 w-full text-center">Stats des offres de stage</h2>
+    <div class="h-96 mt-10 overflow-y-auto">
+        <table class="w-full text-left table-auto border-collapse">
+            <thead>
+            <tr class="bg-gray-100 sticky top-0">
+                <th class="px-4 py-2 border">Nom de l'entreprise</th>
+                <th class="px-4 py-2 border">Compétences attendues</th>
+                <th class="px-4 py-2 border">Localité</th>
+                <th class="px-4 py-2 border">Promotion</th>
+                <th class="px-4 py-2 border">Durée du stage</th>
+                <th class="px-4 py-2 border">Classement</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr class="border-b even:bg-gray-50 odd:bg-white">
+                <td class="px-4 py-2">Orange</td>
+                <td class="px-4 py-2">Réseau, Packet Tracer</td>
+                <td class="px-4 py-2">Reims</td>
+                <td class="px-4 py-2">A2</td>
+                <td class="px-4 py-2">4 mois</td>
+                <td class="px-4 py-2">2</td>
+            </tr>
+            <tr class="border-b even:bg-gray-50 odd:bg-white">
+                <td class="px-4 py-2">Google</td>
+                <td class="px-4 py-2">c#, .NET, JS</td>
+                <td class="px-4 py-2">Reims</td>
+                <td class="px-4 py-2">A3</td>
+                <td class="px-4 py-2">6 mois</td>
+                <td class="px-4 py-2">1</td>
+            </tr>
+            <td class="px-4 py-2">Facebook</td>
+            <td class="px-4 py-2">Python</td>
+            <td class="px-4 py-2">Reims</td>
+            <td class="px-4 py-2">A5</td>
+            <td class="px-4 py-2">6 mois</td>
+            <td class="px-4 py-2">3</td>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% include 'templates/footer.twig' %}
