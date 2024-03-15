@@ -2,11 +2,11 @@
 // create_need.php <ID_Offers> <nameSkills>
 require_once __DIR__ . "/../doctrine/bootstrap.php";
 
-$offerId = $argv[1];
+$Idoffers = $argv[1];
 $nameSkills = $argv[2];
 
 $Need = new \Entity\Need();
-$Need->setIDOffers($offerId);
+$Need->setIDOffers($Idoffers);
 $Need->setNameSkills($nameSkills);
 
 $entityManager->persist($Need);

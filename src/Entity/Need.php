@@ -16,9 +16,9 @@ class Need
     #[ORM\Column(type: 'string', length: 50)]
     private string $nameSkills;
 
-    #[ORM\ManyToOne(targetEntity: 'Offer')]
+    #[ORM\ManyToOne(targetEntity: 'Offers')]
     #[ORM\JoinColumn(name: 'ID_Offers', referencedColumnName: 'ID_Offers')]
-    private Offer $offer;
+    private Offers $offers;
 
     #[ORM\ManyToOne(targetEntity: 'Skill')]
     #[ORM\JoinColumn(name: 'nameSkills', referencedColumnName: 'nameSkills')]
