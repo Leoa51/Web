@@ -43,8 +43,8 @@ $app->get('/publishCompany', function ($request, $response, $args) {
     ]);
 })->setName('entreprise');
 
-$app->get('/base', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'base.twig', [
+$app->get('/profilPilote', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'profilPilote.twig', [
     ]);
 })->setName('base');
 // Define named route
