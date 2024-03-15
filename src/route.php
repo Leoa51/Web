@@ -111,6 +111,11 @@ $app->get('/creationPilote', function ($request, $response, $args) {
     ]);
 })->setName('creation of pilotes');
 
+$app->get('/profilAdmin', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'templates/profilAdmin.twig', [
+    ]);
+})->setName('profil admin');
+
 // Render from string
 $app->get('/hi/{name}', function ($request, $response, $args) {
 $str = $this->get('view')->fetchFromString(
