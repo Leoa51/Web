@@ -19,12 +19,12 @@ class Address
     #[ORM\Column(type: 'integer', nullable: true)]
     private ?int $postalCode = null;
 
-    public function getId(): ?int
+    public function getIDAddress(): ?int
     {
         return $this->ID_Address;
     }
 
-    public function setId(int $ID_Address): void
+    public function setIDAddress(int $ID_Address): void
     {
         $this->ID_Address = $ID_Address;
     }

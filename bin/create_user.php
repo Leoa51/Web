@@ -2,6 +2,10 @@
 // create_user.php <firstName> <lastName> <Type> <years> <login> <password> <ID_Address> <ID_Campus>
 require_once __DIR__ . "/../doctrine/bootstrap.php";
 
+use Entity\Address;
+use Entity\Campus;
+
+
 $firstName = $argv[1];
 $lastName = $argv[2];
 $Type = $argv[3];
@@ -11,7 +15,10 @@ $password = $argv[6];
 $ID_Address = $argv[7];
 $ID_Campus = $argv[8];
 
-$User = new \Entity\User_();
+//$address = $entityManager->getRepository(Address::class)->find($ID_User);
+//$campus = $entityManager->getRepository(Campus::class)->find($ID_Offers);
+
+$User = new \Entity\User();
 $User->setFirstName($firstName);
 $User->setLastName($lastName);
 $User->setType($Type);

@@ -36,11 +36,14 @@ class Offers
 
     #[ORM\ManyToOne(targetEntity: 'Address')]
     #[ORM\JoinColumn(name: 'ID_Address', referencedColumnName: 'ID_Address')]
-    private ?Address $address = null;
+//    private ?int $IDAddress = null;
+    private ?Address $IDAddress = null;
 
     #[ORM\ManyToOne(targetEntity: 'Company')]
     #[ORM\JoinColumn(name: 'ID_Company', referencedColumnName: 'ID_Company')]
-    private ?Company $companyEntity = null;
+//    private ?int $IDCompany = null;
+    private ?Company $IDCompany = null;
+
 
     public function getId(): ?int
     {
@@ -122,23 +125,23 @@ class Offers
         $this->del = $del;
     }
 
-    public function getAddress(): ?Address
+    public function getIDAddress(): ?Address
     {
-        return $this->address;
+        return $this->IDAddress;
     }
 
-    public function setAddress(?Address $address): void
+    public function setIDAddress(?Address $IDAddress): void
     {
-        $this->address = $address;
+        $this->IDAddress = $IDAddress;
     }
 
-    public function getCompanyEntity(): ?Company
+    public function getIDCompany(): ?Company
     {
-        return $this->companyEntity;
+        return $this->IDCompany;
     }
 
-    public function setCompanyEntity(?Company $companyEntity): void
+    public function setIDCompany(?Company $IDCompany): void
     {
-        $this->companyEntity = $companyEntity;
+        $this->IDCompany = $IDCompany;
     }
 }

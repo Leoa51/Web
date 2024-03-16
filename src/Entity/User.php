@@ -40,12 +40,12 @@ class User
     #[ORM\Column(type: 'integer', nullable: false)]
     private int $ID_Campus;
 
-    public function getId(): ?int
+    public function getIDUser(): ?int
     {
         return $this->ID_User;
     }
 
-    public function setId(?int $id): void
+    public function setIDUser(?int $id): void
     {
         $this->ID_User = $id;
     }
@@ -120,22 +120,22 @@ class User
         $this->del = $del;
     }
 
-    public function getAddressId(): int
+    public function getIDAddress(): int
     {
         return $this->ID_Address;
     }
 
-    public function setAddressId(int $ID_Address): void
+    public function setIDAddress(int $ID_Address): void
     {
         $this->ID_Address = $ID_Address;
     }
 
-    public function getCampusId(): int
+    public function getIDCampus(): int
     {
         return $this->ID_Campus;
     }
 
-    public function setCampusId(int $ID_Campus): void
+    public function setIDCampus(int $ID_Campus): void
     {
         $this->ID_Campus = $ID_Campus;
     }

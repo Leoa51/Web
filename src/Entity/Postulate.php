@@ -22,22 +22,22 @@ class Postulate
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private ?string $CVname = null;
 
-    public function getUserId(): int
+    public function getIDUser(): int
     {
         return $this->ID_User;
     }
 
-    public function setUserId(int $ID_User): void
+    public function setIDUser(int $ID_User): void
     {
         $this->ID_User = $ID_User;
     }
 
-    public function getOfferId(): int
+    public function getIDOffers(): int
     {
         return $this->ID_Offers;
     }
 
-    public function setOfferId(int $ID_Offers): void
+    public function setIDOffers(int $ID_Offers): void
     {
         $this->ID_Offers = $ID_Offers;
     }
