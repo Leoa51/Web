@@ -45,13 +45,14 @@ class Offers
     private ?Company $IDCompany = null;
 
 
-    public function getId(): ?int
+    public function getIDOffers(): ?int
     {
         return $this->ID_Offers;
     }
 
-    public function setId(int $ID_Offers): void
+    public function setIDOffers(int $ID_Offers): void
     {
+        echo 'set ID_Offers : ' . $ID_Offers . "\n";
         $this->ID_Offers = $ID_Offers;
     }
 
@@ -62,6 +63,7 @@ class Offers
 
     public function setCompany(?string $company): void
     {
+        echo 'set company : ' . $company . "\n";
         $this->company = $company;
     }
 
@@ -72,6 +74,7 @@ class Offers
 
     public function setTargetPromotion(?string $targetPromotion): void
     {
+        echo 'set targetPromotion : ' . $targetPromotion . "\n";
         $this->targetPromotion = $targetPromotion;
     }
 
@@ -82,6 +85,7 @@ class Offers
 
     public function setDurationOfInternship(?string $durationOfInternship): void
     {
+        echo 'set durationOfInternship : ' . $durationOfInternship . "\n";
         $this->durationOfInternship = $durationOfInternship;
     }
 
@@ -92,6 +96,7 @@ class Offers
 
     public function setPayment(?float $payment): void
     {
+        echo 'set payment : ' . $payment . "\n";
         $this->payment = $payment;
     }
 
@@ -102,6 +107,7 @@ class Offers
 
     public function setOfferDate(?\DateTimeInterface $offerDate): void
     {
+        echo 'set offerDate : ' . $offerDate->format('d-m-Y') . "\n";
         $this->offerDate = $offerDate;
     }
 
@@ -112,6 +118,7 @@ class Offers
 
     public function setNumberOfPlaces(?int $numberOfPlaces): void
     {
+        echo 'set numberOfPlaces : ' . $numberOfPlaces . "\n";
         $this->numberOfPlaces = $numberOfPlaces;
     }
 
@@ -122,6 +129,7 @@ class Offers
 
     public function setDel(?bool $del): void
     {
+        echo 'set del : ' . $del . "\n";
         $this->del = $del;
     }
 
@@ -132,6 +140,7 @@ class Offers
 
     public function setIDAddress(?Address $IDAddress): void
     {
+        echo 'set IDAddress : ' . $IDAddress->getIDAddress() . "\n";
         $this->IDAddress = $IDAddress;
     }
 
@@ -142,6 +151,14 @@ class Offers
 
     public function setIDCompany(?Company $IDCompany): void
     {
-        $this->IDCompany = $IDCompany;
+        try {
+            echo 'set IDCompany : ' . $IDCompany->getIDCompany() . "\n";
+            $this->IDCompany = $IDCompany;
+        }
+        catch (Exception $e) {
+            echo $e->getMessage();
+            $this->IDCompany = null;
+        }
+
     }
 }

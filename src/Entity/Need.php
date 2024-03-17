@@ -10,7 +10,7 @@ class Need
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
-    private int $ID_Offers;
+    private Offers $ID_Offers;
 
     #[ORM\Id]
     #[ORM\Column(type: 'string', length: 50)]
@@ -24,12 +24,12 @@ class Need
     #[ORM\JoinColumn(name: 'nameSkills', referencedColumnName: 'nameSkills')]
     private Skill $skill;
 
-    public function getIdOffers(): int
+    public function getIDOffers(): ?Offers
     {
         return $this->ID_Offers;
     }
 
-    public function setIdOffers(int $ID_Offers): void
+    public function setIDOffers(Offers $ID_Offers): void
     {
         $this->ID_Offers = $ID_Offers;
     }

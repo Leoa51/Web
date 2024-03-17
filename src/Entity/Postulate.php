@@ -29,6 +29,7 @@ class Postulate
 
     public function setIDUser(int $ID_User): void
     {
+        echo 'set ID_User : ' . $ID_User . "\n";
         $this->ID_User = $ID_User;
     }
 
@@ -39,6 +40,7 @@ class Postulate
 
     public function setIDOffers(int $ID_Offers): void
     {
+        echo 'set ID_Offers : ' . $ID_Offers . "\n";
         $this->ID_Offers = $ID_Offers;
     }
 
@@ -49,6 +51,7 @@ class Postulate
 
     public function setMotivationLetter(?string $motivationLetter): void
     {
+        echo 'set motivationLetter : ' . $motivationLetter . "\n";
         $this->motivationLetter = $motivationLetter;
     }
 
@@ -59,6 +62,7 @@ class Postulate
 
     public function setCVName(?string $CVname): void
     {
+        echo 'set CVname : ' . $CVname . "\n";
         $this->CVname = $CVname;
     }
 }

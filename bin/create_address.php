@@ -12,4 +12,4 @@ $Address->setPostalCode($newpostal);
 $entityManager->persist($Address);
 $entityManager->flush();
 
-echo "Created Product with ID " . $Address->getId() . "\n";
+echo "Created Product with ID " . $Address->getIDAddress() . "\n";

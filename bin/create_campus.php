@@ -8,4 +8,4 @@ $Campus = new \Entity\Campus();
 $entityManager->persist($Campus);
 $entityManager->flush();
 
-echo "Created Campus with ID " . $Campus->getId() . "\n";
+echo "Created Campus with ID " . $Campus->getIDCampus() . "\n";

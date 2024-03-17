@@ -47,6 +47,7 @@ class User
 
     public function setIDUser(?int $id): void
     {
+        echo 'set ID_User : ' . $id . "\n";
         $this->ID_User = $id;
     }
 
@@ -57,6 +58,7 @@ class User
 
     public function setFirstName(?string $firstName): void
     {
+        echo 'set firstName : ' . $firstName . "\n";
         $this->firstName = $firstName;
     }
 
@@ -67,6 +69,7 @@ class User
 
     public function setLastName(?string $lastName): void
     {
+        echo 'set lastName : ' . $lastName . "\n";
         $this->lastName = $lastName;
     }
 
@@ -77,6 +80,7 @@ class User
 
     public function setType(?int $type): void
     {
+        echo 'set type : ' . $type . "\n";
         $this->type = $type;
     }
 
@@ -87,6 +91,7 @@ class User
 
     public function setYears(string $years): void
     {
+        echo 'set years : ' . $years . "\n";
         $this->years = $years;
     }
 
@@ -97,6 +102,7 @@ class User
 
     public function setLogin(?string $login): void
     {
+        echo 'set login : ' . $login . "\n";
         $this->login = $login;
     }
 
@@ -107,6 +113,7 @@ class User
 
     public function setPassword(?string $password): void
     {
+        echo 'set password : ' . $password . "\n";
         $this->password = $password;
     }
 
@@ -117,6 +124,7 @@ class User
 
     public function setDel(?bool $del): void
     {
+        echo 'set del : ' . $del . "\n";
         $this->del = $del;
     }
 
@@ -127,6 +135,7 @@ class User
 
     public function setIDAddress(int $ID_Address): void
     {
+        echo 'set ID_Address : ' . $ID_Address . "\n";
         $this->ID_Address = $ID_Address;
     }
 
@@ -137,6 +146,7 @@ class User
 
     public function setIDCampus(int $ID_Campus): void
     {
+        echo 'set ID_Campus : ' . $ID_Campus . "\n";
         $this->ID_Campus = $ID_Campus;
     }
 }

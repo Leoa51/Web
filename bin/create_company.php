@@ -18,4 +18,4 @@ $Company->setMark($newMark);
 $entityManager->persist($Company);
 $entityManager->flush();
 
-echo "Created Company with ID " . $Company->getId() . "\n";
+echo "Created Company with ID " . $Company->getIDCompany() . "\n";

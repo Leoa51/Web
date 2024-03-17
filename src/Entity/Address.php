@@ -26,6 +26,7 @@ class Address
 
     public function setIDAddress(int $ID_Address): void
     {
+        echo 'set IDAddress : ' . $ID_Address . "\n";
         $this->ID_Address = $ID_Address;
     }
 
@@ -36,6 +37,7 @@ class Address
 
     public function setVille(?string $ville): void
     {
+        echo 'set ville : ' . $ville . "\n";
         $this->ville = $ville;
     }
 
@@ -46,6 +48,7 @@ class Address
 
     public function setPostalCode(?int $postalCode): void
     {
+        echo 'set postalCode : ' . $postalCode . "\n";
         $this->postalCode = $postalCode;
     }
 }

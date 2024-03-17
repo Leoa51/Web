@@ -18,6 +18,14 @@ $ID_Company = $argv[8];
 $address = $entityManager->getRepository(Address::class)->find($ID_Address);
 $companyEntity = $entityManager->getRepository(Company::class)->find($ID_Company);
 
+if ($address == null ) {
+    echo "Address not found\n";
+    exit();
+}
+if ($companyEntity == null) {
+    echo "Company not found\n";
+    exit();
+}
 $Offers = new \Entity\Offers();
 $Offers->setCompany($company);
 $Offers->setTargetPromotion($targetPromotion);
@@ -31,4 +39,4 @@ $Offers->setIDCompany($companyEntity);
 $entityManager->persist($Offers);
 $entityManager->flush();
 
-//echo "Created Offers with ID " . $Offers->getIDOffers() . "\n";
+echo "Created Offers with ID " . $Offers->getIDOffers() . "\n";

@@ -6,15 +6,15 @@ use Entity\Skill;
 use Entity\Offers;
 
 $Idoffers = $argv[1];
-$nameSkills = $argv[1];
+$nameSkills = $argv[2];
 
 $offer = $entityManager->getRepository(Offers::class)->find($Idoffers);
-$skill = $entityManager->getRepository(Skill::class)->findOneBy($nameSkills);
+//$skill = $entityManager->getRepository(Skill::class)->find($nameSkills);
 
 
 $Need = new \Entity\Need();
 $Need->setIDOffers($offer);
-$Need->setNameSkills($skill);
+$Need->setNameSkills($nameSkills);
 
 $entityManager->persist($Need);
 $entityManager->flush();

@@ -40,13 +40,14 @@ class Company
     #[ORM\Column(type: 'integer', nullable: true)]
     private ?int $numberOfPostulation = null;
 
-    public function getId(): ?int
+    public function getIDCompany(): ?int
     {
         return $this->ID_Company;
     }
 
-    public function setId(?int $id): void
+    public function setIDCompany(?int $id): void
     {
+        echo 'set id : ' . $id . "\n";
         $this->ID_Company = $id;
     }
 
@@ -57,6 +58,7 @@ class Company
 
     public function setName(?string $name): void
     {
+        echo 'set name : ' . $name . "\n";
         $this->name = $name;
     }
 
@@ -67,6 +69,7 @@ class Company
 
     public function setActivitySector(?string $activitySector): void
     {
+        echo 'set activitySector : ' . $activitySector . "\n";
         $this->activitySector = $activitySector;
     }
 
@@ -77,6 +80,7 @@ class Company
 
     public function setStats(?string $stats): void
     {
+        echo 'set stats : ' . $stats . "\n";
         $this->stats = $stats;
     }
 
@@ -87,6 +91,7 @@ class Company
 
     public function setDel(?bool $del): void
     {
+        echo 'set del : ' . $del . "\n";
         $this->del = $del;
     }
 
@@ -97,6 +102,7 @@ class Company
 
     public function setInvisibleForStudents(?bool $invisibleForStudents): void
     {
+        echo 'set invisibleForStudents : ' . $invisibleForStudents . "\n";
         $this->invisibleForStudents = $invisibleForStudents;
     }
 
@@ -107,6 +113,7 @@ class Company
 
     public function setOpinion(?string $opinion): void
     {
+        echo 'set opinion : ' . $opinion . "\n";
         $this->opinion = $opinion;
     }
 
@@ -117,6 +124,7 @@ class Company
 
     public function setMark(?float $mark): void
     {
+        echo 'set mark : ' . $mark . "\n";
         $this->mark = $mark;
     }
 
@@ -127,16 +135,19 @@ class Company
 
     public function setNumberOfWishlist(?int $numberOfWishlist): void
     {
+        echo 'set numberOfWishlist : ' . $numberOfWishlist . "\n";
         $this->numberOfWishlist = $numberOfWishlist;
     }
 
     public function getNumberOfPostulation(): ?int
     {
+
         return $this->numberOfPostulation;
     }
 
     public function setNumberOfPostulation(?int $numberOfPostulation): void
     {
+        echo 'set numberOfPostulation : ' . $numberOfPostulation . "\n";
         $this->numberOfPostulation = $numberOfPostulation;
     }
 }

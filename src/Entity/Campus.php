@@ -13,13 +13,14 @@ class Campus
     #[ORM\GeneratedValue]
     private int|null $ID_Campus = null;
 
-    public function getId(): ?int
+    public function getIDCampus(): ?int
     {
         return $this->ID_Campus;
     }
 
-    public function setId(?int $id): void
+    public function setIDCampus(?int $id): void
     {
+        echo 'set id : ' . $id . "\n";
         $this->ID_Campus = $id;
     }
 }
