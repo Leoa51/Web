@@ -1,5 +1,6 @@
-{% include 'templates/header.twig' %}
+{% include 'templates/headerFooter.twig' %}
 
+{% block creationStudents %}
 <div class="bg-white shadow-md rounded-lg p-6 mb-4">
     <h2 class="text-xl font-semibold mt-16">Informations de l'étudiant</h2>
     <form action="/submit-internship" method="post">
@@ -23,4 +24,5 @@
     </form>
 </div>
 
-{% include 'templates/footer.twig' %}
+{% endblock %}
+{% include "templates/footer.twig" %}

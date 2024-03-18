@@ -1,6 +1,6 @@
+{% include 'templates/headerfooter.twig' %}
 
-{% include 'templates/header.twig' %}
-
+{% block statsStudents %}
 <div class="container mx-auto px-4 py-8 flex flex-col"> <!-- Ajoutez les classes "flex" et "flex-col" -->
     <h2 class="text-2xl font-semibold mt-4 w-full text-center">Stats des étudiants</h2>
     <div class="h-96 mt-10 overflow-y-auto">
@@ -35,4 +35,5 @@
     </div>
 </div>
 
-{% include 'templates/footer.twig' %}
+{% endblock %}
+{% include "templates/footer.twig" %}
