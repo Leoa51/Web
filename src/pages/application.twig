@@ -1,6 +1,6 @@
-{% include 'templates/header.twig' %}
-{% block creationOffers %}
-    <script src="https://cdn.tailwindcss.com"></script>
+{% include 'templates/headerfooter.twig' %}
+
+{% block application %}
 
     <div class="bg-white shadow-md rounded-lg p-6 mb-4">
         <h2 class="text-xl font-semibold mb-4">Informations du stage</h2>
@@ -42,3 +42,5 @@
     </div>
 
 {% endblock %}
+
+{% include "templates/footer.twig" %}

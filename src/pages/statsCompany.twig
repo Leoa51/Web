@@ -1,7 +1,7 @@
-<script src="https://cdn.tailwindcss.com"></script>
-{% include 'templates/header.twig' %}
+{% include 'templates/headerfooter.twig' %}
 
-<div class="container mx-auto px-4 py-8 flex flex-col"> <!-- Ajoutez les classes "flex" et "flex-col" -->
+{% block statsCompany %}
+<div class="container mx-auto px-4 py-8 flex flex-col">
     <h2 class="text-2xl font-semibold mt-4 w-full text-center">Stats des entreprises</h2>
     <div class="h-96 mt-10 overflow-y-auto">
         <table class="w-full text-left table-auto border-collapse">
@@ -39,27 +39,5 @@
     </div>
 </div>
 
-<script>
-    // Fonction pour gérer la sélection dans la table
-    function filterTable() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("searchInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("dataTable");
-        tr = table.getElementsByTagName("tr");
-
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0]; // Index 0 pour filtrer sur la première colonne (entreprise)
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
-
-{% include 'templates/footer.twig' %}
+{% endblock %}
+{% include "templates/footer.twig" %}

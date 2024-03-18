@@ -1,8 +1,6 @@
-<script src="https://cdn.tailwindcss.com"></script>
-{% include 'templates/header.twig' %}
+{% include 'templates/headerfooter.twig' %}
 
-{% include 'templates/searchbar.twig' %}
-
+{% block profilPilote %}
 <div class="container mx-auto px-4 py-8">
     <div class="bg-white shadow-md rounded-lg p-6 flex items-center">
         <img src="https://www.adaoudi.com/img/me.png" alt="Profile" class="w-24 h-24 rounded-full mr-6">
@@ -25,5 +23,5 @@
         </a>
     </div>
 </div>
-
-{% include 'templates/footer.twig' %}
+{% endblock %}
+{% include "templates/footer.twig" %}

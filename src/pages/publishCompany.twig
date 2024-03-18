@@ -1,7 +1,5 @@
-{#{% extends "base.twig" %}#}
+{% include 'templates/headerfooter.twig' %}
 
-{% block title %}Entreprise - StageHub{% endblock %}
-{% include 'templates/header.twig' %}
 {% block content %}
     <div class="container mx-auto px-4 py-8">
         <div class="flex justify-center">
@@ -33,3 +31,4 @@
 
 
 {% endblock %}
+{% include "templates/footer.twig" %}

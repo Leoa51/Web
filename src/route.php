@@ -6,53 +6,43 @@ return $this->get('view')->render($response, 'Accueil.html', [
 
 
 // Define named route
-$app->get('/test', function ($request, $response, $args) {
-return $this->get('view')->render($response, 'test.twig', [
-]);
-})->setName('profile');
-
-$app->get('/base', function ($request, $response, $args) {
-return $this->get('view')->render($response, 'base.twig', [
-]);
-})->setName('profile');
-
 $app->get('/opinion', function ($request, $response, $args) {
-return $this->get('view')->render($response, 'templates/opinion.twig', [
+return $this->get('view')->render($response, 'opinion.twig', [
 ]);
 })->setName('opinion');
 
 $app->get('/creationOffers', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/creationOffers.twig', [
+    return $this->get('view')->render($response, 'creationOffers.twig', [
     ]);
 })->setName('CreationOffre');
 
 $app->get('/profilPilote', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/profilPilote.twig', [
+    return $this->get('view')->render($response, 'profilPilote.twig', [
     ]);
 })->setName('ProfilPilote');
 
 $app->get('/companyMenu', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/companyMenu.twig', [
+    return $this->get('view')->render($response, 'companyMenu.twig', [
     ]);
 })->setName('companyMenu');
 
 $app->get('/showCompanyDetails', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/showCompanyDetails.twig', [
+    return $this->get('view')->render($response, 'showCompanyDetails.twig', [
     ]);
 })->setName('Details company');
 
 $app->get('/statsCompany', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/statsCompany.twig', [
+    return $this->get('view')->render($response, 'statsCompany.twig', [
     ]);
 })->setName('Stats company');
 
 $app->get('/publishOffers', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/publishOffers.twig', [
+    return $this->get('view')->render($response, 'publishOffers.twig', [
     ]);
 })->setName('Publish Offers');
 
 $app->get('/listOffers', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/listOffers.twig', [
+    return $this->get('view')->render($response, 'listOffers.twig', [
     ]);
 })->setName('list of offers');
 
@@ -62,54 +52,59 @@ $app->get('/listStudents', function ($request, $response, $args) {
 })->setName('list of students');
 
 $app->get('/statsStudents', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/StatsStudents.twig', [
+    return $this->get('view')->render($response, 'StatsStudents.twig', [
     ]);
 })->setName('stats of students');
 
 $app->get('/creationStudents', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/creationStudents.twig', [
+    return $this->get('view')->render($response, 'creationStudents.twig', [
     ]);
 })->setName('stats of students');
 
 $app->get('/login', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/login.twig', [
+    return $this->get('view')->render($response, '/login.twig', [
     ]);
 })->setName('login');
 
 $app->get('/listCompany', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/listCompany.twig', [
+    return $this->get('view')->render($response, 'listCompany.twig', [
     ]);
 })->setName('list of company');
 
 $app->get('/publishCompany', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/publishCompany.twig', [
+    return $this->get('view')->render($response, 'publishCompany.twig', [
     ]);
 })->setName('Publication of company');
 
 $app->get('/profilStudents', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/profilStudents.twig', [
+    return $this->get('view')->render($response, 'profilStudents.twig', [
     ]);
 })->setName('Profil of students');
 
 $app->get('/application', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/application.twig', [
+    return $this->get('view')->render($response, 'application.twig', [
     ]);
 })->setName('application');
 
 $app->get('/statsOffers', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/statsOffers.twig', [
+    return $this->get('view')->render($response, 'statsOffers.twig', [
     ]);
 })->setName('Stats of Offers');
 
 $app->get('/listPilotes', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/listPilotes.twig', [
+    return $this->get('view')->render($response, 'listPilotes.twig', [
     ]);
 })->setName('list of pilotes');
 
 $app->get('/creationPilote', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'templates/creationPilote.twig', [
+    return $this->get('view')->render($response, 'creationPilote.twig', [
     ]);
 })->setName('creation of pilotes');
+
+$app->get('/profilAdmin', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'profilAdmin.twig', [
+    ]);
+})->setName('Profil of Admin');
 
 // Render from string
 $app->get('/hi/{name}', function ($request, $response, $args) {

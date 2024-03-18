@@ -1,8 +1,7 @@
-{% include 'templates/header.twig' %}
+{% include 'templates/headerfooter.twig' %}
 {% block creationOffers %}
-<script src="https://cdn.tailwindcss.com"></script>
 
-<div class="bg-white shadow-md rounded-lg p-6 mb-4">
+    <div class="bg-white shadow-md rounded-lg p-6 mb-4">
     <h2 class="text-xl font-semibold mb-4">Informations du stage</h2>
     <form action="/submit-internship" method="post">
         <div class="mb-4">
@@ -42,3 +41,4 @@
 </div>
 
 {% endblock %}
+{% include "templates/footer.twig" %}
