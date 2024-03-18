@@ -1,0 +1,92 @@
+{% include 'templates/headerFooterSearch.twig' %}
+
+{% block filter %}
+    <div class="flex-col mt-8">
+        <!-- Sidebar -->
+        <div class="ml-0 mt-0 bg-gray-200 p-4">
+            <!-- Filter options -->
+            <h2 class="text-lg font-semibold mb-1">Filter Options</h2>
+            <div class="space-y-2">
+                <!-- Example filter options -->
+                <div>
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">
+                        Localisation
+                    </label>
+                    <select id="Localisation" name="category" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500">
+                        <option value=""> Veuillez choisir une ville.. </option>
+                        <option value="1">Reims</option>
+                        <option value="2">Paris</option>
+                        <option value="3">Nancy</option>
+                    </select>
+                </div>
+                <!-- Add more filter options here -->
+                <div>
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">
+                        Domaine d'expertise
+                    </label>
+                    <select id="Domaine d'expertise" name="category" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500">
+                        <option value="">Quelle domaine cherchez-vous ?</option>
+                        <option value="1">A1</option>
+                        <option value="2">A2</option>
+                        <option value="3">A3</option>
+                        <option value="3">A4</option>
+                        <option value="3">A5</option>
+                    </select>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container mx-auto px-4 py-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Liste des entreprises</h2>
+        <table class="w-full text-left table-auto border-collapse">
+            <thead>
+            <tr class="bg-gray-100">
+                <th class="px-4 py-2 border">Nom de l'entreprise</th>
+                <th class="px-4 py-2 border">secteur d'activité </th>
+                <th class="px-4 py-2 border">Localisation</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Ajoutez autant de lignes que nécessaire -->
+            <tr class="border-b even:bg-gray-50 odd:bg-white cursor-pointer" data-id="1" onclick="handleRowClick(event)">
+                <td class="px-4 py-2 border">Oracle corp </td>
+                <td class="px-4 py-2 border">Logiciel d'entreprises</td>
+                <td class="px-4 py-2 border">Etats-unis</td>
+
+            </tr>
+            <tr class="border-b even:bg-gray-50 odd:bg-white cursor-pointer" data-id="1" onclick="handleRowClick(event)">
+                <td class="px-4 py-2 border">Adobe corp</td>
+                <td class="px-4 py-2 border">Multimedia et logiciel</td>
+                <td class="px-4 py-2 border">Londres , Angleterre</td>
+
+            </tr>
+            <tr class="border-b even:bg-gray-50 odd:bg-white cursor-pointer" data-id="1" onclick="handleRowClick(event)">
+                <td class="px-4 py-2 border">airbnb lnc</td>
+                <td class="px-4 py-2 border">Hotellerie et tourisme  </td>
+                <td class="px-4 py-2 border">Paris, France</td>
+
+            </tr>
+            <tr class="border-b even:bg-gray-50 odd:bg-white cursor-pointer" data-id="1" onclick="handleRowClick(event)">
+                <td class="px-4 py-2 border">Tesla </td>
+                <td class="px-4 py-2 border">Automobile et Energie</td>
+                <td class="px-4 py-2 border">New York, États-Unis</td>
+
+            </tr>
+            </tbody>
+        </table>
+        <div class="flex justify-center space-x-4 mt-8">
+            <a href="/publishCompany" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Ajouter une entreprise</a>
+            <a href="#" class="bg-yellow-500 hover:bg-yellow-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Modifier une entreprise</a>
+            <a href="#" class="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Supprimer une entreprise</a>
+        </div>
+    </div>
+
+{% endblock %}
+{% include "templates/footer.twig" %}
