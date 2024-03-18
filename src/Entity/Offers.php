@@ -151,14 +151,7 @@ class Offers
 
     public function setIDCompany(?Company $IDCompany): void
     {
-        try {
-            echo 'set IDCompany : ' . $IDCompany->getIDCompany() . "\n";
-            $this->IDCompany = $IDCompany;
-        }
-        catch (Exception $e) {
-            echo $e->getMessage();
-            $this->IDCompany = null;
-        }
-
+        echo 'set IDCompany : ' . $IDCompany->getIDCompany() . "\n";
+        $this->IDCompany = $IDCompany;
     }
 }
