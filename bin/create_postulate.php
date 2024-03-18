@@ -10,6 +10,10 @@ $ID_Offers = $argv[2];
 $motivationLetter = $argv[3];
 $CVname = $argv[4];
 
+
+echo $ID_User . "\n" . $ID_Offers . "\n" . $motivationLetter . "\n" . $CVname . "\n";
+
+
 //$user = $entityManager->getRepository(User::class)->find($ID_User);
 //$offer = $entityManager->getRepository(Offers::class)->find($ID_Offers);
 
@@ -22,6 +26,12 @@ $Postulate->setMotivationLetter($motivationLetter);
 $Postulate->setCVname($CVname);
 
 $entityManager->persist($Postulate);
-$entityManager->flush();
+try {
+    $entityManager->flush();
+    echo "Created Postulate with ID User " . $Postulate->getIDUser() . " and ID Offers " . $Postulate->getIDOffers() . "\n";
+}
+catch (\Exception $e) {
+    echo "error \n";
+    echo $e->getMessage();
+}
 
-echo "Created Postulate with ID User " . $Postulate->getIDUser() . " and ID Offers " . $Postulate->getIDOffers() . "\n";

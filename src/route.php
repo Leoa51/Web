@@ -108,12 +108,12 @@ $app->get('/profilAdmin', function ($request, $response, $args) {
 
 // Render from string
 $app->get('/hi/{name}', function ($request, $response, $args) {
-$str = $this->get('view')->fetchFromString(
-'<p>Hi, my name is {{ name }}.</p>',
-[
-'name' => $args['name']
-]
-);
-$response->getBody()->write($str);
-return $response;
+    $str = $this->get('view')->fetchFromString(
+        '<p>Hi, my name is {{ name }}.</p>',
+        [
+            'name' => $args['name']
+        ]
+    );
+    $response->getBody()->write($str);
+    return $response;
 });

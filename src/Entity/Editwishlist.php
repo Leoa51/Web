@@ -26,6 +26,7 @@ class EditWishlist
 
     public function setIdUser(int $ID_User): void
     {
+        echo "ID_User = " . $ID_User . "\n";
         $this->ID_User = $ID_User;
     }
 
@@ -36,6 +37,7 @@ class EditWishlist
 
     public function setIdOffers(int $ID_Offers): void
     {
+        echo "ID_Offers = " . $ID_Offers . "\n";
         $this->ID_Offers = $ID_Offers;
     }
 
@@ -46,6 +48,7 @@ class EditWishlist
 
     public function setPutWishlist(?bool $putWishlist): void
     {
+        echo "putWishlist = " . $putWishlist . "\n";
         $this->putWishlist = $putWishlist;
     }
 }

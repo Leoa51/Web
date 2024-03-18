@@ -15,6 +15,8 @@ $password = $argv[6];
 $ID_Address = $argv[7];
 $ID_Campus = $argv[8];
 
+echo $firstName . "\n" . $lastName . "\n" . $Type . "\n" . $years . "\n" . $login . "\n" . $password . "\n" . $ID_Address . "\n" . $ID_Campus . "\n" ;
+
 //$address = $entityManager->getRepository(Address::class)->find($ID_User);
 //$campus = $entityManager->getRepository(Campus::class)->find($ID_Offers);
 
@@ -29,6 +31,12 @@ $User->setIDAddress($ID_Address);
 $User->setIDCampus($ID_Campus);
 
 $entityManager->persist($User);
-$entityManager->flush();
+try {
+    $entityManager->flush();
+    echo "Created User with ID " . $User->getIDUser() . "\n";
+}
+catch (\Exception $e) {
+    echo "error \n";
+    echo $e->getMessage();
+}
 
-echo "Created User with ID " . $User->getIDUser() . "\n";

@@ -10,7 +10,7 @@ class Need
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
-    private Offers $ID_Offers;
+    private int $ID_Offers;
 
     #[ORM\Id]
     #[ORM\Column(type: 'string', length: 50)]
@@ -18,18 +18,18 @@ class Need
 
     #[ORM\ManyToOne(targetEntity: 'Offers')]
     #[ORM\JoinColumn(name: 'ID_Offers', referencedColumnName: 'ID_Offers')]
-    private Offers $offers;
+    private int $offers;
 
     #[ORM\ManyToOne(targetEntity: 'Skill')]
     #[ORM\JoinColumn(name: 'nameSkills', referencedColumnName: 'nameSkills')]
-    private Skill $skill;
+    private string $skill;
 
-    public function getIDOffers(): ?Offers
+    public function getIDOffers(): ?int
     {
         return $this->ID_Offers;
     }
 
-    public function setIDOffers(Offers $ID_Offers): void
+    public function setIDOffers(int $ID_Offers): void
     {
         $this->ID_Offers = $ID_Offers;
     }
