@@ -1,0 +1,26 @@
+{
+  "name": "StageHub - Le n°1 du recrutement pour les stages",
+  "short_name": "StageHub",
+  "start_url": "site.stagehub.com",
+  "display": "standalone",
+  "background_color": "#ff00ff",
+  "theme_color": "#009688",
+  "description": "Site pour mettre en relation facilement les recruteurs et les étudiants",
+  "icons": [
+    {
+      "src": "logoStageHub72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "logoStageHub96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "logoStageHub128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ]
+}
