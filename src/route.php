@@ -106,6 +106,11 @@ $app->get('/profilAdmin', function ($request, $response, $args) {
     ]);
 })->setName('Profil of Admin');
 
+$app->get('/about', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'about.twig', [
+    ]);
+})->setName('footer about');
+
 // Render from string
 $app->get('/hi/{name}', function ($request, $response, $args) {
 $str = $this->get('view')->fetchFromString(
