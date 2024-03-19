@@ -1,6 +1,7 @@
 {% include "templates/headerFooterSearch.twig" %}
 
-{% block filter %}
+{% block content %}
+
     <div class="flex-col mt-8">
         <!-- Sidebar -->
         <div class="ml-0 mt-0 bg-gray-200 p-4">
@@ -10,7 +11,7 @@
                 <!-- Example filter options -->
                 <div>
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">
-                        Category
+                        Centre
                     </label>
                     <select id="category" name="category" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500">
                         <option value=""> Votre centre ?</option>
@@ -22,7 +23,7 @@
                 <!-- Add more filter options here -->
                 <div>
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">
-                        Category
+                        Promotion
                     </label>
                     <select id="category" name="category" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500">
                         <option value="">Quelle promotion ?</option>
@@ -38,10 +39,6 @@
         </div>
     </div>
 
-{% endblock %}
-
-
-{% block listStudents %}
     <style>
         /* Ajoutez ce style pour mettre en surbrillance la ligne sélectionnée */
         .selected {
