@@ -4,6 +4,8 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
+use Slim\Exception\HttpNotFoundException;
+
 
 
 require_once __DIR__ . "/index_requirement.php";
@@ -225,6 +227,13 @@ $app->get('/apiuser/{page}', function (Request $request, Response $response , ar
 });
 
 
+
+$app->get('/fetch', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'fetch.php', [
+    ]);
+})->setName('Profil of Admin');
+
+
 //$app->post('/newaddress', function (Request $request, Response $response) {
 //    $data = $request->getParsedBody();
 ////    $this->get('address')->create($data);
@@ -232,3 +241,30 @@ $app->get('/apiuser/{page}', function (Request $request, Response $response , ar
 //
 //    return $response;
 //});
+
+
+
+
+
+
+
+
+
+
+
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+    return $response;
+});
+
+$app->add(function ($request, $handler) {
+    $response = $handler->handle($request);
+    return $response
+        ->withHeader('Access-Control-Allow-Origin', 'http://site.stagehub.com')
+        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+});
+
+
+$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
+    throw new HttpNotFoundException($request);
+});
