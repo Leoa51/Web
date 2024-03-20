@@ -59,7 +59,7 @@ foreach ( $companies as $company ) {
 
 
 // @TODO : Editwishlist
-// @ TODO : Need
+// @ TODO : Needs
 
 
 // ListOffers
