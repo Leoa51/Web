@@ -26,10 +26,10 @@ $app->get('/creationOffers', function ($request, $response, $args) {
     ]);
 })->setName('CreationOffre');
 
-$app->get('/profilPilote', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'profilPilote.twig', [
+$app->get('/profilPilot', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'profilPilot.twig', [
     ]);
-})->setName('ProfilPilote');
+})->setName('ProfilPilot');
 
 $app->get('/companyMenu', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'companyMenu.twig', [
@@ -101,18 +101,14 @@ $app->get('/statsOffers', function ($request, $response, $args) {
     ]);
 })->setName('Stats of Offers');
 
-$app->get('/listPilotes', function ($request, $response, $args) use ($data) {
-    return $this->get('view')->render($response, 'listPilotes.twig', ['data' => $data]);
-})->setName('list of pilotes');
-
-
-
-
+$app->get('/listPilot', function ($request, $response, $args) use ($data) {
+    return $this->get('view')->render($response, 'listPilot.twig', ['data' => $data]);
+})->setName('list of pilot');
 
 $app->get('/creationPilote', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'creationPilote.twig', [
     ]);
-})->setName('creation of pilotes');
+})->setName('creation of pilot');
 
 $app->get('/profilAdmin', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'profilAdmin.twig', [
@@ -122,17 +118,19 @@ $app->get('/profilAdmin', function ($request, $response, $args) {
 $app->get('/about', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'about.twig', [
     ]);
-})->setName('footer about');
+})->setName('About');
 
 $app->get('/contact', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'contact.twig', [
     ]);
-})->setName('footer contact');
+})->setName('Contact');
 
 $app->get('/privacy', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'privacy.twig', [
     ]);
-})->setName('footer privacy');
+})->setName('Privacy');
+
+
 
 // Render from string
 $app->get('/hi/{name}', function ($request, $response, $args) {

@@ -1,4 +1,6 @@
-{% include 'templates/headerfooter.twig' %}
+{% extends 'templates/headerfooter.twig' %}
+
+{% block title %}Stagehub - Statistique des entreprises{% endblock %}
 
 {% block content %}
 <div class="container mx-auto px-4 py-8 flex flex-col">
@@ -40,4 +42,3 @@
 </div>
 
 {% endblock %}
-{% include "templates/footer.twig" %}

@@ -1,4 +1,6 @@
-{% include 'templates/headerFooterSearch.twig' %}
+{% extends 'templates/headerFooterSearch.twig' %}
+
+{% block title %}Stagehub - Menu entreprise{% endblock %}
 
 {% block filter %}
     <div class="flex-col mt-8">
@@ -71,4 +73,4 @@
     </div>
 </div>
 {% endblock %}
-{% include "templates/footer.twig" %}
+

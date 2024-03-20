@@ -1,8 +1,11 @@
-{% include 'templates/headerFooter.twig' %}
+{% extends 'templates/headerFooter.twig' %}
+
+{% block title %}Stagehub - Postuler{% endblock %}
 
 {% block content %}
 
-    <div class="bg-white shadow-md rounded-lg p-6 mb-4">
+    <div class="container mx-auto px-4 py-8">
+        <form class="bg-white shadow-md rounded-lg p-6">
         <h2 class="text-xl font-semibold mb-4">Informations du stage</h2>
         <form action="/submit-internship" method="post">
             <div class="mb-4">
@@ -50,7 +53,6 @@
         </form>
     </div>
 
-
     <script>
         function validateForm() {
             var companyName = document.getElementById('company_name').value.trim();
@@ -76,7 +78,6 @@
     </script>
 
 
-
 {% endblock %}
 
-{% include "templates/footer.twig" %}
+
