@@ -5,18 +5,29 @@ require_once __DIR__ . "/../doctrine/bootstrap.php";
 use Entity\Skill;
 use Entity\Offers;
 
-$Idoffers = $argv[1];
+$IDoffers = $argv[1];
 $nameSkills = $argv[2];
 
-$offer = $entityManager->getRepository(Offers::class)->find($Idoffers);
+
+
+echo $IDoffers . "\n" . $nameSkills . "\n";
+
+//$offer = $entityManager->getRepository(Offers::class)->find($IDoffers);
 //$skill = $entityManager->getRepository(Skill::class)->find($nameSkills);
 
 
 $Need = new \Entity\Need();
-$Need->setIDOffers($offer);
+$Need->setIDOffers($IDoffers);
 $Need->setNameSkills($nameSkills);
 
 $entityManager->persist($Need);
-$entityManager->flush();
 
-echo "Created Need with ID Offers " . $Need->getIDOffers() . " and nameSkills " . $Need->getNameSkills() . "\n";
+try {
+    $entityManager->flush();
+    echo "Created Need with ID Offers " . $Need->getIDOffers() . " and nameSkills " . $Need->getNameSkills();
+}
+catch (\Exception $e) {
+    echo "error \n";
+    echo $e->getMessage();
+}
+

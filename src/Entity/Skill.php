@@ -19,6 +19,7 @@ class Skill
 
     public function setNameSkills(string $nameSkills): void
     {
+        echo "NameSkill : " . $nameSkills . "\n";
         $this->nameSkills = $nameSkills;
     }
 }
