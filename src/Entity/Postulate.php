@@ -16,11 +16,11 @@ class Postulate
     #[ORM\Column(type: 'integer')]
     private int $ID_Offers;
 
-    #[ORM\Column(type: 'string', length: 50, nullable: true)]
-    private ?string $motivationLetter = null;
+    #[ORM\Column(type: 'string', length: 50)]
+    private ?string $motivationLetter;
 
-    #[ORM\Column(type: 'string', length: 50, nullable: true)]
-    private ?string $CVname = null;
+    #[ORM\Column(type: 'string', length: 50)]
+    private ?string $CVname;
 
     public function getIDUser(): int
     {

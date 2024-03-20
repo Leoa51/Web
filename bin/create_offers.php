@@ -15,6 +15,16 @@ $ID_Address = $argv[7];
 $ID_Company = $argv[8];
 
 
+echo \DI\string($company . "\n");
+echo \DI\string($targetPromotion . "\n");
+echo \DI\string($durationOfInternship . "\n");
+echo \DI\string($payment . "\n");
+echo $offerDate->format('d-m-Y'). "\n";
+echo \DI\string($numberOfPlaces . "\n");
+echo \DI\string($ID_Address . "\n");
+echo \DI\string($ID_Company . "\n");
+
+
 $address = $entityManager->getRepository(Address::class)->find($ID_Address);
 $companyEntity = $entityManager->getRepository(Company::class)->find($ID_Company);
 

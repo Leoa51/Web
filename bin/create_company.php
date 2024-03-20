@@ -8,6 +8,8 @@ $newStats = $argv[3];
 $newOpinion = $argv[4];
 $newMark = $argv[5];
 
+echo $newName . "\n" . $newActivitySector . "\n" . $newStats . "\n" . $newOpinion . "\n" . $newMark . "\n";
+
 $Company = new \Entity\Company();
 $Company->setName($newName);
 $Company->setActivitySector($newActivitySector);

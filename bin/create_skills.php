@@ -6,10 +6,18 @@ use Entity\Skill;
 
 $nameSkills = $argv[1];
 
+echo $nameSkills. "\n";
+
 $Skills = new \Entity\Skill();
 $Skills->setNameSkills($nameSkills);
 
 $entityManager->persist($Skills);
-$entityManager->flush();
+try {
+    $entityManager->flush();
+    echo "Created Skills with ID " . $Skills->getNameSkills() . "\n";
+}
+catch (\Exception $e) {
+    echo "error \n";
+    echo $e->getMessage();
+}
 
-echo "Created Skills with ID " . $Skills->getNameSkills() . "\n";
