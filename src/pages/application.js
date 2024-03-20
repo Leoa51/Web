@@ -1,4 +1,4 @@
-function validateForm() {
+    function validateForm() {
     var companyName = document.getElementById('company_name').value.trim();
     var skills = document.getElementById('skills').value.trim();
     var location = document.getElementById('location').value.trim();
