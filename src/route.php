@@ -111,6 +111,16 @@ $app->get('/about', function ($request, $response, $args) {
     ]);
 })->setName('footer about');
 
+$app->get('/contact', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'contact.twig', [
+    ]);
+})->setName('footer contact');
+
+$app->get('/privacy', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'privacy.twig', [
+    ]);
+})->setName('footer privacy');
+
 // Render from string
 $app->get('/hi/{name}', function ($request, $response, $args) {
 $str = $this->get('view')->fetchFromString(
