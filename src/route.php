@@ -137,6 +137,7 @@ $app->get('/hi/{name}', function ($request, $response, $args) {
 
 $app->get('/apiaddress/{page}', function (Request $request, Response $response , array $args) use ($addressdata) {
     $page = (int) $args['page'];
+//    $search = (string) $args['search'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
 
