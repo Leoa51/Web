@@ -11,9 +11,9 @@ $data = [];
 
 foreach ( $users as $user ) {
     try {
-        $query = $entityManager->createQuery('SELECT u FROM Entity\Address u WHERE u.ID_address ='. $user->getIDAddress() );
+        $query = $entityManager->createQuery('SELECT u.ville FROM Entity\Address u WHERE u.ID_Address ='. $user->getIDAddress() );
         $address = $query->getResult();
-        $ville = $address[0]->getVille();
+        $ville = $address[0]['ville'];
     }
     catch (\Exception $e) {
         $ville = "null";
