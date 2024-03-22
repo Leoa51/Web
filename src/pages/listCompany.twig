@@ -1,9 +1,9 @@
 {% extends 'templates/headerFooterSearch.twig' %}
+
 {% block title %}Stagehub - Liste des entreprises{% endblock %}
 
-
-{% block content %}
-    <div class="flex-col mt-8">
+{% block filter %}
+    <div class="flex-col">
         <!-- Sidebar -->
         <div class="ml-0 mt-0 bg-gray-200 p-4">
             <!-- Filter options -->
@@ -39,8 +39,33 @@
             </div>
         </div>
     </div>
+{% endblock %}
 
-    <div class="container mx-auto px-4 py-8">
+{% block content %}
+    <style>
+        /* Ajoutez ce style pour mettre en surbrillance la ligne sélectionnée */
+        .selected {
+            background-color: rgba(156, 163, 175);
+        }
+    </style>
+    <script>
+        function handleRowClick(event) {
+            const row = event.currentTarget;
+            const id = row.dataset.id;
+
+            // Supprimer la classe "selected" de toutes les lignes
+            const rows = document.querySelectorAll("tr.selected");
+            rows.forEach((r) => r.classList.remove("selected"));
+
+            // Ajouter la classe "selected" à la ligne actuelle
+            row.classList.add("selected");
+
+            // Gérez la sélection ici en utilisant l'identifiant (id)
+            console.log(`La ligne ${id} a été sélectionnée.`);
+        }
+    </script>
+<body>
+<div class="container mx-auto px-4 py-8">
         <h2 class="text-2xl font-semibold text-gray-800 mb-6">Liste des entreprises</h2>
         <table class="w-full text-left table-auto border-collapse">
             <thead>
@@ -48,36 +73,17 @@
                 <th class="px-4 py-2 border">Nom de l'entreprise</th>
                 <th class="px-4 py-2 border">secteur d'activité </th>
                 <th class="px-4 py-2 border">Localisation</th>
-
-
             </tr>
             </thead>
             <tbody>
-            <!-- Ajoutez autant de lignes que nécessaire -->
-            <tr class="border-b even:bg-gray-50 odd:bg-white cursor-pointer" data-id="1" onclick="handleRowClick(event)">
-                <td class="px-4 py-2 border">Oracle corp </td>
-                <td class="px-4 py-2 border">Logiciel d'entreprises</td>
-                <td class="px-4 py-2 border">Etats-unis</td>
-
-            </tr>
-            <tr class="border-b even:bg-gray-50 odd:bg-white cursor-pointer" data-id="1" onclick="handleRowClick(event)">
-                <td class="px-4 py-2 border">Adobe corp</td>
-                <td class="px-4 py-2 border">Multimedia et logiciel</td>
-                <td class="px-4 py-2 border">Londres , Angleterre</td>
-
-            </tr>
-            <tr class="border-b even:bg-gray-50 odd:bg-white cursor-pointer" data-id="1" onclick="handleRowClick(event)">
-                <td class="px-4 py-2 border">airbnb lnc</td>
-                <td class="px-4 py-2 border">Hotellerie et tourisme  </td>
-                <td class="px-4 py-2 border">Paris, France</td>
-
-            </tr>
-            <tr class="border-b even:bg-gray-50 odd:bg-white cursor-pointer" data-id="1" onclick="handleRowClick(event)">
-                <td class="px-4 py-2 border">Tesla </td>
-                <td class="px-4 py-2 border">Automobile et Energie</td>
-                <td class="px-4 py-2 border">New York, États-Unis</td>
-
-            </tr>
+            {% for key,user in data %}
+                <tr class="border-b even:bg-gray-50 odd:bg-white cursor-pointer" data-id="1" onclick="handleRowClick(event)">
+                    <td class="px-4 py-2 border">{{ user[0] }}</td>
+                    <td class="px-4 py-2 border">{{ user[1] }}</td>
+                    <td class="px-4 py-2 border">{{ user[2] }}</td>
+                    <td class="px-4 py-2 border">{{ user[3] }}</td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
         <div class="flex justify-center space-x-4 mt-8">
