@@ -1,44 +1,68 @@
-{% include 'templates/headerfooter.twig' %}
+{% extends 'templates/headerfooter.twig' %}
 
-{% block PublishOffers %}
-<div class="container mx-auto px-4 py-8">
-    <form class="bg-white shadow-md rounded-lg p-6">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Informations du stage</h2>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-semibold mb-2" for="entreprise">Nom de l'entreprise</label>
-            <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="entreprise" type="text" placeholder="Nom de l'entreprise">
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-semibold mb-2" for="competences">Compétences demandées</label>
-            <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="competences" type="text" placeholder="Compétences demandées">
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-semibold mb-2" for="localisation">Localisation</label>
-            <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="localisation" type="text" placeholder="Localisation">
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-semibold mb-2" for="promotions">Promotions concernées</label>
-            <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="promotions" type="text" placeholder="Promotions concernées">
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-semibold mb-2" for="duree">Durée du stage</label>
-            <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="duree" type="text" placeholder="Durée du stage">
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-semibold mb-2" for="remuneration">Rémunération</label>
-            <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="remuneration" type="text" placeholder="Rémunération">
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-semibold mb-2" for="date_publication">Date de publication de l'offre</label>
-            <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="date_publication" type="date">
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-semibold mb-2" for="places_disponibles">Nombre de places disponibles</label
-            >
-            <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="places_disponibles" type="number" min="1" placeholder="Nombre de places disponibles">
-        </div>
-        <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Publier l'offre de stage</a>
-    </form>
-</div>
+{% block title %}Stagehub - Publication d'offre de stage{% endblock %}
+
+{% block content %}
+    <div class="container mx-auto px-4 py-8">
+        <form class="bg-white shadow-md rounded-lg p-6">
+        <h2 class="text-xl font-semibold mb-4">Informations du stage</h2>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2" for="company_name">Nom de l'entreprise</label>
+                <input id="company_name" name="company_name" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2" for="skills">Compétences demandées</label>
+                <input id="skills" name="skills" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2" for="location">Localisation</label>
+                <input id="location" name="location" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2" for="promotions">Promotions concernées</label>
+                <input id="promotions" name="promotions" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2" for="duration">Durée du stage</label>
+                <input id="duration" name="duration" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2" for="remuneration">Rémunération</label>
+                <input id="remuneration" name="remuneration" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2" for="publication_date">Date de publication de l'offre</label>
+                <input id="publication_date" name="publication_date" type="date" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2" for="available_places">Nombre de places disponibles</label>
+                <input id="available_places" name="available_places" type="number" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+            </div>
+            <input class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" type="button" value="Soumettre" onclick="if(validateForm()) { window.location.href='/listOffers'; }">
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            var companyName = document.getElementById('company_name').value.trim();
+            var skills = document.getElementById('skills').value.trim();
+            var location = document.getElementById('location').value.trim();
+            var promotions = document.getElementById('promotions').value.trim();
+            var duration = document.getElementById('duration').value.trim();
+            var remuneration = document.getElementById('remuneration').value.trim();
+            var publicationDate = document.getElementById('publication_date').value.trim();
+            var availablePlaces = document.getElementById('available_places').value.trim();
+
+
+            if (companyName === '' || skills === '' || location === '' || promotions === '' || duration === '' || remuneration === '' || publicationDate === '' || availablePlaces === '') {
+                alert('Veuillez remplir tous les champs.');
+                return false;
+            }
+
+            // Autres validations éventuelles peuvent être ajoutées ici
+
+            return true;
+        }
+    </script>
+
 {% endblock %}
-{% include "templates/footer.twig" %}

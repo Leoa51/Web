@@ -1,7 +1,9 @@
-{% include 'templates/headerFooterSearch.twig' %}
+{% extends 'templates/headerFooterSearch.twig' %}
+
+{% block title %}Stagehub - Menu entreprise{% endblock %}
 
 {% block filter %}
-    <div class="flex-col mt-8">
+    <div class="flex-col">
         <!-- Sidebar -->
         <div class="ml-0 mt-0 bg-gray-200 p-4">
             <!-- Filter options -->
@@ -9,11 +11,11 @@
             <div class="space-y-2">
                 <!-- Example filter options -->
                 <div>
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="location">
                         Localisation
                     </label>
-                    <select id="Localisation" name="category" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500">
-                        <option value=""> Veuillez choisir une ville.. </option>
+                    <select id="location" name="location" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500">
+                        <option value="">Veuillez choisir une ville..</option>
                         <option value="1">Reims</option>
                         <option value="2">Paris</option>
                         <option value="3">Nancy</option>
@@ -21,54 +23,52 @@
                 </div>
                 <!-- Add more filter options here -->
                 <div>
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="expertise">
                         Domaine d'expertise
                     </label>
-                    <select id="Domaine d'expertise" name="category" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500">
+                    <select id="expertise" name="expertise" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500">
                         <option value="">Quelle domaine cherchez-vous ?</option>
                         <option value="1">Info</option>
                         <option value="2">Marketing</option>
                     </select>
-
                 </div>
             </div>
         </div>
     </div>
 {% endblock %}
 
-{% block companyMenu %}
-<div class="container mx-auto px-4 py-8">
-    <a href="/showCompanyDetails" class="bg-white shadow-md rounded-lg p-6 flex items-center">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/1200px-Orange_logo.svg.png" alt="Company Logo" class="w-24 h-24 rounded-full mr-6">
-        <div>
-            <h2 class="text-2xl font-semibold text-gray-800">Orange</h2>
-            <p class="text-gray-600">Localité: Reims</p>
-            <p class="text-gray-600">Domaine d'expertise: Réseaux Telecom, vente</p>
-        </div>
-    </a>
-    <br>
-    <a href="/showCompanyDetails" class="bg-white shadow-md rounded-lg p-6 flex items-center">
-        <img src="https://www.facebook.com/images/fb_icon_325x325.png" alt="Company Logo" class="w-24 h-24 rounded-full mr-6">
-        <div>
-            <h2 class="text-2xl font-semibold text-gray-800">Facebook</h2>
-            <p class="text-gray-600">Localité: Paris</p>
-            <p class="text-gray-600">Domaine d'expertise: Développement Full-Stack</p>
-        </div>
-    </a>
-    <br>
-    <a href="/showCompanyDetails" class="bg-white shadow-md rounded-lg p-6 flex items-center">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1024px-Google_%22G%22_logo.svg.png" alt="Company Logo" class="w-24 h-24 rounded-full mr-6">
-        <div>
-            <h2 class="text-2xl font-semibold text-gray-800">Google</h2>
-            <p class="text-gray-600">Localité: Rennes</p>
-            <p class="text-gray-600">Domaine d'expertise: Gestion de cloud</p>
-        </div>
-    </a>
-    <div class="flex justify-center space-x-4 mt-8">
-        <a href="/statsCompany" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-            Stats des entreprises
+{% block content %}
+    <div class="container mx-auto px-4 py-8">
+        <a href="#" class="bg-white shadow-md rounded-lg p-6 flex items-center">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/1200px-Orange_logo.svg.png" alt="Company Logo" class="w-24 h-24 rounded-full mr-6">
+            <div>
+                <h2 class="text-2xl font-semibold text-gray-800">Orange</h2>
+                <p class="text-gray-600">Localité: Reims</p>
+                <p class="text-gray-600">Domaine d'expertise: Réseaux Telecom, vente</p>
+            </div>
         </a>
+        <br>
+        <a href="#" class="bg-white shadow-md rounded-lg p-6 flex items-center">
+            <img src="https://www.facebook.com/images/fb_icon_325x325.png" alt="Company Logo" class="w-24 h-24 rounded-full mr-6">
+            <div>
+                <h2 class="text-2xl font-semibold text-gray-800">Facebook</h2>
+                <p class="text-gray-600">Localité: Paris</p>
+                <p class="text-gray-600">Domaine d'expertise: Développement Full-Stack</p>
+            </div>
+        </a>
+        <br>
+        <a href="#" class="bg-white shadow-md rounded-lg p-6 flex items-center">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1024px-Google_%22G%22_logo.svg.png" alt="Company Logo" class="w-24 h-24 rounded-full mr-6">
+            <div>
+                <h2 class="text-2xl font-semibold text-gray-800">Google</h2>
+                <p class="text-gray-600">Localité: Rennes</p>
+                <p class="text-gray-600">Domaine d'expertise: Gestion de cloud</p>
+            </div>
+        </a>
+        <div class="flex justify-center space-x-4 mt-8">
+            <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+                Stats des entreprises
+            </a>
+        </div>
     </div>
-</div>
 {% endblock %}
-{% include "templates/footer.twig" %}

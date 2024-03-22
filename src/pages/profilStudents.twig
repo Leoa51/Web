@@ -1,6 +1,8 @@
-{% include 'templates/headerfooter.twig' %}
+{% extends 'templates/headerfooter.twig' %}
 
-{% block profilStudents %}
+{% block title %}Stagehub - Profil étudiant{% endblock %}
+
+{% block content %}
 <body class="bg-gray-100">
 <div class="container mx-auto px-4 py-8">
     <div class="flex">
@@ -38,4 +40,3 @@
     </div>
 </div>
 {% endblock %}
-{% include "templates/footer.twig" %}

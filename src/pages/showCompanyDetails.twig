@@ -1,6 +1,8 @@
-{% include 'templates/headerfooter.twig' %}
+{% extends 'templates/headerfooter.twig' %}
 
-{% block showDetailsCompany %}
+{% block title %}Stagehub - Détails entreprise{% endblock %}
+
+{% block content %}
 <div class="container mx-auto px-4 py-8">
     <div class="bg-white shadow-md rounded-lg p-6 flex items-center">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1024px-Google_%22G%22_logo.svg.png" alt="Company Logo" class="w-24 h-24 rounded-full mr-6">
@@ -35,4 +37,3 @@
 </div>
 
 {% endblock %}
-{% include "templates/footer.twig" %}
