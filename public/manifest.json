@@ -4,23 +4,19 @@
   "short_name": "StageHub",
   "start_url": "http://site.stagehub.com",
   "display": "standalone",
+  "scope": "/",
   "background_color": "#0000ff",
   "theme_color": "#285CE9",
   "description": "Site pour mettre en relation facilement les recruteurs et les étudiants",
   "icons": [
     {
-      "src": "logoStageHub72.png",
-      "sizes": "72x72",
+      "src": "testlogo192px.png",
+      "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "logoStageHub96.png",
-      "sizes": "96x96",
-      "type": "image/png"
-    },
-    {
-      "src": "logoStageHub128.png",
-      "sizes": "128x128",
+      "src": "testlogo512px.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
