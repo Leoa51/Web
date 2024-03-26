@@ -13,6 +13,15 @@ class Campus
     #[ORM\GeneratedValue]
     private int|null $ID_Campus = null;
 
+    #[ORM\OneToMany(targetEntity: 'User', mappedBy: 'campus')]
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
+
+
     public function getIDCampus(): ?int
     {
         return $this->ID_Campus;
