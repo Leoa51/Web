@@ -2,123 +2,190 @@
 
 require_once __DIR__ . "/../doctrine/bootstrap.php";
 
-// ListUsers
-$queryBuilder = $entityManager->createQueryBuilder();
-$queryBuilder
-    ->select('u')
-    ->from('Entity\User', 'u')
-    ->where('u.type = 2');
 
-$query = $queryBuilder->getQuery();
-$users = $query->getResult();
+//function ListUser ($entityManager)
+//{
+//    $queryBuilder = $entityManager->createQueryBuilder();
+//    $queryBuilder
+//        ->select('u')
+//        ->from('Entity\User', 'u')
+//
+//    $query = $queryBuilder->getQuery();
+//    $users = $query->getResult();
+//
+//    $data = [];
+//
+//    foreach ($users as $user) {
+//        try {
+//            $queryBuilder = $entityManager->createQueryBuilder();
+//            $queryBuilder
+//                ->select('a')
+//                ->from('Entity\Address', 'a')
+//                ->where('a.ID_address = :idAddress')
+//                ->setParameter('idAddress', $user->getIDAddress());
+//
+//            $query = $queryBuilder->getQuery();
+//            $address = $query->getResult();
+//            $ville = $address[0]->getVille();
+//        } catch (\Exception $e) {
+//            $ville = "null";
+//        }
+//        $data[] = [$user->getLastName(), $user->getFirstName(), $ville, $user->getYears()];
+//    }
+//}
 
-$data = [];
+function ListUser ($entityManager)
+{
+    $queryBuilder = $entityManager->createQueryBuilder();
+    $queryBuilder
+        ->select('u')
+        ->from('Entity\User', 'u');
 
-foreach ($users as $user) {
-    try {
-        $queryBuilder = $entityManager->createQueryBuilder();
-        $queryBuilder
-            ->select('a')
-            ->from('Entity\Address', 'a')
-            ->where('a.ID_address = :idAddress')
-            ->setParameter('idAddress', $user->getIDAddress());
+    $query = $queryBuilder->getQuery();
+    $users = $query->getResult();
 
-        $query = $queryBuilder->getQuery();
-        $address = $query->getResult();
-        $ville = $address[0]->getVille();
-    } catch (\Exception $e) {
-        $ville = "null";
+    $userdata = [];
+
+    foreach ($users as $user) {
+        $userdata[] = [$user->getIDUser(), $user->getFirstName(), $user->getLastName(), $user->getType(), $user->getYears(), $user->getLogin(), $user->getPassword()];
     }
-    $data[] = [$user->getLastName(), $user->getFirstName(), $ville, $user->getYears()];
+
+    return $userdata;
 }
 
-// ListAddress
-$queryBuilder = $entityManager->createQueryBuilder();
-$queryBuilder
-    ->select('a')
-    ->from('Entity\Address', 'a');
+function ListPilot ($entityManager)
+{
+    $queryBuilder = $entityManager->createQueryBuilder();
+    $queryBuilder
+        ->select('u')
+        ->from('Entity\User', 'u')
+        ->where('u.type = 2');
 
-$query = $queryBuilder->getQuery();
-$addresses = $query->getResult();
+    $query = $queryBuilder->getQuery();
+    $users = $query->getResult();
 
-$addressdata = [];
+    $data = [];
 
-foreach ($addresses as $address) {
-    $addressdata[] = [$address->getIDAddress(), $address->getVille(), $address->getPostalCode()];
+    foreach ($users as $user) {
+        try {
+            $queryBuilder = $entityManager->createQueryBuilder();
+            $queryBuilder
+                ->select('a')
+                ->from('Entity\Address', 'a')
+                ->where('a.ID_address = :idAddress')
+                ->setParameter('idAddress', $user->getIDAddress());
+
+            $query = $queryBuilder->getQuery();
+            $address = $query->getResult();
+            $ville = $address[0]->getVille();
+        } catch (\Exception $e) {
+            $ville = "null";
+        }
+        $data[] = [$user->getLastName(), $user->getFirstName(), $ville, $user->getYears()];
+    }
+
+    return $data;
 }
 
-// ListCampus
-$queryBuilder = $entityManager->createQueryBuilder();
-$queryBuilder
-    ->select('ca')
-    ->from('Entity\Campus', 'ca');
 
-$query = $queryBuilder->getQuery();
-$campuses = $query->getResult();
+function ListAddress($entityManager){
+    $queryBuilder = $entityManager->createQueryBuilder();
+    $queryBuilder
+        ->select('a')
+        ->from('Entity\Address', 'a');
 
-$campusdata = [];
+    $query = $queryBuilder->getQuery();
+    $addresses = $query->getResult();
 
-foreach ($campuses as $campus) {
-    $campusdata[] = [$campus->getIDCampus()];
+    $addressdata = [];
+
+    foreach ($addresses as $address) {
+        $addressdata[] = [$address->getIDAddress(), $address->getVille(), $address->getPostalCode()];
+    }
+
+    return $addressdata;
 }
 
-// ListCompany
-$queryBuilder = $entityManager->createQueryBuilder();
-$queryBuilder
-    ->select('co')
-    ->from('Entity\Company', 'co');
 
-$query = $queryBuilder->getQuery();
-$companies = $query->getResult();
 
-$companydata = [];
+function ListCampus($entityManager){
+    $queryBuilder = $entityManager->createQueryBuilder();
+    $queryBuilder
+        ->select('ca')
+        ->from('Entity\Campus', 'ca');
 
-foreach ($companies as $company) {
-    $companydata[] = [$company->getIDCompany(), $company->getName(), $company->getActivitySector(), $company->getStats(), $company->getOpinion(), $company->getMark(), $company->getNumberOfWishlist(), $company->getNumberOfPostulation()];
+    $query = $queryBuilder->getQuery();
+    $campuses = $query->getResult();
+
+    $campusdata = [];
+
+    foreach ($campuses as $campus) {
+        $campusdata[] = [$campus->getIDCampus()];
+    }
+
+    return $campusdata;
 }
 
-// ListOffers
-$queryBuilder = $entityManager->createQueryBuilder();
-$queryBuilder
-    ->select('o')
-    ->from('Entity\Offers', 'o');
+function ListCompany($entityManager){
+    $queryBuilder = $entityManager->createQueryBuilder();
+    $queryBuilder
+        ->select('co')
+        ->from('Entity\Company', 'co');
 
-$query = $queryBuilder->getQuery();
-$offers = $query->getResult();
+    $query = $queryBuilder->getQuery();
+    $companies = $query->getResult();
 
-$offersdata = [];
+    $companydata = [];
 
-foreach ($offers as $offer) {
-    $offersdata[] = [$offer->getIDOffers(), $offer->getTargetPromotion(), $offer->getDurationOfInternship(), $offer->getPayment(), $offer->getOfferDate(), $offer->getNumberOfPlaces()];
+    foreach ($companies as $company) {
+        $companydata[] = [$company->getIDCompany(), $company->getName(), $company->getActivitySector(), $company->getStats(), $company->getOpinion(), $company->getMark(), $company->getNumberOfWishlist(), $company->getNumberOfPostulation()];
+    }
+
+    return $companydata;
+
 }
 
-// ListPostulate
-$queryBuilder = $entityManager->createQueryBuilder();
-$queryBuilder
-    ->select('p')
-    ->from('Entity\Postulate', 'p');
+function ListOffers($entityManager){
+    $queryBuilder = $entityManager->createQueryBuilder();
+    $queryBuilder
+        ->select('o')
+        ->from('Entity\Offers', 'o');
 
-$query = $queryBuilder->getQuery();
-$postulates = $query->getResult();
+    $query = $queryBuilder->getQuery();
+    $offers = $query->getResult();
 
-$postulatedata = [];
+    $offersdata = [];
 
-foreach ($postulates as $postulate) {
-    $postulatedata[] = [$postulate->getIDUser(), $postulate->getIDOffers(), $postulate->getMotivationLetter(), $postulate->getCVName()];
+
+    foreach ($offers as $offer) {
+        $offersdata[] = [$offer->getIDOffers(), $offer->getTargetPromotion(), $offer->getDurationOfInternship(), $offer->getPayment(), $offer->getOfferDate(), $offer->getNumberOfPlaces()];
+    }
+
+    return $offersdata;
+
 }
+
+function ListPostulate ($entityManager)
+{
+    $queryBuilder = $entityManager->createQueryBuilder();
+    $queryBuilder
+        ->select('p')
+        ->from('Entity\Postulate', 'p');
+
+    $query = $queryBuilder->getQuery();
+    $postulates = $query->getResult();
+
+    $postulatedata = [];
+
+    foreach ($postulates as $postulate) {
+        $postulatedata[] = [$postulate->getIDUser(), $postulate->getIDOffers(), $postulate->getMotivationLetter(), $postulate->getCVName()];
+    }
+
+    return $postulatedata;
+
+}
+
+
 
 // ListUser
-$queryBuilder = $entityManager->createQueryBuilder();
-$queryBuilder
-    ->select('u')
-    ->from('Entity\User', 'u');
-
-$query = $queryBuilder->getQuery();
-$users = $query->getResult();
-
-$userdata = [];
-
-foreach ($users as $user) {
-    $userdata[] = [$user->getIDUser(), $user->getFirstName(), $user->getLastName(), $user->getType(), $user->getYears(), $user->getLogin(), $user->getPassword()];
-}
 

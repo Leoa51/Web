@@ -103,12 +103,12 @@ $app->get('/statsOffers', function ($request, $response, $args) {
     ]);
 })->setName('Stats of Offers');
 
-$app->get('/listPilot', function ($request, $response, $args) use ($data) {
-    return $this->get('view')->render($response, 'listPilot.twig', ['data' => $data]);
-})->setName('list of pilot');
+//$app->get('/listPilot', function ($request, $response, $args) use ($data) {
+//    return $this->get('view')->render($response, 'listPilot.twig', ['data' => $data]);
+//})->setName('list of pilot');
 
-$app->get('/creationPilote', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'creationPilote.twig', [
+$app->get('/creationPilot', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'creationPilot.twig', [
     ]);
 })->setName('creation of pilot');
 
@@ -148,7 +148,10 @@ $app->get('/hi/{name}', function ($request, $response, $args) {
 
 
 
-$app->get('/apiaddress/{page}', function (Request $request, Response $response , array $args) use ($addressdata) {
+$app->get('/apiaddress/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+
+    $addressdata = ListAddress($entityManager);
+
     $page = (int) $args['page'];
 //    $search = (string) $args['search'];
     $limit = 10;
@@ -164,7 +167,10 @@ $app->get('/apiaddress/{page}', function (Request $request, Response $response ,
 });
 
 
-$app->get('/apicampus/{page}', function (Request $request, Response $response , array $args) use ($campusdata) {
+$app->get('/apicampus/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+
+    $campusdata = ListCampus($entityManager);
+
     $page = (int) $args['page'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
@@ -179,7 +185,10 @@ $app->get('/apicampus/{page}', function (Request $request, Response $response , 
 });
 
 
-$app->get('/apicompany/{page}', function (Request $request, Response $response , array $args) use ($companydata) {
+$app->get('/apicompany/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+
+    $companydata = ListCompany($entityManager);
+
     $page = (int) $args['page'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
@@ -196,7 +205,10 @@ $app->get('/apicompany/{page}', function (Request $request, Response $response ,
 
 
 
-$app->get('/apioffers/{page}', function (Request $request, Response $response , array $args) use ($offersdata) {
+$app->get('/apioffers/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+
+    $offersdata = ListOffers($entityManager);
+
     $page = (int) $args['page'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
@@ -211,7 +223,10 @@ $app->get('/apioffers/{page}', function (Request $request, Response $response , 
 });
 
 
-$app->get('/apipostulate/{page}', function (Request $request, Response $response , array $args) use ($postulatedata) {
+$app->get('/apipostulate/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+
+    $postulatedata = ListPostulate($entityManager);
+
     $page = (int) $args['page'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
@@ -226,7 +241,38 @@ $app->get('/apipostulate/{page}', function (Request $request, Response $response
 });
 
 
-$app->get('/apiuser/{page}', function (Request $request, Response $response , array $args) use ($userdata) {
+$app->get('/apiuser/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+
+
+
+
+
+
+
+
+
+
+    $queryArgs = $request->getQueryParams();
+
+    $test = $queryArgs['test'] ?? 2;
+    $test2 = $queryArgs['test2'] ?? 2;
+    print_r($test);
+    print_r($test2);
+    $userdata = ListUser($entityManager, $test, $test2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     $page = (int) $args['page'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
@@ -239,6 +285,7 @@ $app->get('/apiuser/{page}', function (Request $request, Response $response , ar
     $response->getBody()->write($json);
     return $response->withHeader('Content-Type', 'application/json');
 });
+
 
 
 
@@ -255,6 +302,49 @@ $app->get('/fetch', function ($request, $response, $args) {
 //
 //    return $response;
 //});
+
+$app->map(['GET', 'POST'], '/testpost', function ($request, $response, $args) use ($entityManager) {
+    $httpMethod = $request->getMethod();
+
+    if ($httpMethod === 'GET') {
+        return $this->get('view')->render($response, 'testpost.html', []);
+    }
+    elseif ($httpMethod === 'POST') {
+//        error_log("post");
+//        $Address = new \Entity\Address();
+//
+        $data = $request->getParsedBody();
+        $a = "api";
+        $b = "1";
+
+        if(isset($data['a'])){
+            $a = $data['a'];
+        }
+        if(isset($data['b'])){
+            $b = $data['b'];
+        }
+        $command = "php ../bin/create_address.php ". $a . " " . $b;
+        exec($command, $output, $status);
+
+//        $Address->setVille($a);
+//        $Address->setPostalCode($b);
+
+//        try {
+//            error_log('Before persist');
+//            $entityManager->persist($Address);
+//            $entityManager->flush();
+//        } catch (\Exception $e) {
+//            error_log($e->getMessage());
+//            return $response->withStatus(500);
+//        }
+
+        return $this->get('view')->render($response, 'testpost.html', []);
+
+    }
+
+
+});
+
 
 
 
