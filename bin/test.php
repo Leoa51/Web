@@ -4,10 +4,10 @@
 //exec("php ../bin/create_company.php 1 2 3 4 5", $output, $status);
 //exec("php ../bin/create_editwishlist.php 20 7 3", $output, $status);
 //exec("php ../bin/create_need.php 1 2", $output, $status); @todo /!\ error ID_offers
-exec("php ../bin/create_offers.php 1 2 3 4 5/6/7 8 9 10", $output, $status);
+//exec("php ../bin/create_offers.php 1 2 3 4 5/6/7 8 9 10", $output, $status);
 //exec("php ../bin/create_postulate.php 12 24 30 40", $output, $status);
 //exec("php ../bin/create_skills.php 19", $output, $status);
-//exec("php ../bin/create_user.php zak daoudi3 2 4 5 6 7 8", $output, $status);
+exec("php ../bin/create_user.php zak daoudi4 2 4 5 6 7 8", $output, $status);
 
 out($output);
 

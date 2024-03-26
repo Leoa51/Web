@@ -12,20 +12,23 @@
             xhr.onreadystatechange = function () {
                 if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                     var data = JSON.parse(this.responseText);
-                    console.log(data);
-                    const elt = document.getElementById("data");
-                    elt.innerHTML = JSON.stringify(data);
+
+                    const parentElement = document.getElementById("ici");
                     const template = document.getElementById("template");
-                    const parentElement = document.getElementById("parent");
+                    const a= parentElement.querySelector("#a");
+                    const b = parentElement.querySelector("#b");
+                    a.innerHTML = "";
+
+                    console.log(data);
+                    b.innerHTML = JSON.stringify(data);
+
                     for (let value of data) {
-                        let existingElement = parentElement.querySelector("#d");
-                        if (!existingElement) {
-                            const cloned = template.content.cloneNode(true);
-                            const p = cloned.querySelector("#d");
-                            p.textContent = value;
-                            p.id = value; // add an id to the element for duplicate checking
-                            parentElement.appendChild(cloned);
-                        }
+                        const p = template.content.cloneNode(true);
+                        p.querySelector("#nom").textContent = value;
+                        p.querySelector("#nom").setAttribute('toto',value[0]);
+                        //p.textContent = value;
+
+                        a.appendChild(p);
                     }
                 }
             };
@@ -35,12 +38,14 @@
     </script>
 </head>
 <body>
-<div id="parent">
-    <template id="template">
-        <p id="d"></p>
-    </template>
+
+<template id="template">
+    <p id="nom"></p>
+</template>
+<div id="ici">
+    <p id="a"></p>
+    <p id="b"></p>
 </div>
-<p id="data"></p>
 
 <input type="text">
 
