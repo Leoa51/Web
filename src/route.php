@@ -105,8 +105,8 @@ $app->get('/listPilot', function ($request, $response, $args) use ($data) {
     return $this->get('view')->render($response, 'listPilot.twig', ['data' => $data]);
 })->setName('list of pilot');
 
-$app->get('/creationPilote', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'creationPilote.twig', [
+$app->get('/creationPilot', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'creationPilot.twig', [
     ]);
 })->setName('creation of pilot');
 
@@ -129,8 +129,6 @@ $app->get('/privacy', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'privacy.twig', [
     ]);
 })->setName('Privacy');
-
-
 
 // Render from string
 $app->get('/hi/{name}', function ($request, $response, $args) {

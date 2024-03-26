@@ -14,7 +14,6 @@
     alert('Veuillez remplir tous les champs.');
     return false;
 }
-
     // Autres validations éventuelles peuvent être ajoutées ici
 
     return true;
