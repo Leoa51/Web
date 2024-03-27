@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'campus')]
-class Campus
+class Campus implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue]
-    private int|null $ID_Campus = null;
+    public int|null $ID_Campus = null;
 
     #[ORM\OneToMany(targetEntity: 'User', mappedBy: 'campus')]
     private $users;
@@ -31,5 +31,10 @@ class Campus
     {
         echo 'set id : ' . $id . "\n";
         $this->ID_Campus = $id;
+    }
+
+    #[\Override] public function jsonSerialize(): mixed
+    {
+        return get_object_vars($this);
     }
 }

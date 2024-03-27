@@ -4,67 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="manifest.json" rel="manifest">
+    <script>
+        function login_check(event) {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            if (email === "") {
+                alert("Ajouter une popup avec middleware");
+                event.preventDefault(); // Prevent form submission
+                return false;
+            }
+
+            if (password === "") {
+                alert("Ajouter une popup avec middleware");
+                event.preventDefault(); // Prevent form submission
+                return false;
+            }
+
+            // If both email and password are not empty, the function will return true, and the form will be submitted
+            return true;
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
 <div class="container mx-auto flex justify-center items-center h-screen">
     <div class="bg-white shadow-2xl rounded-2xl p-12 w-full max-w-md">
         <h2 class="text-3xl font-semibold text-gray-800 mb-8 text-center">Connexion</h2>
-        <form id="login-form">
+        <form method="post" onsubmit="return login_check(event);">
             <div class="mb-6">
                 <label class="block text-gray-700 font-semibold mb-2" for="email">Adresse e-mail</label>
-                <input class="appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Entrez votre adresse e-mail">
+                <input class="appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Entrez votre adresse e-mail" name="email">
             </div>
             <div class="mb-8">
                 <label class="block text-gray-700 font-semibold mb-2" for="password">Mot de passe</label>
-                <input class="appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Entrez votre mot de passe">
+                <input class="appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Entrez votre mot de passe" name="password">
             </div>
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded focus:outline-none focus:shadow-outline w-full" type="submit">Se connecter</button>
         </form>
     </div>
 </div>
-
-<script>
-    document.getElementById('login-form').addEventListener('submit', async (event) => {
-        event.preventDefault();
-
-        const login = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-
-        const response = await fetch('server.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        });
-
-        const data = await response.json();
-
-        if (data.result === 'Connexion réussie') {
-            // Rediriger l'utilisateur vers la page correspondante en fonction du type d'utilisateur
-            let redirectUrl;
-            switch (data.userType) {
-                case 1:
-                    redirectUrl = '/profilStudent';
-                    break;
-                case 2:
-                    redirectUrl = '/profilPilot';
-                    break;
-                case 3:
-                    redirectUrl = '/profilAdmin';
-                    break;
-                default:
-                    redirectUrl = '/';
-            }
-            window.location.href = redirectUrl;
-        } else {
-            // Afficher un message d'erreur
-            alert(data.result);
-        }
-    });
-</script>
-
 </body>
 </html>
