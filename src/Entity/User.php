@@ -42,6 +42,31 @@ class User
     #[ORM\Column(type: 'integer', nullable: false)]
     private int $ID_Campus;
 
+    #[ORM\ManyToOne(targetEntity: 'Address')]
+    #[ORM\JoinColumn(name: 'ID_Address', referencedColumnName: 'ID_Address')]
+    private ?Address $IDAddress = null;
+
+    #[ORM\ManyToOne(targetEntity: 'Campus')]
+    #[ORM\JoinColumn(name: 'ID_Campus', referencedColumnName: 'ID_Campus')]
+    private ?Campus $IDCampus = null;
+
+    #[ORM\OneToMany(targetEntity: 'Postulate', mappedBy: 'user')]
+    private $postulates;
+
+    #[ORM\ManyToOne(targetEntity: 'Campus')]
+    #[ORM\JoinColumn(name: 'ID_Campus', referencedColumnName: 'ID_Campus')]
+    private ?Campus $campus = null;
+
+    #[ORM\OneToMany(targetEntity: 'Editwishlist', mappedBy: 'user')]
+    private $editwishlists;
+
+    public function __construct()
+    {
+        $this->editwishlists = new ArrayCollection();
+    }
+
+
+
     public function getIDUser(): ?int
     {
         return $this->ID_User;

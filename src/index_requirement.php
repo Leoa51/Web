@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../doctrine/bootstrap.php";
-
 
 //function ListUser ($entityManager)
 //{
@@ -35,19 +33,19 @@ require_once __DIR__ . "/../doctrine/bootstrap.php";
 //}
 
 
-
-function ListAddress($entityManager, $ville, $postalcode){
+function ListAddress($entityManager, $ville, $postalcode)
+{
     $queryBuilder = $entityManager->createQueryBuilder();
     $queryBuilder
         ->select('a')
         ->from('Entity\Address', 'a');
-    if($ville !== null){
+    if ($ville !== null) {
         error_log($ville . "\n");
         $queryBuilder
             ->where('a.ville = :ville')
             ->setParameter('ville', $ville);
     }
-    if($postalcode !== null){
+    if ($postalcode !== null) {
         error_log($postalcode . "\n");
         $queryBuilder
             ->andWhere('a.postalCode = :postalCode')
@@ -68,85 +66,67 @@ function ListAddress($entityManager, $ville, $postalcode){
 }
 
 
-
-function ListCampus($entityManager){
-    $queryBuilder = $entityManager->createQueryBuilder();
-    $queryBuilder
-        ->select('ca')
-        ->from('Entity\Campus', 'ca');
-
-    $query = $queryBuilder->getQuery();
-    $campuses = $query->getResult();
-
-    $campusdata = [];
-
-    foreach ($campuses as $campus) {
-        $campusdata[] = [$campus->getIDCampus()];
-    }
-
-    return $campusdata;
-}
-
-function ListCompany($entityManager,$id, $name, $activitySector, $stats, $del, $invisibleForStudents, $opinion, $mark, $numberOfWishlist, $numberOfPostulation){
+function ListCompany($entityManager, $id, $name, $activitySector, $stats, $del, $invisibleForStudents, $opinion, $mark, $numberOfWishlist, $numberOfPostulation)
+{
     $queryBuilder = $entityManager->createQueryBuilder();
     $queryBuilder
         ->select('co')
         ->from('Entity\Company', 'co');
-    if($id !== null){
+    if ($id !== null) {
         error_log($id . "\n");
         $queryBuilder
             ->where('co.ID_Company = :id')
             ->setParameter('id', $id);
     }
-    if($name !== null){
+    if ($name !== null) {
         error_log($name . "\n");
         $queryBuilder
             ->where('co.name = :name')
             ->setParameter('name', $name);
     }
-    if($activitySector !== null){
+    if ($activitySector !== null) {
         error_log($activitySector . "\n");
         $queryBuilder
             ->andWhere('co.activitySector = :activitySector')
             ->setParameter('activitySector', $activitySector);
     }
-    if($stats !== null){
+    if ($stats !== null) {
         error_log($stats . "\n");
         $queryBuilder
             ->andWhere('co.stats = :stats')
             ->setParameter('stats', $stats);
     }
-    if($del !== null){
+    if ($del !== null) {
         error_log($del . "\n");
         $queryBuilder
             ->andWhere('co.del = :del')
             ->setParameter('del', $del);
     }
-    if($mark !== null){
+    if ($mark !== null) {
         error_log($mark . "\n");
         $queryBuilder
             ->where('co.mark = :mark')
             ->setParameter('mark', $mark);
     }
-    if($invisibleForStudents !== null){
+    if ($invisibleForStudents !== null) {
         error_log($invisibleForStudents . "\n");
         $queryBuilder
             ->andWhere('co.invisibleForStudents = :invisibleForStudents')
             ->setParameter('invisibleForStudents', $invisibleForStudents);
     }
-    if($opinion !== null){
+    if ($opinion !== null) {
         error_log($opinion . "\n");
         $queryBuilder
             ->andWhere('co.opinion = :opinion')
             ->setParameter('opinion', $opinion);
     }
-    if($numberOfWishlist !== null){
+    if ($numberOfWishlist !== null) {
         error_log($numberOfWishlist . "\n");
         $queryBuilder
             ->andWhere('co.numberOfWishlist = :numberOfWishlist')
             ->setParameter('numberOfWishlist', $numberOfWishlist);
     }
-    if($numberOfPostulation !== null){
+    if ($numberOfPostulation !== null) {
         error_log($numberOfPostulation . "\n");
         $queryBuilder
             ->andWhere('co.numberOfPostulation = :numberOfPostulation')
@@ -165,67 +145,68 @@ function ListCompany($entityManager,$id, $name, $activitySector, $stats, $del, $
 
 }
 
-function ListOffers($entityManager, $ID_Offers, $company, $targetPromotion, $durationOfInternship, $payment, $offerDate, $numberOfPlaces, $del, $ID_Address, $ID_Company){
+function ListOffers($entityManager, $ID_Offers, $company, $targetPromotion, $durationOfInternship, $payment, $offerDate, $numberOfPlaces, $del, $ID_Address, $ID_Company)
+{
     $queryBuilder = $entityManager->createQueryBuilder();
     $queryBuilder
         ->select('o')
         ->from('Entity\Offers', 'o');
 
-    if($ID_Offers !== null){
+    if ($ID_Offers !== null) {
         error_log($ID_Offers . "\n");
         $queryBuilder
             ->where('o.ID_Offers = :IDOffers')
             ->setParameter('IDOffers', $ID_Offers);
     }
-    if($company !== null){
+    if ($company !== null) {
         error_log($company . "\n");
         $queryBuilder
             ->andWhere('o.company = :company')
             ->setParameter('company', $company);
     }
-    if($targetPromotion !== null){
+    if ($targetPromotion !== null) {
         error_log($targetPromotion . "\n");
         $queryBuilder
             ->andWhere('o.targetPromotion = :targetPromotion')
             ->setParameter('targetPromotion', $targetPromotion);
     }
-    if($durationOfInternship !== null){
+    if ($durationOfInternship !== null) {
         error_log($durationOfInternship . "\n");
         $queryBuilder
             ->andWhere('o.durationOfInternship = :durationOfInternship')
             ->setParameter('durationOfInternship', $durationOfInternship);
     }
-    if($payment !== null){
+    if ($payment !== null) {
         error_log($payment . "\n");
         $queryBuilder
             ->andWhere('o.payment = :payment')
             ->setParameter('payment', $payment);
     }
-    if($offerDate !== null){
+    if ($offerDate !== null) {
         error_log($offerDate . "\n");
         $queryBuilder
             ->andWhere('o.offerDate = :offerDate')
             ->setParameter('offerDate', $offerDate);
     }
-    if($numberOfPlaces !== null){
+    if ($numberOfPlaces !== null) {
         error_log($numberOfPlaces . "\n");
         $queryBuilder
             ->andWhere('o.numberOfPlaces = :numberOfPlaces')
             ->setParameter('numberOfPlaces', $numberOfPlaces);
     }
-    if($del !== null){
+    if ($del !== null) {
         error_log($del . "\n");
         $queryBuilder
             ->andWhere('o.del = :del')
             ->setParameter('del', $del);
     }
-    if($ID_Address !== null){
+    if ($ID_Address !== null) {
         error_log($ID_Address . "\n");
         $queryBuilder
             ->andWhere('o.ID_Address = :IDAddress')
             ->setParameter('IDAddress', $ID_Address);
     }
-    if($ID_Company !== null){
+    if ($ID_Company !== null) {
         error_log($ID_Company . "\n");
         $queryBuilder
             ->andWhere('o.ID_Company = :IDCompany')
@@ -246,7 +227,7 @@ function ListOffers($entityManager, $ID_Offers, $company, $targetPromotion, $dur
 
 }
 
-function ListPostulate ($entityManager)
+function ListPostulate($entityManager)
 {
     $queryBuilder = $entityManager->createQueryBuilder();
     $queryBuilder
@@ -267,71 +248,70 @@ function ListPostulate ($entityManager)
 }
 
 
-
 // ListUser
-function ListUser ($entityManager, $ID_User, $firstname, $lastname, $type, $years, $login, $password, $del, $ID_Address, $ID_Campus)
+function ListUser($entityManager, $ID_User, $firstname, $lastname, $type, $years, $login, $password, $del, $ID_Address, $ID_Campus)
 {
     $queryBuilder = $entityManager->createQueryBuilder();
     $queryBuilder
         ->select('u')
         ->from('Entity\User', 'u');
 
-    if($ID_User !== null){
+    if ($ID_User !== null) {
         error_log($ID_User . "\n");
         $queryBuilder
             ->where('u.ID_User = :IDUser')
             ->setParameter('IDUser', $ID_User);
     }
-    if($firstname !== null){
+    if ($firstname !== null) {
         error_log($firstname . "\n");
         $queryBuilder
             ->andWhere('u.firstname = :firstname')
             ->setParameter('firstname', $firstname);
     }
-    if($lastname !== null){
+    if ($lastname !== null) {
         error_log($lastname . "\n");
         $queryBuilder
             ->andWhere('u.lastname = :lastname')
             ->setParameter('lastname', $lastname);
     }
-    if($type !== null){
+    if ($type !== null) {
         error_log($type . "\n");
         $queryBuilder
             ->andWhere('u.type = :type')
             ->setParameter('type', $type);
     }
-    if($years !== null){
+    if ($years !== null) {
         error_log($years . "\n");
         $queryBuilder
             ->andWhere('u.years = :years')
             ->setParameter('years', $years);
     }
-    if($login !== null){
+    if ($login !== null) {
         error_log($login . "\n");
         $queryBuilder
             ->andWhere('u.login = :login')
             ->setParameter('login', $login);
     }
 //    @todo hash password
-    if($password !== null){
+    if ($password !== null) {
         error_log($password . "\n");
         $queryBuilder
             ->andWhere('u.password = :password')
             ->setParameter('password', $password);
     }
-    if($del !== null){
+    if ($del !== null) {
         error_log($del . "\n");
         $queryBuilder
             ->andWhere('u.del = :del')
             ->setParameter('del', $del);
     }
-    if($ID_Address !== null){
+    if ($ID_Address !== null) {
         error_log($ID_Address . "\n");
         $queryBuilder
             ->andWhere('u.ID_Address = :IDAddress')
             ->setParameter('IDAddress', $ID_Address);
     }
-    if($ID_Campus !== null){
+    if ($ID_Campus !== null) {
         error_log($ID_Campus . "\n");
         $queryBuilder
             ->andWhere('u.ID_Campus = :IDCampus')
@@ -351,7 +331,7 @@ function ListUser ($entityManager, $ID_User, $firstname, $lastname, $type, $year
     return $userdata;
 }
 
-function ListPilot ($entityManager)
+function ListPilot($entityManager)
 {
     $queryBuilder = $entityManager->createQueryBuilder();
     $queryBuilder

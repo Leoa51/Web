@@ -10,6 +10,7 @@ class Postulate
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
+
     private int $ID_User;
 
     #[ORM\Id]
@@ -21,6 +22,14 @@ class Postulate
 
     #[ORM\Column(type: 'string', length: 50)]
     private ?string $CVname;
+
+    #[ORM\ManyToOne(targetEntity: 'User')]
+    #[ORM\JoinColumn(name: 'ID_User', referencedColumnName: 'ID_User')]
+    private ?User $user = null;
+
+    #[ORM\ManyToOne(targetEntity: 'Offers')]
+    #[ORM\JoinColumn(name: 'ID_Offers', referencedColumnName: 'ID_Offers')]
+    private ?Offers $offer = null;
 
     public function getIDUser(): int
     {

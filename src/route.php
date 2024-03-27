@@ -7,20 +7,19 @@ use Slim\Factory\AppFactory;
 use Slim\Exception\HttpNotFoundException;
 
 
-
 require_once __DIR__ . "/index_requirement.php";
 
 
 $app->get('/', function ($request, $response, $args) {
-return $this->get('view')->render($response, 'Accueil.html', [
-]);
+    return $this->get('view')->render($response, 'Accueil.html', [
+    ]);
 })->setName('profile');
 
 
 // Define named route
 $app->get('/opinion', function ($request, $response, $args) {
-return $this->get('view')->render($response, 'opinion.twig', [
-]);
+    return $this->get('view')->render($response, 'opinion.twig', [
+    ]);
 })->setName('opinion');
 
 $app->get('/creationOffers', function ($request, $response, $args) {
@@ -79,8 +78,7 @@ $app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use (
 
     if ($httpMethod === 'GET') {
         return $this->get('view')->render($response, '/login.twig', []);
-    }
-    elseif ($httpMethod === 'POST') {
+    } elseif ($httpMethod === 'POST') {
         if (isset($_POST['email'], $_POST['password'])) {
             $email = htmlspecialchars($_POST['email']);
             $password = htmlspecialchars($_POST['password']);
@@ -93,14 +91,12 @@ $app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use (
             setcookie('email', $email, time() + (30 * 60), "/");
 //            setcookie('password', $password, time() + (30 * 60), "/");
 
-            if(password_verify($password, $correctpassword)){
+            if (password_verify($password, $correctpassword)) {
                 return $this->get('view')->render($response, '/profilStudents.twig', [
                     'email' => $email,
                     'password' => $password
                 ]);
-            }
-            else
-            {
+            } else {
                 return $this->get('view')->render($response, '/login.twig', [
                     'error' => 'Email or password not correct'
                 ]);
@@ -114,13 +110,6 @@ $app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use (
         }
     }
 });
-
-
-
-
-
-
-
 
 
 $app->get('/listCompany', function ($request, $response, $args) {
@@ -148,9 +137,12 @@ $app->get('/statsOffers', function ($request, $response, $args) {
     ]);
 })->setName('Stats of Offers');
 
-//$app->get('/listPilot', function ($request, $response, $args) use ($data) {
-//    return $this->get('view')->render($response, 'listPilot.twig', ['data' => $data]);
-//})->setName('list of pilot');
+$app->get('/listPilot', function ($request, $response, $args) use ($entityManager) {
+
+    $pilotdata = ListPilot($entityManager);
+
+    return $this->get('view')->render($response, 'listPilot.twig', ['data' => $pilotdata]);
+})->setName('list of pilot');
 
 $app->get('/creationPilot', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'creationPilot.twig', [
@@ -178,7 +170,6 @@ $app->get('/privacy', function ($request, $response, $args) {
 })->setName('Privacy');
 
 
-
 // Render from string
 $app->get('/hi/{name}', function ($request, $response, $args) {
     $str = $this->get('view')->fetchFromString(
@@ -192,8 +183,7 @@ $app->get('/hi/{name}', function ($request, $response, $args) {
 });
 
 
-
-$app->get('/apiaddress/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+$app->get('/apiaddress/{page}', function (Request $request, Response $response, array $args) use ($entityManager) {
 
     $queryArgs = $request->getQueryParams();
 
@@ -203,7 +193,7 @@ $app->get('/apiaddress/{page}', function (Request $request, Response $response ,
     error_log($ville);
     $addressdata = ListAddress($entityManager, $ville, $postalcode);
 
-    $page = (int) $args['page'];
+    $page = (int)$args['page'];
 //    $search = (string) $args['search'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
@@ -218,25 +208,11 @@ $app->get('/apiaddress/{page}', function (Request $request, Response $response ,
 });
 
 
-$app->get('/apicampus/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
-
-    $campusdata = ListCampus($entityManager);
-
-    $page = (int) $args['page'];
-    $limit = 10;
-    $offset = ($page - 1) * $limit;
-
-    $data = array_slice($campusdata, $offset, $limit);
-
-    $json = json_encode($data);
-
-    // Retourner les offres en JSON dans la réponse HTTP
-    $response->getBody()->write($json);
-    return $response->withHeader('Content-Type', 'application/json');
-});
+$app->get('/apicampus/{page}', [\Controller\CampusController::class, 'getCampus']);
+$app->get('/liste-campus', [\Controller\CampusController::class, 'showCampusList']);
 
 
-$app->get('/apicompany/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+$app->get('/apicompany/{page}', function (Request $request, Response $response, array $args) use ($entityManager) {
 
     $queryArgs = $request->getQueryParams();
 
@@ -253,10 +229,10 @@ $app->get('/apicompany/{page}', function (Request $request, Response $response ,
 
     echo($id);
 
+    !
+    $companydata = ListCompany($entityManager, $id, $name, $activitySector, $stats, $del, $invisibleForStudents, $opinion, $mark, $numberOfWishlist, $numberOfPostulation);
 
-    $companydata = ListCompany($entityManager,$id, $name, $activitySector, $stats, $del, $invisibleForStudents, $opinion, $mark, $numberOfWishlist, $numberOfPostulation);
-
-    $page = (int) $args['page'];
+    $page = (int)$args['page'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
 
@@ -270,9 +246,7 @@ $app->get('/apicompany/{page}', function (Request $request, Response $response ,
 });
 
 
-
-
-$app->get('/apioffers/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+$app->get('/apioffers/{page}', function (Request $request, Response $response, array $args) use ($entityManager) {
 
     $queryArgs = $request->getQueryParams();
 
@@ -288,10 +262,9 @@ $app->get('/apioffers/{page}', function (Request $request, Response $response , 
     $ID_Company = $queryArgs['ID_Company'] ?? null;
 
 
-
     $offersdata = ListOffers($entityManager, $ID_Offers, $company, $targetPromotion, $durationOfInternship, $payment, $offerDate, $numberOfPlaces, $del, $ID_Address, $ID_Company);
 
-    $page = (int) $args['page'];
+    $page = (int)$args['page'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
 
@@ -305,15 +278,14 @@ $app->get('/apioffers/{page}', function (Request $request, Response $response , 
 });
 
 
-$app->get('/apipostulate/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+$app->get('/apipostulate/{page}', function (Request $request, Response $response, array $args) use ($entityManager) {
 
     $queryArgs = $request->getQueryParams();
 
 
-
     $postulatedata = ListPostulate($entityManager);
 
-    $page = (int) $args['page'];
+    $page = (int)$args['page'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
 
@@ -327,7 +299,7 @@ $app->get('/apipostulate/{page}', function (Request $request, Response $response
 });
 
 
-$app->get('/apiuser/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+$app->get('/apiuser/{page}', function (Request $request, Response $response, array $args) use ($entityManager) {
 
     $queryArgs = $request->getQueryParams();
 
@@ -346,7 +318,7 @@ $app->get('/apiuser/{page}', function (Request $request, Response $response , ar
     $userdata = ListUser($entityManager, $ID_User, $firstname, $lastname, $type, $years, $login, $password, $del, $ID_Address, $ID_Campus);
 
 
-    $page = (int) $args['page'];
+    $page = (int)$args['page'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
 
@@ -354,12 +326,10 @@ $app->get('/apiuser/{page}', function (Request $request, Response $response , ar
 
     $json = json_encode($data);
 
-    // Retourner les offres en JSON dans la réponse HTTP
+
     $response->getBody()->write($json);
     return $response->withHeader('Content-Type', 'application/json');
 });
-
-
 
 
 $app->get('/fetch', function ($request, $response, $args) {
@@ -381,19 +351,18 @@ $app->map(['GET', 'POST'], '/testpost', function ($request, $response, $args) us
 
     if ($httpMethod === 'GET') {
         return $this->get('view')->render($response, 'testpost.html', []);
-    }
-    elseif ($httpMethod === 'POST') {
+    } elseif ($httpMethod === 'POST') {
 //        error_log("post");
 //        $Address = new \Entity\Address();
 //
         $data = $request->getParsedBody();
-        $a = "api";
-        $b = "1";
+//        $a = "api";
+//        $b = "1";
 
-        if(isset($data['a'])){
+        if (isset($data['a'])) {
             $a = $data['a'];
         }
-        if(isset($data['b'])){
+        if (isset($data['b'])) {
             $b = $data['b'];
         }
 //        $command = "php ../bin/create_address.php ". $a . " " . $b;
@@ -417,16 +386,6 @@ $app->map(['GET', 'POST'], '/testpost', function ($request, $response, $args) us
 
 
 });
-
-
-
-
-
-
-
-
-
-
 
 
 $app->options('/{routes:.+}', function ($request, $response, $args) {

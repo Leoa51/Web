@@ -41,6 +41,14 @@ class EditWishlist
         $this->ID_Offers = $ID_Offers;
     }
 
+    #[ORM\ManyToOne(targetEntity: 'User')]
+    #[ORM\JoinColumn(name: 'ID_User', referencedColumnName: 'ID_User')]
+    private ?User $user = null;
+
+    #[ORM\ManyToOne(targetEntity: 'Offers')]
+    #[ORM\JoinColumn(name: 'ID_Offers', referencedColumnName: 'ID_Offers')]
+    private ?Offers $offer = null;
+
     public function getPutWishlist(): ?bool
     {
         return $this->putWishlist;
