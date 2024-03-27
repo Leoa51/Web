@@ -44,6 +44,17 @@ class Offers
 //    private ?int $IDCompany = null;
     private ?Company $IDCompany = null;
 
+    #[ORM\OneToMany(targetEntity: 'Postulate', mappedBy: 'offer')]
+    private $postulates;
+
+    #[ORM\OneToMany(targetEntity: 'Editwishlist', mappedBy: 'offer')]
+    private $editwishlists;
+    public function __construct()
+    {
+        $this->postulates = new ArrayCollection();
+    }
+
+
 
     public function getIDOffers(): ?int
     {

@@ -1,48 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
     <title>Connexion</title>
     <script>
-
-        function login_check() {
+        function login_check(event) {
             var email = document.getElementById("email").value;
             var password = document.getElementById("password").value;
+
             if (email === "") {
                 alert("Ajouter une popup avec middleware");
+                event.preventDefault(); // Prevent form submission
                 return false;
             }
+
             if (password === "") {
                 alert("Ajouter une popup avec middleware");
+                event.preventDefault(); // Prevent form submission
                 return false;
             }
+
+            // If both email and password are not empty, the function will return true, and the form will be submitted
+            return true;
         }
     </script>
 
-
-
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
 <div class="container mx-auto flex justify-center items-center h-screen">
     <div class="bg-white shadow-2xl rounded-2xl p-12 w-full max-w-md">
         <h2 class="text-3xl font-semibold text-gray-800 mb-8 text-center">Connexion</h2>
-        <form>
+        <form method="post" onsubmit="return login_check(event);">
             <div class="mb-6">
                 <label class="block text-gray-700 font-semibold mb-2" for="email">Adresse e-mail</label>
-                <input class="appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Entrez votre adresse e-mail">
+                <input class="appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Entrez votre adresse e-mail" name="email">
             </div>
             <div class="mb-8">
                 <label class="block text-gray-700 font-semibold mb-2" for="password">Mot de passe</label>
-                <input class="appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Entrez votre mot de passe">
+                <input class="appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Entrez votre mot de passe" name="password">
             </div>
-            <button onclick="login_check()" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded focus:outline-none focus:shadow-outline w-full" type="submit">Se connecter</button>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded focus:outline-none focus:shadow-outline w-full" type="submit">Se connecter</button>
         </form>
     </div>
 </div>
-
 </body>
 </html>
-
