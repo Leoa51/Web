@@ -107,10 +107,10 @@ $app->get('/statsOffers', function ($request, $response, $args) {
 //    return $this->get('view')->render($response, 'listPilot.twig', ['data' => $data]);
 //})->setName('list of pilot');
 
-$app->get('/creationPilot', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'creationPilot.twig', [
-    ]);
-})->setName('creation of pilot');
+//$app->get('/creationPilot', function ($request, $response, $args) {
+//    return $this->get('view')->render($response, 'creationPilot.twig', [
+//    ]);
+//})->setName('creation of pilot');
 
 $app->get('/profilAdmin', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'profilAdmin.twig', [
@@ -339,10 +339,52 @@ $app->map(['GET', 'POST'], '/testpost', function ($request, $response, $args) us
         return $this->get('view')->render($response, 'testpost.html', []);
 
     }
-
-
 });
 
+
+$app->map(['GET', 'POST'], '/testcreation', function ($request, $response, $args) use ($entityManager) {
+    $httpMethod = $request->getMethod();
+
+    if ($httpMethod === 'GET') {
+        return $this->get('view')->render($response, 'testcreation.html', []);
+    }
+    elseif ($httpMethod === 'POST') {
+//        error_log("post");
+//        $Address = new \Entity\Address();
+//
+        $data = $request->getParsedBody();
+        $firstName = "1";
+        $lastName = "2";
+        $Type = "3";
+        $years = "4";
+        $login = "5";
+        $password = "6";
+
+        if(isset($data['firstName'])){
+            $firstName = $data['firstName'];
+        }
+        if(isset($data['lastName'])){
+            $lastName = $data['lastName'];
+        }
+        if(isset($data['Type'])){
+            $Type = $data['Type'];
+        }
+        if(isset($data['years'])){
+            $years = $data['years'];
+        }
+        if(isset($data['login'])){
+            $login = $data['login'];
+        }
+        if(isset($data['password'])){
+            $password = $data['password'];
+        }
+        $command = "php ../bin/create_user.php ". $firstName . " " . $lastName. " " . $Type . " " . $years . " " . $login . " " . $password;
+        exec($command, $output, $status);
+
+        return $this->get('view')->render($response, 'testcreation.html', []);
+
+    }
+});
 
 
 
