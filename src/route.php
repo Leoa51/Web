@@ -281,7 +281,7 @@ $app->get('/apiuser/{page}', function (Request $request, Response $response , ar
 
     $json = json_encode($data);
 
-    // Retourner les offres en JSON dans la réponse HTTP
+
     $response->getBody()->write($json);
     return $response->withHeader('Content-Type', 'application/json');
 });
