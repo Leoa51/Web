@@ -4,6 +4,8 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
+use Slim\Exception\HttpNotFoundException;
+
 
 
 require_once __DIR__ . "/index_requirement.php";
@@ -71,10 +73,55 @@ $app->get('/creationStudents', function ($request, $response, $args) {
     ]);
 })->setName('stats of students');
 
-$app->get('/login', function ($request, $response, $args) {
-    return $this->get('view')->render($response, '/login.twig', [
-    ]);
-})->setName('login');
+
+$app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use ($entityManager) {
+    $httpMethod = $request->getMethod();
+
+    if ($httpMethod === 'GET') {
+        return $this->get('view')->render($response, '/login.twig', []);
+    }
+    elseif ($httpMethod === 'POST') {
+        if (isset($_POST['email'], $_POST['password'])) {
+            $email = htmlspecialchars($_POST['email']);
+            $password = htmlspecialchars($_POST['password']);
+
+            $options = ['cost' => 12]; // You can adjust the cost factor based on your requirements
+            $encodedPassword = password_hash("password", PASSWORD_BCRYPT, $options);
+            $correctpassword = $encodedPassword;
+
+
+            setcookie('email', $email, time() + (30 * 60), "/");
+//            setcookie('password', $password, time() + (30 * 60), "/");
+
+            if(password_verify($password, $correctpassword)){
+                return $this->get('view')->render($response, '/profilStudents.twig', [
+                    'email' => $email,
+                    'password' => $password
+                ]);
+            }
+            else
+            {
+                return $this->get('view')->render($response, '/login.twig', [
+                    'error' => 'Email or password not correct'
+                ]);
+            }
+
+        } else {
+            // Handle the case when the email or password is not provided in the POST request
+            return $this->get('view')->render($response, '/login.twig', [
+                'error' => 'Email or password not provided'
+            ]);
+        }
+    }
+});
+
+
+
+
+
+
+
+
 
 $app->get('/listCompany', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'listCompany.twig', [
@@ -101,12 +148,12 @@ $app->get('/statsOffers', function ($request, $response, $args) {
     ]);
 })->setName('Stats of Offers');
 
-$app->get('/listPilot', function ($request, $response, $args) use ($data) {
-    return $this->get('view')->render($response, 'listPilot.twig', ['data' => $data]);
-})->setName('list of pilot');
+//$app->get('/listPilot', function ($request, $response, $args) use ($data) {
+//    return $this->get('view')->render($response, 'listPilot.twig', ['data' => $data]);
+//})->setName('list of pilot');
 
-$app->get('/creationPilote', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'creationPilote.twig', [
+$app->get('/creationPilot', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'creationPilot.twig', [
     ]);
 })->setName('creation of pilot');
 
@@ -146,8 +193,18 @@ $app->get('/hi/{name}', function ($request, $response, $args) {
 
 
 
-$app->get('/apiaddress/{page}', function (Request $request, Response $response , array $args) use ($addressdata) {
+$app->get('/apiaddress/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+
+    $queryArgs = $request->getQueryParams();
+
+    $ville = $queryArgs['ville'] ?? null;
+    $postalcode = $queryArgs['postalcode'] ?? null;
+
+    error_log($ville);
+    $addressdata = ListAddress($entityManager, $ville, $postalcode);
+
     $page = (int) $args['page'];
+//    $search = (string) $args['search'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
 
@@ -161,7 +218,10 @@ $app->get('/apiaddress/{page}', function (Request $request, Response $response ,
 });
 
 
-$app->get('/apicampus/{page}', function (Request $request, Response $response , array $args) use ($campusdata) {
+$app->get('/apicampus/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+
+    $campusdata = ListCampus($entityManager);
+
     $page = (int) $args['page'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
@@ -176,7 +236,26 @@ $app->get('/apicampus/{page}', function (Request $request, Response $response , 
 });
 
 
-$app->get('/apicompany/{page}', function (Request $request, Response $response , array $args) use ($companydata) {
+$app->get('/apicompany/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+
+    $queryArgs = $request->getQueryParams();
+
+    $id = $queryArgs['id'] ?? null;
+    $name = $queryArgs['name'] ?? null;
+    $activitySector = $queryArgs['activitySector'] ?? null;
+    $stats = $queryArgs['stats'] ?? null;
+    $del = $queryArgs['del'] ?? null;
+    $invisibleForStudents = $queryArgs['invisibleForStudents'] ?? null;
+    $opinion = $queryArgs['opinion'] ?? null;
+    $mark = $queryArgs['mark'] ?? null;
+    $numberOfWishlist = $queryArgs['numberOfWishlist'] ?? null;
+    $numberOfPostulation = $queryArgs['numberOfPostulation'] ?? null;
+
+    echo($id);
+
+
+    $companydata = ListCompany($entityManager,$id, $name, $activitySector, $stats, $del, $invisibleForStudents, $opinion, $mark, $numberOfWishlist, $numberOfPostulation);
+
     $page = (int) $args['page'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
@@ -193,7 +272,25 @@ $app->get('/apicompany/{page}', function (Request $request, Response $response ,
 
 
 
-$app->get('/apioffers/{page}', function (Request $request, Response $response , array $args) use ($offersdata) {
+$app->get('/apioffers/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+
+    $queryArgs = $request->getQueryParams();
+
+    $ID_Offers = $queryArgs['id'] ?? null;
+    $company = $queryArgs['company'] ?? null;
+    $targetPromotion = $queryArgs['targetPromotion'] ?? null;
+    $durationOfInternship = $queryArgs['durationOfInternship'] ?? null;
+    $payment = $queryArgs['payment'] ?? null;
+    $offerDate = $queryArgs['offerDate'] ?? null;
+    $numberOfPlaces = $queryArgs['numberOfPlaces'] ?? null;
+    $del = $queryArgs['del'] ?? null;
+    $ID_Address = $queryArgs['ID_Address'] ?? null;
+    $ID_Company = $queryArgs['ID_Company'] ?? null;
+
+
+
+    $offersdata = ListOffers($entityManager, $ID_Offers, $company, $targetPromotion, $durationOfInternship, $payment, $offerDate, $numberOfPlaces, $del, $ID_Address, $ID_Company);
+
     $page = (int) $args['page'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
@@ -208,7 +305,14 @@ $app->get('/apioffers/{page}', function (Request $request, Response $response , 
 });
 
 
-$app->get('/apipostulate/{page}', function (Request $request, Response $response , array $args) use ($postulatedata) {
+$app->get('/apipostulate/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+
+    $queryArgs = $request->getQueryParams();
+
+
+
+    $postulatedata = ListPostulate($entityManager);
+
     $page = (int) $args['page'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
@@ -223,7 +327,25 @@ $app->get('/apipostulate/{page}', function (Request $request, Response $response
 });
 
 
-$app->get('/apiuser/{page}', function (Request $request, Response $response , array $args) use ($userdata) {
+$app->get('/apiuser/{page}', function (Request $request, Response $response , array $args) use ($entityManager) {
+
+    $queryArgs = $request->getQueryParams();
+
+    $ID_User = $queryArgs['id'] ?? null;
+    $firstname = $queryArgs['firstname'] ?? null;
+    $lastname = $queryArgs['lastname'] ?? null;
+    $type = $queryArgs['type'] ?? null;
+    $years = $queryArgs['years'] ?? null;
+    $login = $queryArgs['login'] ?? null;
+    $password = $queryArgs['password'] ?? null;
+    $del = $queryArgs['del'] ?? null;
+    $ID_Address = $queryArgs['ID_Address'] ?? null;
+    $ID_Campus = $queryArgs['ID_Campus'] ?? null;
+
+
+    $userdata = ListUser($entityManager, $ID_User, $firstname, $lastname, $type, $years, $login, $password, $del, $ID_Address, $ID_Campus);
+
+
     $page = (int) $args['page'];
     $limit = 10;
     $offset = ($page - 1) * $limit;
@@ -238,6 +360,14 @@ $app->get('/apiuser/{page}', function (Request $request, Response $response , ar
 });
 
 
+
+
+$app->get('/fetch', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'fetch.php', [
+    ]);
+})->setName('Profil of Admin');
+
+
 //$app->post('/newaddress', function (Request $request, Response $response) {
 //    $data = $request->getParsedBody();
 ////    $this->get('address')->create($data);
@@ -245,3 +375,73 @@ $app->get('/apiuser/{page}', function (Request $request, Response $response , ar
 //
 //    return $response;
 //});
+
+$app->map(['GET', 'POST'], '/testpost', function ($request, $response, $args) use ($entityManager) {
+    $httpMethod = $request->getMethod();
+
+    if ($httpMethod === 'GET') {
+        return $this->get('view')->render($response, 'testpost.html', []);
+    }
+    elseif ($httpMethod === 'POST') {
+//        error_log("post");
+//        $Address = new \Entity\Address();
+//
+        $data = $request->getParsedBody();
+        $a = "api";
+        $b = "1";
+
+        if(isset($data['a'])){
+            $a = $data['a'];
+        }
+        if(isset($data['b'])){
+            $b = $data['b'];
+        }
+//        $command = "php ../bin/create_address.php ". $a . " " . $b;
+//        exec($command, $output, $status);
+
+        $Address->setVille($a);
+        $Address->setPostalCode($b);
+
+        try {
+            error_log('Before persist');
+            $entityManager->persist($Address);
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+            return $response->withStatus(500);
+        }
+
+        return $this->get('view')->render($response, 'testpost.html', []);
+
+    }
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+    return $response;
+});
+
+$app->add(function ($request, $handler) {
+    $response = $handler->handle($request);
+    return $response
+        ->withHeader('Access-Control-Allow-Origin', 'http://site.stagehub.com')
+        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+});
+
+
+$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
+    throw new HttpNotFoundException($request);
+});
