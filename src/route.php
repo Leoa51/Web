@@ -169,6 +169,11 @@ $app->get('/privacy', function ($request, $response, $args) {
     ]);
 })->setName('Privacy');
 
+$app->get('/offersMenu', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'offersMenu.twig', [
+    ]);
+})->setName('menu of offers');
+
 
 // Render from string
 $app->get('/hi/{name}', function ($request, $response, $args) {
