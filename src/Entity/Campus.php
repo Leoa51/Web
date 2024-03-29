@@ -16,10 +16,10 @@ class Campus implements \JsonSerializable
     #[ORM\OneToMany(targetEntity: 'User', mappedBy: 'campus')]
     private $users;
 
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-    }
+//    public function __construct()
+//    {
+//        $this->users = new ArrayCollection();
+//    }
 
 
     public function getIDCampus(): ?int

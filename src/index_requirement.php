@@ -1,37 +1,6 @@
 <?php
 
-
-//function ListUser ($entityManager)
-//{
-//    $queryBuilder = $entityManager->createQueryBuilder();
-//    $queryBuilder
-//        ->select('u')
-//        ->from('Entity\User', 'u')
-//
-//    $query = $queryBuilder->getQuery();
-//    $users = $query->getResult();
-//
-//    $data = [];
-//
-//    foreach ($users as $user) {
-//        try {
-//            $queryBuilder = $entityManager->createQueryBuilder();
-//            $queryBuilder
-//                ->select('a')
-//                ->from('Entity\Address', 'a')
-//                ->where('a.ID_address = :idAddress')
-//                ->setParameter('idAddress', $user->getIDAddress());
-//
-//            $query = $queryBuilder->getQuery();
-//            $address = $query->getResult();
-//            $ville = $address[0]->getVille();
-//        } catch (\Exception $e) {
-//            $ville = "null";
-//        }
-//        $data[] = [$user->getLastName(), $user->getFirstName(), $ville, $user->getYears()];
-//    }
-//}
-
+$centers = array("erreur", "Reims", "Lyon", "Paris", "Nantes", "Strasbourg", "Bordeaux", "Toulouse", "Rennes", "Lille", "Marseille", "Tunis", "Narbonne", "Clermont-Ferrand", "Aix-en-Provence", "Marseille", "Lorient", "Villeurbanne", "Brest", "Nancy", "Montpellier");
 
 function ListAddress($entityManager, $ville, $postalcode)
 {
