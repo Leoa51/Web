@@ -16,25 +16,6 @@ $app->get('/', function ($request, $response, $args) {
 })->setName('profile');
 
 
-$app->post('/submit-review', function ($request, $response, $args) {
-    // Récupérer les données envoyées par le formulaire
-    $rating = $request->getParam('rating');
-    $comment = $request->getParam('comment');
-
-    // Vérifier que les données sont valides
-    if (empty($rating) || empty($comment)) {
-        // Retourner une réponse d'erreur si les données ne sont pas valides
-        return $response->withStatus(400)->getBody()->write('Veuillez remplir tous les champs.');
-    }
-
-    // Enregistrer l'avis dans la base de données
-    // ...
-
-    // Rediriger l'utilisateur vers la page de liste des offres
-    return $response->withStatus(302)->withHeader('Location', '/listOffers');
-});
-
-
 $app->map(['GET', 'POST'], '/opinion', function ($request, $response, $args) use ($entityManager) {
     session_start();
     $httpMethod = $request->getMethod();
@@ -43,6 +24,34 @@ $app->map(['GET', 'POST'], '/opinion', function ($request, $response, $args) use
         ]);
     } elseif ($httpMethod === 'POST') {
         var_dump("test");
+        print_r("err");
+
+        $data = $request->getParsedBody();
+        $opinion = "vide";
+        $rating = 5;
+
+        if (htmlspecialchars($_POST['rating']) !== null) {
+            $rating = htmlspecialchars($_POST['rating']);
+        };
+
+        if (htmlspecialchars($_POST['comment']) !== null) {
+            $opinion = htmlspecialchars($_POST['comment']);
+        };
+
+        $Opinion = new \Entity\Opinion();
+        $Opinion->setIDCompany(1);
+        $Opinion->setOpinion($opinion);
+        $Opinion->setSender($_COOKIE['firstName'] . " " . $_COOKIE['lastName']);
+        $Opinion->setMark($rating);
+
+        try {
+            error_log('Before persist');
+            $entityManager->persist($Opinion);
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            var_dump($e->getMessage());
+            return $response->withStatus(500);
+        }
 
         return $response->withStatus(302)->withHeader('Location', '/showCompanyDetails');
     }
@@ -131,18 +140,18 @@ $app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use (
             foreach ($users as $user) {
 
                 if ($password == $user['password']) {
-                    setcookie('firstName', $user['firstName'], time() + (1 * 60), "/");
-                    setcookie('lastName', $user['lastName'], time() + (1 * 60), "/");
-                    setcookie('years', $user['years'], time() + (1 * 60), "/");
-                    setcookie('centre', $centers[$user['ID_Campus'] + 1], time() + (1 * 60), "/");
+                    setcookie('firstName', $user['firstName'], time() + (10 * 60), "/");
+                    setcookie('lastName', $user['lastName'], time() + (10 * 60), "/");
+                    setcookie('years', $user['years'], time() + (10 * 60), "/");
+                    setcookie('centre', $centers[$user['ID_Campus'] + 1], time() + (10 * 60), "/");
                     if ($user['type'] == "2") {
-                        setcookie('type', "Admin", time() + (30 * 60), "/");
+                        setcookie('type', "Admin", time() + (10 * 60), "/");
                         return $response->withStatus(302)->withHeader('Location', '/profilAdmin');
                     } elseif ($user['type'] == "1") {
-                        setcookie('type', "Pilot", time() + (30 * 60), "/");
+                        setcookie('type', "Pilot", time() + (10 * 60), "/");
                         return $response->withStatus(302)->withHeader('Location', '/profilPilot');
                     } elseif ($user['type'] == "0") {
-                        setcookie('type', "Student", time() + (30 * 60), "/");
+                        setcookie('type', "Student", time() + (10 * 60), "/");
                         return $response->withStatus(302)->withHeader('Location', '/profilStudents');
                     }
 
@@ -217,19 +226,6 @@ $app->get('/privacy', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'privacy.twig', [
     ]);
 })->setName('Privacy');
-
-
-// Render from string
-$app->get('/hi/{name}', function ($request, $response, $args) {
-    $str = $this->get('view')->fetchFromString(
-        '<p>Hi, my name is {{ name }}.</p>',
-        [
-            'name' => $args['name']
-        ]
-    );
-    $response->getBody()->write($str);
-    return $response;
-});
 
 
 $app->get('/apiaddress/{page}', function (Request $request, Response $response, array $args) use ($entityManager) {
@@ -415,8 +411,6 @@ $app->get('/fetch', function ($request, $response, $args) {
 //        if (isset($data['b'])) {
 //            $b = $data['b'];
 //        }
-////        $command = "php ../bin/create_address.php ". $a . " " . $b;
-////        exec($command, $output, $status);
 //
 //        $Address->setVille($a);
 //        $Address->setPostalCode($b);

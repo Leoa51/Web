@@ -3,41 +3,44 @@
 {% block title %}Stagehub - Laisser un Avis{% endblock %}
 
 {% block content %}
-<div class="bg-white shadow-md rounded-lg p-6 mb-4">
-    <h2 class="text-xl font-semibold mb-4">Laisser un avis</h2>
-    <form action="/submit-review" method="post">
-        <div class="mb-4">
-            <label class="block text-gray-700 font-medium mb-2" for="rating">Note</label>
-            <select id="rating" name="rating" class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-medium mb-2" for="comment">Commentaire</label>
-            <textarea id="comment" name="comment" rows="4" class="form-textarea appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></textarea>
-        </div>
-        <input class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" type="button" value="Soumettre" onclick="if(validateForm()) { window.location.href='/listOffers'; }">
-    </form>
-</div>
-
     <script>
         function validateForm() {
             var comment = document.getElementById('comment').value.trim();
 
 
-            if (comment === '') {
+            if (comment === "") {
                 alert('Veuillez remplir tous les champs.');
+                event.preventDefault(); // Prevent form submission
                 return false;
             }
-
-            // Autres validations éventuelles peuvent être ajoutées ici
-
             return true;
         }
     </script>
+    <div class="bg-white shadow-md rounded-lg p-6 mb-4">
+        <h2 class="text-xl font-semibold mb-4">Laisser un avis</h2>
+        <form method="post" onsubmit="return validateForm(event);">
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2" for="rating">Note</label>
+                <select id="rating" name="rating"
+                        class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-medium mb-2" for="comment">Commentaire</label>
+                <textarea id="comment" name="comment" rows="4"
+                          class="form-textarea appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"></textarea>
+            </div>
+            <button class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    type="submit"> Soummetre
+            </button>
+        </form>
+    </div>
+
+
 {% endblock %}
 
