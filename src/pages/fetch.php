@@ -1,8 +1,9 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Document</title>
     <script>
         function loadxhr(page) {
@@ -15,7 +16,7 @@
 
                     const parentElement = document.getElementById("ici");
                     const template = document.getElementById("template");
-                    const a= parentElement.querySelector("#a");
+                    const a = parentElement.querySelector("#a");
                     const b = parentElement.querySelector("#b");
                     a.innerHTML = "";
 
@@ -25,7 +26,7 @@
                     for (let value of data) {
                         const p = template.content.cloneNode(true);
                         p.querySelector("#nom").textContent = value;
-                        p.querySelector("#nom").setAttribute('toto',value[0]);
+                        p.querySelector("#nom").setAttribute('toto', value[0]);
                         //p.textContent = value;
 
                         a.appendChild(p);
@@ -34,10 +35,23 @@
             };
             xhr.send();
         }
+
         loadxhr(1);
     </script>
 </head>
 <body>
+aa
+<?php
+if (isset($_COOKIE['firstName'])) {
+    echo "oui";
+    echo $_COOKIE['firstName'];
+} else {
+    echo "non";
+}
+echo var_dump($_COOKIE);
+echo $_COOKIE['firstName'];
+
+?>
 
 <template id="template">
     <p id="nom"></p>

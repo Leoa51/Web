@@ -16,11 +16,39 @@ $app->get('/', function ($request, $response, $args) {
 })->setName('profile');
 
 
-// Define named route
-$app->get('/opinion', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'opinion.twig', [
-    ]);
+$app->post('/submit-review', function ($request, $response, $args) {
+    // Récupérer les données envoyées par le formulaire
+    $rating = $request->getParam('rating');
+    $comment = $request->getParam('comment');
+
+    // Vérifier que les données sont valides
+    if (empty($rating) || empty($comment)) {
+        // Retourner une réponse d'erreur si les données ne sont pas valides
+        return $response->withStatus(400)->getBody()->write('Veuillez remplir tous les champs.');
+    }
+
+    // Enregistrer l'avis dans la base de données
+    // ...
+
+    // Rediriger l'utilisateur vers la page de liste des offres
+    return $response->withStatus(302)->withHeader('Location', '/listOffers');
+});
+
+
+$app->map(['GET', 'POST'], '/opinion', function ($request, $response, $args) use ($entityManager) {
+    session_start();
+    $httpMethod = $request->getMethod();
+    if ($httpMethod === 'GET') {
+        return $this->get('view')->render($response, 'opinion.twig', [
+        ]);
+    } elseif ($httpMethod === 'POST') {
+        var_dump("test");
+
+        return $response->withStatus(302)->withHeader('Location', '/showCompanyDetails');
+    }
+
 })->setName('opinion');
+
 
 $app->get('/creationOffers', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'creationOffers.twig', [
@@ -29,6 +57,10 @@ $app->get('/creationOffers', function ($request, $response, $args) {
 
 $app->get('/profilPilot', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'profilPilot.twig', [
+        'prenom' => $_COOKIE['firstName'],
+        'nom' => $_COOKIE['lastName'],
+        'promotion' => $_COOKIE['years'],
+        'centre' => $_COOKIE['centre']
     ]);
 })->setName('ProfilPilot');
 
@@ -73,7 +105,9 @@ $app->get('/creationStudents', function ($request, $response, $args) {
 })->setName('stats of students');
 
 
-$app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use ($entityManager) {
+$app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use ($entityManager, $centers) {
+    //            @todo hashing /!\ sel pas dans la bdd + probleme avec les centres non reconnus sur les pages de profil
+    session_start();
     $httpMethod = $request->getMethod();
 
     if ($httpMethod === 'GET') {
@@ -83,30 +117,38 @@ $app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use (
             $email = htmlspecialchars($_POST['email']);
             $password = htmlspecialchars($_POST['password']);
 
-            $options = ['cost' => 12]; // You can adjust the cost factor based on your requirements
-            $encodedPassword = password_hash("password", PASSWORD_BCRYPT, $options);
-            $correctpassword = $encodedPassword;
+            $queryBuilder = $entityManager->createQueryBuilder();
+            $queryBuilder
+                ->select('u.ID_User', 'u.password', 'u.type', 'u.firstName', 'u.lastName', 'u.years')
+                ->from('Entity\User', 'u')
+                ->Where('u.login = :login')
+                ->setParameter('login', $_POST['email'])
+                ->andWhere('u.del = :del')
+                ->setParameter('del', false);
+            $query = $queryBuilder->getQuery();
+            $users = $query->getResult();
 
+            foreach ($users as $user) {
 
-            setcookie('email', $email, time() + (30 * 60), "/");
-//            setcookie('password', $password, time() + (30 * 60), "/");
+                if ($password == $user['password']) {
+                    setcookie('firstName', $user['firstName'], time() + (1 * 60), "/");
+                    setcookie('lastName', $user['lastName'], time() + (1 * 60), "/");
+                    setcookie('years', $user['years'], time() + (1 * 60), "/");
+                    setcookie('centre', $centers[$user['ID_Campus'] + 1], time() + (1 * 60), "/");
+                    if ($user['type'] == "2") {
+                        setcookie('type', "Admin", time() + (30 * 60), "/");
+                        return $response->withStatus(302)->withHeader('Location', '/profilAdmin');
+                    } elseif ($user['type'] == "1") {
+                        setcookie('type', "Pilot", time() + (30 * 60), "/");
+                        return $response->withStatus(302)->withHeader('Location', '/profilPilot');
+                    } elseif ($user['type'] == "0") {
+                        setcookie('type', "Student", time() + (30 * 60), "/");
+                        return $response->withStatus(302)->withHeader('Location', '/profilStudents');
+                    }
 
-            if (password_verify($password, $correctpassword)) {
-                return $this->get('view')->render($response, '/profilStudents.twig', [
-                    'email' => $email,
-                    'password' => $password
-                ]);
-            } else {
-                return $this->get('view')->render($response, '/login.twig', [
-                    'error' => 'Email or password not correct'
-                ]);
+                }
             }
-
-        } else {
-            // Handle the case when the email or password is not provided in the POST request
-            return $this->get('view')->render($response, '/login.twig', [
-                'error' => 'Email or password not provided'
-            ]);
+            return $this->get('view')->render($response, 'login.twig', []);
         }
     }
 });
@@ -124,6 +166,10 @@ $app->get('/publishCompany', function ($request, $response, $args) {
 
 $app->get('/profilStudents', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'profilStudents.twig', [
+        'prenom' => $_COOKIE['firstName'],
+        'nom' => $_COOKIE['lastName'],
+        'promotion' => $_COOKIE['years'],
+        'centre' => $_COOKIE['centre']
     ]);
 })->setName('Profil of students');
 
@@ -151,6 +197,9 @@ $app->get('/creationPilot', function ($request, $response, $args) {
 
 $app->get('/profilAdmin', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'profilAdmin.twig', [
+//        'prenom' => $_COOKIE['firstName'],
+//        'nom' => $_COOKIE['lastName'],
+//        'promotion' => $_COOKIE['years']
     ]);
 })->setName('Profil of Admin');
 
@@ -338,6 +387,7 @@ $app->get('/apiuser/{page}', function (Request $request, Response $response, arr
 
 
 $app->get('/fetch', function ($request, $response, $args) {
+    session_start();
     return $this->get('view')->render($response, 'fetch.php', [
     ]);
 })->setName('Profil of Admin');
@@ -351,46 +401,46 @@ $app->get('/fetch', function ($request, $response, $args) {
 //    return $response;
 //});
 
-$app->map(['GET', 'POST'], '/testpost', function ($request, $response, $args) use ($entityManager) {
-    $httpMethod = $request->getMethod();
-
-    if ($httpMethod === 'GET') {
-        return $this->get('view')->render($response, 'testpost.html', []);
-    } elseif ($httpMethod === 'POST') {
-//        error_log("post");
-//        $Address = new \Entity\Address();
+//$app->map(['GET', 'POST'], '/testpost', function ($request, $response, $args) use ($entityManager) {
+//    $httpMethod = $request->getMethod();
 //
-        $data = $request->getParsedBody();
-//        $a = "api";
-//        $b = "1";
-
-        if (isset($data['a'])) {
-            $a = $data['a'];
-        }
-        if (isset($data['b'])) {
-            $b = $data['b'];
-        }
-//        $command = "php ../bin/create_address.php ". $a . " " . $b;
-//        exec($command, $output, $status);
-
-        $Address->setVille($a);
-        $Address->setPostalCode($b);
-
-        try {
-            error_log('Before persist');
-            $entityManager->persist($Address);
-            $entityManager->flush();
-        } catch (\Exception $e) {
-            error_log($e->getMessage());
-            return $response->withStatus(500);
-        }
-
-        return $this->get('view')->render($response, 'testpost.html', []);
-
-    }
-
-
-});
+//    if ($httpMethod === 'GET') {
+//        return $this->get('view')->render($response, 'testpost.html', []);
+//    } elseif ($httpMethod === 'POST') {
+////        error_log("post");
+////        $Address = new \Entity\Address();
+////
+//        $data = $request->getParsedBody();
+////        $a = "api";
+////        $b = "1";
+//
+//        if (isset($data['a'])) {
+//            $a = $data['a'];
+//        }
+//        if (isset($data['b'])) {
+//            $b = $data['b'];
+//        }
+////        $command = "php ../bin/create_address.php ". $a . " " . $b;
+////        exec($command, $output, $status);
+//
+//        $Address->setVille($a);
+//        $Address->setPostalCode($b);
+//
+//        try {
+//            error_log('Before persist');
+//            $entityManager->persist($Address);
+//            $entityManager->flush();
+//        } catch (\Exception $e) {
+//            error_log($e->getMessage());
+//            return $response->withStatus(500);
+//        }
+//
+//        return $this->get('view')->render($response, 'testpost.html', []);
+//
+//    }
+//
+//
+//});
 
 
 $app->options('/{routes:.+}', function ($request, $response, $args) {
