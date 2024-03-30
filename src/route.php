@@ -139,7 +139,7 @@ $app->get('/statsOffers', function ($request, $response, $args) {
 
 $app->get('/listPilot', function ($request, $response, $args) use ($entityManager) {
 
-    $pilotdata = ListPilot($entityManager);
+//    $pilotdata = ListPilot($entityManager);
 
     return $this->get('view')->render($response, 'listPilot.twig', ['data' => $pilotdata]);
 })->setName('list of pilot');
