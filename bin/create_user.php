@@ -18,7 +18,7 @@ echo $firstName . "\n" . $lastName . "\n" . $Type . "\n" . $years . "\n" . $logi
 
 try {
     $address = $entityManager->getRepository(Address::class)->find($ID_Address);
-    echo "address : " . $address->getIDAddress() . " " . $address->getVille() . "\n";
+//    echo "address : " . $address->getIDAddress() . " " . $address->getVille() . "\n";
 } catch (\Exception $e) {
     echo "error \n";
     echo $e->getMessage();
