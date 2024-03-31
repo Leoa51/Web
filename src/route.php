@@ -131,6 +131,8 @@ $app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use (
             foreach ($users as $user) {
 
                 if ($password == $user['password']) {
+
+                    setcookie('ID_User', $user['ID_User'], time() + (1 * 60), "/");
                     setcookie('firstName', $user['firstName'], time() + (1 * 60), "/");
                     setcookie('lastName', $user['lastName'], time() + (1 * 60), "/");
                     setcookie('years', $user['years'], time() + (1 * 60), "/");
