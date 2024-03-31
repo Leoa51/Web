@@ -1,6 +1,27 @@
 <?php
-
+require_once __DIR__ . "/../doctrine/bootstrap.php";
 $centers = array("erreur", "Reims", "Lyon", "Paris", "Nantes", "Strasbourg", "Bordeaux", "Toulouse", "Rennes", "Lille", "Marseille", "Tunis", "Narbonne", "Clermont-Ferrand", "Aix-en-Provence", "Marseille", "Lorient", "Villeurbanne", "Brest", "Nancy", "Montpellier");
+
+
+function StatsCompany($entityManager, $page)
+{
+    $queryBuilder = $entityManager->createQueryBuilder();
+    $queryBuilder
+        ->select('c.name', 'c.activitySector', 'c.stats')
+        ->from('Entity\Company', 'c')
+        ->setFirstResult(($page - 1) * 10)
+        ->setMaxResults(10)
+        ->orderBy('c.stats', 'ASC')
+        ->where('c.del = 0');
+
+    $query = $queryBuilder->getQuery();
+    $companies = $query->getResult();
+
+    return $companies;
+}
+
+//$var = StatsCompany($entityManager, 1);
+//var_dump($var);
 
 function ListAddress($entityManager, $ville, $postalcode)
 {

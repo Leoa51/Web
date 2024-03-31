@@ -83,8 +83,12 @@ $app->get('/showCompanyDetails', function ($request, $response, $args) {
     ]);
 })->setName('Details company');
 
-$app->get('/statsCompany', function ($request, $response, $args) {
+$app->get('/statsCompany/{page}', function ($request, $response, $args) use ($entityManager) {
+
+    $statsCompany = StatsCompany($entityManager, $args['page']);
+
     return $this->get('view')->render($response, 'statsCompany.twig', [
+        'data' => $statsCompany
     ]);
 })->setName('Stats company');
 
