@@ -32,7 +32,7 @@ class User
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private ?string $login = null;
 
-    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private ?string $password = null;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
@@ -148,7 +148,8 @@ class User
     public function setPassword(?string $password): void
     {
         error_log('set password : ' . $password . "\n");
-        $encodedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $encodedPassword = password_hash($password, PASSWORD_BCRYPT);
+//        $encodedPassword = hash('sha256', $password);
         $this->password = $encodedPassword;
     }
 
