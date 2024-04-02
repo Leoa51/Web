@@ -9,6 +9,7 @@ use Slim\Exception\HttpNotFoundException;
 
 require_once __DIR__ . "/index_requirement.php";
 
+session_start();
 
 $app->get('/', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'Accueil.html', [
@@ -17,7 +18,9 @@ $app->get('/', function ($request, $response, $args) {
 
 
 $app->map(['GET', 'POST'], '/opinion', function ($request, $response, $args) use ($entityManager) {
-    session_start();
+    if (!StudentPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     $httpMethod = $request->getMethod();
     if ($httpMethod === 'GET') {
         return $this->get('view')->render($response, 'opinion.twig', [
@@ -41,7 +44,7 @@ $app->map(['GET', 'POST'], '/opinion', function ($request, $response, $args) use
         $Opinion = new \Entity\Opinion();
         $Opinion->setIDCompany(1);
         $Opinion->setOpinion($opinion);
-        $Opinion->setSender($_COOKIE['firstName'] . " " . $_COOKIE['lastName']);
+        $Opinion->setSender($_SESSION['firstName'] . " " . $_SESSION['lastName']);
         $Opinion->setMark($rating);
 
         try {
@@ -60,67 +63,110 @@ $app->map(['GET', 'POST'], '/opinion', function ($request, $response, $args) use
 
 
 $app->get('/creationOffers', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'creationOffers.twig', [
-    ]);
+    if (PilotPerm()) {
+        return $this->get('view')->render($response, 'creationOffers.twig', [
+        ]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('CreationOffre');
 
 $app->get('/profilPilot', function ($request, $response, $args) {
+    if (!PilotPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'profilPilot.twig', [
-        'prenom' => $_COOKIE['firstName'],
-        'nom' => $_COOKIE['lastName'],
-        'promotion' => $_COOKIE['years'],
-        'centre' => $_COOKIE['centre']
+        'prenom' => $_SESSION['firstName'],
+        'nom' => $_SESSION['lastName'],
+        'promotion' => $_SESSION['years'],
+        'centre' => $_SESSION['centre']
     ]);
 })->setName('ProfilPilot');
 
 $app->get('/companyMenu', function ($request, $response, $args) {
+    if (!StudentPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'companyMenu.twig', [
     ]);
 })->setName('companyMenu');
 
 $app->get('/showCompanyDetails', function ($request, $response, $args) {
+    if (!StudentPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'showCompanyDetails.twig', [
     ]);
 })->setName('Details company');
 
+//$app->get('/statsCompany/{page}', function ($request, $response, $args) use ($entityManager) {
+//
+//    $statsCompany = StatsCompany($entityManager, $args['page']);
+//
+//    return $this->get('view')->render($response, 'statsCompany.twig', [
+//        'data' => $statsCompany,
+//        'page' => $args['page']
+//    ]);
+//})->setName('Stats company');
+
 $app->get('/statsCompany/{page}', function ($request, $response, $args) use ($entityManager) {
+    if (!StudentPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 
     $statsCompany = StatsCompany($entityManager, $args['page']);
 
     return $this->get('view')->render($response, 'statsCompany.twig', [
-        'data' => $statsCompany
+        'data' => $statsCompany['companies'],
+        'page' => $args['page'],
+        'totalCompanies' => $statsCompany['totalCompanies']
     ]);
 })->setName('Stats company');
 
+
 $app->get('/publishOffers', function ($request, $response, $args) {
+    if (!PilotPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'publishOffers.twig', [
     ]);
 })->setName('Publish Offers');
 
 $app->get('/listOffers', function ($request, $response, $args) {
+    if (!PilotPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'listOffers.twig', [
     ]);
 })->setName('list of offers');
 
 $app->get('/listStudents', function ($request, $response, $args) {
+    if (!PilotPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'listStudents.twig', [
     ]);
 })->setName('list of students');
 
 $app->get('/statsStudents', function ($request, $response, $args) {
+    if (!PilotPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'StatsStudents.twig', [
     ]);
 })->setName('stats of students');
 
 $app->get('/creationStudents', function ($request, $response, $args) {
+    if (!PilotPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'creationStudents.twig', [
     ]);
 })->setName('stats of students');
 
 
 $app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use ($entityManager, $centers) {
-    //            @todo hashing /!\ sel pas dans la bdd + probleme avec les centres non reconnus sur les pages de profil
-    session_start();
+
     $httpMethod = $request->getMethod();
 
     if ($httpMethod === 'GET') {
@@ -143,19 +189,28 @@ $app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use (
 
             foreach ($users as $user) {
 
-                if ($password == $user['password']) {
-                    setcookie('firstName', $user['firstName'], time() + (10 * 60), "/");
-                    setcookie('lastName', $user['lastName'], time() + (10 * 60), "/");
-                    setcookie('years', $user['years'], time() + (10 * 60), "/");
-                    setcookie('centre', $centers[$user['ID_Campus'] + 1], time() + (10 * 60), "/");
+                if (password_verify($password, $user['password'])) {
+//                    setcookie('firstName', $user['firstName'], time() + (10 * 60), "/");
+//                    setcookie('lastName', $user['lastName'], time() + (10 * 60), "/");
+//                    setcookie('years', $user['years'], time() + (10 * 60), "/");
+//                    setcookie('centre', $centers[$user['ID_Campus'] + 1], time() + (10 * 60), "/");
+                    $_SESSION['firstName'] = $user['firstName'];
+                    $_SESSION['lastName'] = $user['lastName'];
+                    $_SESSION['years'] = $user['years'];
+                    $_SESSION['centre'] = $centers[$user['ID_Campus'] + 1];
+                    $_SESSION['ID_User'] = $user['ID_User'];
+
                     if ($user['type'] == "2") {
-                        setcookie('type', "Admin", time() + (10 * 60), "/");
+//                        setcookie('type', "Admin", time() + (10 * 60), "/");
+                        $_SESSION['type'] = "Admin";
                         return $response->withStatus(302)->withHeader('Location', '/profilAdmin');
                     } elseif ($user['type'] == "1") {
-                        setcookie('type', "Pilot", time() + (10 * 60), "/");
+//                        setcookie('type', "Pilot", time() + (10 * 60), "/");
+                        $_SESSION['type'] = "Pilot";
                         return $response->withStatus(302)->withHeader('Location', '/profilPilot');
                     } elseif ($user['type'] == "0") {
-                        setcookie('type', "Student", time() + (10 * 60), "/");
+//                        setcookie('type', "Student", time() + (10 * 60), "/");
+                        $_SESSION['type'] = "Student";
                         return $response->withStatus(302)->withHeader('Location', '/profilStudents');
                     }
 
@@ -168,13 +223,21 @@ $app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use (
 
 
 $app->get('/listCompany', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'listCompany.twig', [
-    ]);
+    if (PilotPerm()) {
+        return $this->get('view')->render($response, 'listCompany.twig', [
+        ]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('list of company');
 
 $app->get('/publishCompany', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'publishCompany.twig', [
-    ]);
+    if (PilotPerm()) {
+        return $this->get('view')->render($response, 'publishCompany.twig', [
+        ]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('Publication of company');
 
 
@@ -184,42 +247,62 @@ $app->get('/accessDenied', function ($request, $response, $args) {
 })->setName('Access denied to our site');
 
 $app->get('/profilStudents', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'profilStudents.twig', [
-        'prenom' => $_COOKIE['firstName'],
-        'nom' => $_COOKIE['lastName'],
-        'promotion' => $_COOKIE['years'],
-        'centre' => $_COOKIE['centre']
-    ]);
+    if (SpecialPerm()) {
+        return $this->get('view')->render($response, 'profilStudents.twig', [
+            'prenom' => $_SESSION['firstName'],
+            'nom' => $_SESSION['lastName'],
+            'promotion' => $_SESSION['years'],
+            'centre' => $_SESSION['centre']
+        ]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('Profil of students');
 
 $app->get('/application', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'application.twig', [
-    ]);
+    if (SpecialPerm()) {
+        return $this->get('view')->render($response, 'application.twig', [
+        ]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('application');
 
 $app->get('/statsOffers', function ($request, $response, $args) {
+    if (!StudentPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'statsOffers.twig', [
     ]);
 })->setName('Stats of Offers');
 
 $app->get('/listPilot', function ($request, $response, $args) use ($entityManager) {
+    if (AdminPerm()) {
 
-    $pilotdata = ListPilot($entityManager);
+        $pilotdata = ListPilot($entityManager);
 
-    return $this->get('view')->render($response, 'listPilot.twig', ['data' => $pilotdata]);
+        return $this->get('view')->render($response, 'listPilot.twig', ['data' => $pilotdata]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('list of pilot');
 
 $app->get('/creationPilot', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'creationPilot.twig', [
-    ]);
+    if (AdminPerm()) {
+        return $this->get('view')->render($response, 'creationPilot.twig', [
+        ]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('creation of pilot');
 
 $app->get('/profilAdmin', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'profilAdmin.twig', [
-//        'prenom' => $_COOKIE['firstName'],
-//        'nom' => $_COOKIE['lastName'],
-//        'promotion' => $_COOKIE['years']
-    ]);
+    if (AdminPerm()) {
+        return $this->get('view')->render($response, 'profilAdmin.twig', [
+        ]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('Profil of Admin');
 
 $app->get('/about', function ($request, $response, $args) {
@@ -241,6 +324,30 @@ $app->get('/privacy', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'privacy.twig', [
     ]);
 })->setName('Privacy');
+
+$app->get('/disconnect', function ($request, $response, $args) {
+    session_destroy();
+    session_start();
+    return $response->withStatus(302)->withHeader('Location', '/');
+});
+
+$app->get('/denied', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'denied.twig', [
+    ]);
+});
+
+
+$app->get('/redirect', function ($request, $response, $args) {
+    if (isset($_SESSION['type']) && $_SESSION['type'] == "Admin") {
+        return $response->withStatus(302)->withHeader('Location', '/profilAdmin');
+    } elseif (isset($_SESSION['type']) && $_SESSION['type'] == "Pilot") {
+        return $response->withStatus(302)->withHeader('Location', '/profilPilot');
+    } elseif (isset($_SESSION['type']) && $_SESSION['type'] == "Student") {
+        return $response->withStatus(302)->withHeader('Location', '/profilStudents');
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
+});
 
 
 $app->get('/apiaddress/{page}', function (Request $request, Response $response, array $args) use ($entityManager) {
@@ -393,7 +500,6 @@ $app->get('/apiuser/{page}', function (Request $request, Response $response, arr
 
 
 $app->get('/fetch', function ($request, $response, $args) {
-    session_start();
     return $this->get('view')->render($response, 'fetch.php', [
     ]);
 })->setName('Profil of Admin');
@@ -460,6 +566,6 @@ $app->add(function ($request, $handler) {
 });
 
 
-$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
-    throw new HttpNotFoundException($request);
-});
+//$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
+//    throw new HttpNotFoundException($request);
+//});
