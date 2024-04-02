@@ -34,26 +34,32 @@ class Offers
     #[ORM\Column(type: 'boolean', nullable: true)]
     private ?bool $del = null;
 
+//    #[ORM\ManyToOne(targetEntity: 'Address')]
+//    #[ORM\JoinColumn(name: 'ID_Address', referencedColumnName: 'ID_Address')]
+//    private ?Address $ID_Address = null;
+
     #[ORM\ManyToOne(targetEntity: 'Address')]
     #[ORM\JoinColumn(name: 'ID_Address', referencedColumnName: 'ID_Address')]
-//    private ?int $IDAddress = null;
-    private ?Address $IDAddress = null;
+    private ?int $ID_Address = null;
+
+
+//    #[ORM\ManyToOne(targetEntity: 'Company')]
+//    #[ORM\JoinColumn(name: 'ID_Company', referencedColumnName: 'ID_Company')]
+//    private ?Company $ID_Company = null;
 
     #[ORM\ManyToOne(targetEntity: 'Company')]
     #[ORM\JoinColumn(name: 'ID_Company', referencedColumnName: 'ID_Company')]
-//    private ?int $IDCompany = null;
-    private ?Company $IDCompany = null;
+    private ?int $ID_Company = null;
 
     #[ORM\OneToMany(targetEntity: 'Postulate', mappedBy: 'offer')]
     private $postulates;
 
     #[ORM\OneToMany(targetEntity: 'Editwishlist', mappedBy: 'offer')]
     private $editwishlists;
-    public function __construct()
-    {
-        $this->postulates = new ArrayCollection();
-    }
-
+//    public function __construct()
+//    {
+//        $this->postulates = new ArrayCollection();
+//    }
 
 
     public function getIDOffers(): ?int
@@ -144,25 +150,49 @@ class Offers
         $this->del = $del;
     }
 
-    public function getIDAddress(): ?Address
+//    public function getIDAddress(): ?Address
+//    {
+//        return $this->ID_Address;
+//    }
+
+//    public function setIDAddress(?Address $ID_Address): void
+//    {
+//        echo 'set ID_Address : ' . $ID_Address->getIDAddress() . "\n";
+//        $this->ID_Address = $ID_Address;
+//    }
+
+    public function getIDAddress(): ?int
     {
-        return $this->IDAddress;
+        return $this->ID_Address;
     }
 
-    public function setIDAddress(?Address $IDAddress): void
+    public function setIDAddress(?int $ID_Address): void
     {
-        echo 'set IDAddress : ' . $IDAddress->getIDAddress() . "\n";
-        $this->IDAddress = $IDAddress;
+        echo 'set ID_Address : ' . $ID_Address . "\n";
+        $this->ID_Address = $ID_Address;
     }
 
-    public function getIDCompany(): ?Company
+//    public function getIDCompany(): ?Company
+//    {
+//        return $this->ID_Company;
+//    }
+//
+//    public function setIDCompany(?Company $ID_Company): void
+//    {
+//        echo 'set ID_Company : ' . $ID_Company->getIDCompany() . "\n";
+//        $this->ID_Company = $ID_Company;
+//    }
+
+    public function getIDCompany(): ?int
     {
-        return $this->IDCompany;
+        return $this->ID_Company;
     }
 
-    public function setIDCompany(?Company $IDCompany): void
+    public function setIDCompany(?int $ID_Company): void
     {
-        echo 'set IDCompany : ' . $IDCompany->getIDCompany() . "\n";
-        $this->IDCompany = $IDCompany;
+        echo 'set ID_Company : ' . $ID_Company . "\n";
+        $this->ID_Company = $ID_Company;
     }
+
+
 }

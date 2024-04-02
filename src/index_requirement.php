@@ -1,37 +1,84 @@
 <?php
 
+use Entity\Company;
+use Entity\Offers;
+use Entity\Address;
 
-//function ListUser ($entityManager)
-//{
-//    $queryBuilder = $entityManager->createQueryBuilder();
-//    $queryBuilder
-//        ->select('u')
-//        ->from('Entity\User', 'u')
-//
-//    $query = $queryBuilder->getQuery();
-//    $users = $query->getResult();
-//
-//    $data = [];
-//
-//    foreach ($users as $user) {
-//        try {
-//            $queryBuilder = $entityManager->createQueryBuilder();
-//            $queryBuilder
-//                ->select('a')
-//                ->from('Entity\Address', 'a')
-//                ->where('a.ID_address = :idAddress')
-//                ->setParameter('idAddress', $user->getIDAddress());
-//
-//            $query = $queryBuilder->getQuery();
-//            $address = $query->getResult();
-//            $ville = $address[0]->getVille();
-//        } catch (\Exception $e) {
-//            $ville = "null";
-//        }
-//        $data[] = [$user->getLastName(), $user->getFirstName(), $ville, $user->getYears()];
-//    }
-//}
 
+require_once __DIR__ . "/../doctrine/bootstrap.php";
+$centers = array("erreur", "Reims", "Lyon", "Paris", "Nantes", "Strasbourg", "Bordeaux", "Toulouse", "Rennes", "Lille", "Marseille", "Tunis", "Narbonne", "Clermont-Ferrand", "Aix-en-Provence", "Marseille", "Lorient", "Villeurbanne", "Brest", "Nancy", "Montpellier");
+
+function StudentPerm()
+{
+    if (isset($_SESSION) && ($_SESSION['type'] == "Student" || $_SESSION['type'] == "Pilot" || $_SESSION['type'] == "Admin")) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function PilotPerm()
+{
+    if (isset($_SESSION) && ($_SESSION['type'] == "Pilot" || $_SESSION['type'] == "Admin")) {
+        return true;
+    } else {
+        echo "access denied"; //@todo retourner une erreur
+        return false;
+    }
+}
+
+function AdminPerm()
+{
+    if (isset($_SESSION) && $_SESSION['type'] == "Admin") {
+        return true;
+    } else {
+        echo "access denied"; //@todo retourner une erreur
+        return false;
+    }
+}
+
+function SpecialPerm()
+{
+    if (isset($_SESSION) && ($_SESSION['type'] == "Student" || $_SESSION['type'] == "Admin")) {
+        return true;
+    } else {
+        echo "access denied"; //@todo retourner une erreur
+        return false;
+    }
+}
+
+
+function StatsCompany($entityManager, $page)
+{
+    $queryBuilder = $entityManager->createQueryBuilder();
+    $queryBuilder
+        ->select('company.name', 'company.activitySector', 'company.stats', 'address.ville')
+        ->from(Company::class, 'company')
+        ->leftJoin(Offers::class, 'offers', 'WITH', 'offers.ID_Company = company.ID_Company')
+        ->leftJoin(Address::class, 'address', 'WITH', 'address.ID_Address = offers.ID_Address')
+        ->setFirstResult(($page - 1) * 10)
+        ->setMaxResults(10)
+        ->orderBy('company.stats', 'ASC')
+        ->where('company.del = 0');
+
+    $query = $queryBuilder->getQuery();
+    $companies = $query->getResult();
+
+    $totalCompanies = $entityManager->createQueryBuilder()
+        ->select('COUNT(company.ID_Company)')
+        ->from(Company::class, 'company')
+        ->where('company.del = 0')
+        ->getQuery()
+        ->getSingleScalarResult();
+
+
+    return ['companies' => $companies, 'totalCompanies' => $totalCompanies];
+
+//    return $companies;
+}
+
+//$var = StatsCompany($entityManager, 1);
+//var_dump($var);
 
 function ListAddress($entityManager, $ville, $postalcode)
 {

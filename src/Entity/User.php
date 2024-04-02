@@ -10,6 +10,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 #[ORM\Table(name: 'user_')]
 class User
 {
+
+//    @todo : ajouter le sel
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue]
@@ -30,41 +32,40 @@ class User
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private ?string $login = null;
 
-    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private ?string $password = null;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private ?bool $del = null;
 
     #[ORM\Column(type: 'integer', nullable: false)]
-    private int $ID_Address;
+    private Address $ID_Address;
 
-    #[ORM\Column(type: 'integer', nullable: false)]
+    #[ORM\Column(type: 'integer', nullable: true)]
     private int $ID_Campus;
 
-    #[ORM\ManyToOne(targetEntity: 'Address')]
+    #[ORM\OneToMany(targetEntity: 'Address', mappedBy: 'user')]
     #[ORM\JoinColumn(name: 'ID_Address', referencedColumnName: 'ID_Address')]
     private ?Address $IDAddress = null;
 
     #[ORM\ManyToOne(targetEntity: 'Campus')]
     #[ORM\JoinColumn(name: 'ID_Campus', referencedColumnName: 'ID_Campus')]
-    private ?Campus $IDCampus = null;
+    private ?int $IDCampus;
 
     #[ORM\OneToMany(targetEntity: 'Postulate', mappedBy: 'user')]
     private $postulates;
 
-    #[ORM\ManyToOne(targetEntity: 'Campus')]
-    #[ORM\JoinColumn(name: 'ID_Campus', referencedColumnName: 'ID_Campus')]
-    private ?Campus $campus = null;
+//    #[ORM\ManyToOne(targetEntity: 'Campus')]
+//    #[ORM\JoinColumn(name: 'ID_Campus', referencedColumnName: 'ID_Campus')]
+//    private ?Campus $campus = null;
 
-//    #[ORM\OneToMany(targetEntity: 'Editwishlist', mappedBy: 'user')]
-//    private $editwishlists;
-//
-////    public function __construct()
-////    {
-////        $this->editwishlists = new ArrayCollection();
+    #[ORM\OneToMany(targetEntity: 'Editwishlist', mappedBy: 'user')]
+    private $editwishlists;
+
+//    public function __construct()
+//    {
+//        $this->editwishlists = new ArrayCollection();
 //    }
-
 
 
     public function getIDUser(): ?int
@@ -138,7 +139,7 @@ class User
         return $this->password;
     }
 
-    public function isPasswordValid (?string $pass): bool
+    public function isPasswordValid(?string $pass): bool
     {
         return password_verify($pass, $this->getPassword());
     }
@@ -147,8 +148,8 @@ class User
     public function setPassword(?string $password): void
     {
         error_log('set password : ' . $password . "\n");
-        $options = ['cost' => 12]; // You can adjust the cost factor based on your requirements
-        $encodedPassword = password_hash($password, PASSWORD_BCRYPT, $options);
+        $encodedPassword = password_hash($password, PASSWORD_BCRYPT);
+//        $encodedPassword = hash('sha256', $password);
         $this->password = $encodedPassword;
     }
 
@@ -168,9 +169,9 @@ class User
         return $this->ID_Address;
     }
 
-    public function setIDAddress(int $ID_Address): void
+    public function setIDAddress(Address $ID_Address): void
     {
-        error_log('set ID_Address : ' . $ID_Address . "\n");
+//        error_log('set ID_Address : ' . $ID_Address . "\n");
         $this->ID_Address = $ID_Address;
     }
 
@@ -181,7 +182,7 @@ class User
 
     public function setIDCampus(int $ID_Campus): void
     {
-        error_log('set ID_Campus : ' . $ID_Campus . "\n");
+//        error_log('set ID_Campus : ' . $ID_Campus . "\n");
         $this->ID_Campus = $ID_Campus;
     }
 }

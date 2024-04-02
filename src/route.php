@@ -9,6 +9,7 @@ use Slim\Exception\HttpNotFoundException;
 
 require_once __DIR__ . "/index_requirement.php";
 
+session_start();
 
 $app->get('/', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'Accueil.html', [
@@ -16,64 +17,156 @@ $app->get('/', function ($request, $response, $args) {
 })->setName('profile');
 
 
-// Define named route
-$app->get('/opinion', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'opinion.twig', [
-    ]);
+$app->map(['GET', 'POST'], '/opinion', function ($request, $response, $args) use ($entityManager) {
+    if (!StudentPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
+    $httpMethod = $request->getMethod();
+    if ($httpMethod === 'GET') {
+        return $this->get('view')->render($response, 'opinion.twig', [
+        ]);
+    } elseif ($httpMethod === 'POST') {
+        var_dump("test");
+        print_r("err");
+
+        $data = $request->getParsedBody();
+        $opinion = "vide";
+        $rating = 5;
+
+        if (htmlspecialchars($_POST['rating']) !== null) {
+            $rating = htmlspecialchars($_POST['rating']);
+        };
+
+        if (htmlspecialchars($_POST['comment']) !== null) {
+            $opinion = htmlspecialchars($_POST['comment']);
+        };
+
+        $Opinion = new \Entity\Opinion();
+        $Opinion->setIDCompany(1);
+        $Opinion->setOpinion($opinion);
+        $Opinion->setSender($_SESSION['firstName'] . " " . $_SESSION['lastName']);
+        $Opinion->setMark($rating);
+
+        try {
+            error_log('Before persist');
+            $entityManager->persist($Opinion);
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            var_dump($e->getMessage());
+            return $response->withStatus(500);
+        }
+
+        return $response->withStatus(302)->withHeader('Location', '/showCompanyDetails');
+    }
+
 })->setName('opinion');
 
+
 $app->get('/creationOffers', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'creationOffers.twig', [
-    ]);
+    if (PilotPerm()) {
+        return $this->get('view')->render($response, 'creationOffers.twig', [
+        ]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('CreationOffre');
 
 $app->get('/profilPilot', function ($request, $response, $args) {
+    if (!PilotPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'profilPilot.twig', [
+        'prenom' => $_SESSION['firstName'],
+        'nom' => $_SESSION['lastName'],
+        'promotion' => $_SESSION['years'],
+        'centre' => $_SESSION['centre']
     ]);
 })->setName('ProfilPilot');
 
 $app->get('/companyMenu', function ($request, $response, $args) {
+    if (!StudentPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'companyMenu.twig', [
     ]);
 })->setName('companyMenu');
 
 $app->get('/showCompanyDetails', function ($request, $response, $args) {
+    if (!StudentPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'showCompanyDetails.twig', [
     ]);
 })->setName('Details company');
 
-$app->get('/statsCompany', function ($request, $response, $args) {
+//$app->get('/statsCompany/{page}', function ($request, $response, $args) use ($entityManager) {
+//
+//    $statsCompany = StatsCompany($entityManager, $args['page']);
+//
+//    return $this->get('view')->render($response, 'statsCompany.twig', [
+//        'data' => $statsCompany,
+//        'page' => $args['page']
+//    ]);
+//})->setName('Stats company');
+
+$app->get('/statsCompany/{page}', function ($request, $response, $args) use ($entityManager) {
+    if (!StudentPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
+
+    $statsCompany = StatsCompany($entityManager, $args['page']);
+
     return $this->get('view')->render($response, 'statsCompany.twig', [
+        'data' => $statsCompany['companies'],
+        'page' => $args['page'],
+        'totalCompanies' => $statsCompany['totalCompanies']
     ]);
 })->setName('Stats company');
 
+
 $app->get('/publishOffers', function ($request, $response, $args) {
+    if (!PilotPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'publishOffers.twig', [
     ]);
 })->setName('Publish Offers');
 
 $app->get('/listOffers', function ($request, $response, $args) {
+    if (!PilotPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'listOffers.twig', [
     ]);
 })->setName('list of offers');
 
 $app->get('/listStudents', function ($request, $response, $args) {
+    if (!PilotPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'listStudents.twig', [
     ]);
 })->setName('list of students');
 
 $app->get('/statsStudents', function ($request, $response, $args) {
+    if (!PilotPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'StatsStudents.twig', [
     ]);
 })->setName('stats of students');
 
 $app->get('/creationStudents', function ($request, $response, $args) {
+    if (!PilotPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'creationStudents.twig', [
     ]);
 })->setName('stats of students');
 
 
-$app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use ($entityManager) {
+$app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use ($entityManager, $centers) {
+
     $httpMethod = $request->getMethod();
 
     if ($httpMethod === 'GET') {
@@ -83,75 +176,133 @@ $app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use (
             $email = htmlspecialchars($_POST['email']);
             $password = htmlspecialchars($_POST['password']);
 
-            $options = ['cost' => 12]; // You can adjust the cost factor based on your requirements
-            $encodedPassword = password_hash("password", PASSWORD_BCRYPT, $options);
-            $correctpassword = $encodedPassword;
+            $queryBuilder = $entityManager->createQueryBuilder();
+            $queryBuilder
+                ->select('u.ID_User', 'u.password', 'u.type', 'u.firstName', 'u.lastName', 'u.years')
+                ->from('Entity\User', 'u')
+                ->Where('u.login = :login')
+                ->setParameter('login', $_POST['email'])
+                ->andWhere('u.del = :del')
+                ->setParameter('del', false);
+            $query = $queryBuilder->getQuery();
+            $users = $query->getResult();
 
+            foreach ($users as $user) {
 
-            setcookie('email', $email, time() + (30 * 60), "/");
-//            setcookie('password', $password, time() + (30 * 60), "/");
+                if (password_verify($password, $user['password'])) {
+//                    setcookie('firstName', $user['firstName'], time() + (10 * 60), "/");
+//                    setcookie('lastName', $user['lastName'], time() + (10 * 60), "/");
+//                    setcookie('years', $user['years'], time() + (10 * 60), "/");
+//                    setcookie('centre', $centers[$user['ID_Campus'] + 1], time() + (10 * 60), "/");
+                    $_SESSION['firstName'] = $user['firstName'];
+                    $_SESSION['lastName'] = $user['lastName'];
+                    $_SESSION['years'] = $user['years'];
+                    $_SESSION['centre'] = $centers[$user['ID_Campus'] + 1];
+                    $_SESSION['ID_User'] = $user['ID_User'];
 
-            if (password_verify($password, $correctpassword)) {
-                return $this->get('view')->render($response, '/profilStudents.twig', [
-                    'email' => $email,
-                    'password' => $password
-                ]);
-            } else {
-                return $this->get('view')->render($response, '/login.twig', [
-                    'error' => 'Email or password not correct'
-                ]);
+                    if ($user['type'] == "2") {
+//                        setcookie('type', "Admin", time() + (10 * 60), "/");
+                        $_SESSION['type'] = "Admin";
+                        return $response->withStatus(302)->withHeader('Location', '/profilAdmin');
+                    } elseif ($user['type'] == "1") {
+//                        setcookie('type', "Pilot", time() + (10 * 60), "/");
+                        $_SESSION['type'] = "Pilot";
+                        return $response->withStatus(302)->withHeader('Location', '/profilPilot');
+                    } elseif ($user['type'] == "0") {
+//                        setcookie('type', "Student", time() + (10 * 60), "/");
+                        $_SESSION['type'] = "Student";
+                        return $response->withStatus(302)->withHeader('Location', '/profilStudents');
+                    }
+
+                }
             }
-
-        } else {
-            // Handle the case when the email or password is not provided in the POST request
-            return $this->get('view')->render($response, '/login.twig', [
-                'error' => 'Email or password not provided'
-            ]);
+            return $this->get('view')->render($response, 'login.twig', []);
         }
     }
 });
 
 
 $app->get('/listCompany', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'listCompany.twig', [
-    ]);
+    if (PilotPerm()) {
+        return $this->get('view')->render($response, 'listCompany.twig', [
+        ]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('list of company');
 
 $app->get('/publishCompany', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'publishCompany.twig', [
-    ]);
+    if (PilotPerm()) {
+        return $this->get('view')->render($response, 'publishCompany.twig', [
+        ]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('Publication of company');
 
-$app->get('/profilStudents', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'profilStudents.twig', [
+
+$app->get('/accessDenied', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'accessDenied.twig', [
     ]);
+})->setName('Access denied to our site');
+
+$app->get('/profilStudents', function ($request, $response, $args) {
+    if (SpecialPerm()) {
+        return $this->get('view')->render($response, 'profilStudents.twig', [
+            'prenom' => $_SESSION['firstName'],
+            'nom' => $_SESSION['lastName'],
+            'promotion' => $_SESSION['years'],
+            'centre' => $_SESSION['centre']
+        ]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('Profil of students');
 
 $app->get('/application', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'application.twig', [
-    ]);
+    if (SpecialPerm()) {
+        return $this->get('view')->render($response, 'application.twig', [
+        ]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('application');
 
 $app->get('/statsOffers', function ($request, $response, $args) {
+    if (!StudentPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'statsOffers.twig', [
     ]);
 })->setName('Stats of Offers');
 
 $app->get('/listPilot', function ($request, $response, $args) use ($entityManager) {
+    if (AdminPerm()) {
 
-    $pilotdata = ListPilot($entityManager);
+        $pilotdata = ListPilot($entityManager);
 
-    return $this->get('view')->render($response, 'listPilot.twig', ['data' => $pilotdata]);
+        return $this->get('view')->render($response, 'listPilot.twig', ['data' => $pilotdata]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('list of pilot');
 
 $app->get('/creationPilot', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'creationPilot.twig', [
-    ]);
+    if (AdminPerm()) {
+        return $this->get('view')->render($response, 'creationPilot.twig', [
+        ]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('creation of pilot');
 
 $app->get('/profilAdmin', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'profilAdmin.twig', [
-    ]);
+    if (AdminPerm()) {
+        return $this->get('view')->render($response, 'profilAdmin.twig', [
+        ]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('Profil of Admin');
 
 $app->get('/about', function ($request, $response, $args) {
@@ -164,22 +315,38 @@ $app->get('/contact', function ($request, $response, $args) {
     ]);
 })->setName('Contact');
 
+$app->get('/offersMenu', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'offersMenu.twig', [
+    ]);
+})->setName('Menu offers');
+
 $app->get('/privacy', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'privacy.twig', [
     ]);
 })->setName('Privacy');
 
+$app->get('/disconnect', function ($request, $response, $args) {
+    session_destroy();
+    session_start();
+    return $response->withStatus(302)->withHeader('Location', '/');
+});
 
-// Render from string
-$app->get('/hi/{name}', function ($request, $response, $args) {
-    $str = $this->get('view')->fetchFromString(
-        '<p>Hi, my name is {{ name }}.</p>',
-        [
-            'name' => $args['name']
-        ]
-    );
-    $response->getBody()->write($str);
-    return $response;
+$app->get('/denied', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'denied.twig', [
+    ]);
+});
+
+
+$app->get('/redirect', function ($request, $response, $args) {
+    if (isset($_SESSION['type']) && $_SESSION['type'] == "Admin") {
+        return $response->withStatus(302)->withHeader('Location', '/profilAdmin');
+    } elseif (isset($_SESSION['type']) && $_SESSION['type'] == "Pilot") {
+        return $response->withStatus(302)->withHeader('Location', '/profilPilot');
+    } elseif (isset($_SESSION['type']) && $_SESSION['type'] == "Student") {
+        return $response->withStatus(302)->withHeader('Location', '/profilStudents');
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 });
 
 
@@ -338,130 +505,52 @@ $app->get('/fetch', function ($request, $response, $args) {
 })->setName('Profil of Admin');
 
 
-$app->post('/newaddress', function (Request $request, Response $response) {
-    $data = $request->getParsedBody();
-//    $this->get('address')->create($data);
-    exec("php D:\Download\apps_travail\xampp\htdocs\site\bin\create_address.php api 1", $output, $status);
-
-    return $response;
-});
-
-$app->map(['GET', 'POST'], '/testpost', function ($request, $response, $args) use ($entityManager) {
-    $httpMethod = $request->getMethod();
-
-    if ($httpMethod === 'GET') {
-        return $this->get('view')->render($response, 'testpost.html', []);
-    } elseif ($httpMethod === 'POST') {
-        error_log("post");
-        $Address = new \Entity\Address();
+//$app->post('/newaddress', function (Request $request, Response $response) {
+//    $data = $request->getParsedBody();
+////    $this->get('address')->create($data);
+//    exec("php D:\Download\apps_travail\xampp\htdocs\site\bin\create_address.php api 1", $output, $status);
 //
+//    return $response;
+//});
 
-        $data = $request->getParsedBody();
-//        $a = "api";
-//        $b = "1";
-
-        if (isset($data['a'])) {
-            $a = $data['a'];
-        }
-        if (isset($data['b'])) {
-            $b = $data['b'];
-        }
-//        $command = "php ../bin/create_address.php ". $a . " " . $b;
-//        exec($command, $output, $status);
-
-        $Address->setVille($a);
-        $Address->setPostalCode($b);
-
-        try {
-            error_log('Before persist');
-            $entityManager->persist($Address);
-            $entityManager->flush();
-        } catch (\Exception $e) {
-            error_log($e->getMessage());
-            return $response->withStatus(500);
-        }
-
-        return $this->get('view')->render($response, 'testpost.html', []);
-
-    }
-
-
-});
-
-
-$app->map(['GET', 'POST'], '/testcreation', function ($request, $response, $args) use ($entityManager) {
-    $httpMethod = $request->getMethod();
-
-    if ($httpMethod === 'GET') {
-        return $this->get('view')->render($response, 'testcreation.html', []);
-    } elseif ($httpMethod === 'POST') {
-        error_log("post");
-        $User = new \Entity\User();
+//$app->map(['GET', 'POST'], '/testpost', function ($request, $response, $args) use ($entityManager) {
+//    $httpMethod = $request->getMethod();
 //
-
-        $data = $request->getParsedBody();
-
-
-        if (isset($data['firstName'])) {
-            $firstName = $data['firstName'];
-        }
-
-        if (isset($data['lastName'])) {
-            $lastName = $data['lastName'];
-        }
-
-        if (isset($data['type'])) {
-            $type = $data['type'];
-        }
-
-        if (isset($data['years'])) {
-            $years = $data['years'];
-        }
-
-        if (isset($data['login'])) {
-            $login = $data['login'];
-        }
-
-        if (isset($data['password'])) {
-            $password = $data['password'];
-        }
-
-        if (isset($data['del'])) {
-            $del = $data['del'];
-        }
-
-        if (isset($data['ID_Address'])) {
-            $ID_Address = $data['ID_Address'];
-        }
-
-        if (isset($data['ID_Campus'])) {
-            $ID_Campus = $data['ID_Campus'];
-        }
-
-
-        $User->setFirstname($firstName);
-        $User->setLastname($lastName);
-        $User->setType($type);
-        $User->setYears($years);
-        $User->setLogin($login);
-        $User->setPassword($password);
-        $User->setDel($del);
-        $User->setIDAddress($ID_Address);
-        $User->setIDCampus($ID_Campus);
-
-        try {
-            $entityManager->persist($User);
-            $entityManager->flush();
-        } catch (\Exception $e) {
-            error_log($e->getMessage());
-            return $response->withStatus(500);
-        }
-
-        return $this->get('view')->render($response, 'testcreation.html', []);
-
-    }
-});
-
+//    if ($httpMethod === 'GET') {
+//        return $this->get('view')->render($response, 'testpost.html', []);
+//    } elseif ($httpMethod === 'POST') {
+////        error_log("post");
+////        $Address = new \Entity\Address();
+////
+//        $data = $request->getParsedBody();
+////        $a = "api";
+////        $b = "1";
+//
+//        if (isset($data['a'])) {
+//            $a = $data['a'];
+//        }
+//        if (isset($data['b'])) {
+//            $b = $data['b'];
+//        }
+//
+//        $Address->setVille($a);
+//        $Address->setPostalCode($b);
+//
+//        try {
+//            error_log('Before persist');
+//            $entityManager->persist($Address);
+//            $entityManager->flush();
+//        } catch (\Exception $e) {
+//            error_log($e->getMessage());
+//            return $response->withStatus(500);
+//        }
+//
+//        return $this->get('view')->render($response, 'testpost.html', []);
+//
+//    }
+//
+//
+//});
 
 
 $app->options('/{routes:.+}', function ($request, $response, $args) {
@@ -477,6 +566,6 @@ $app->add(function ($request, $handler) {
 });
 
 
-$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
-    throw new HttpNotFoundException($request);
-});
+//$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
+//    throw new HttpNotFoundException($request);
+//});
