@@ -18,6 +18,9 @@ $app->get('/', function ($request, $response, $args) {
 
 
 $app->map(['GET', 'POST'], '/opinion', function ($request, $response, $args) use ($entityManager) {
+    if (!StudentPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     $httpMethod = $request->getMethod();
     if ($httpMethod === 'GET') {
         return $this->get('view')->render($response, 'opinion.twig', [
@@ -73,20 +76,25 @@ $app->get('/profilPilot', function ($request, $response, $args) {
         return $response->withStatus(302)->withHeader('Location', '/');
     }
     return $this->get('view')->render($response, 'profilPilot.twig', [
-        'prenom' => $_COOKIE['firstName'],
-        'nom' => $_COOKIE['lastName'],
-        'promotion' => $_COOKIE['years'],
-        'centre' => $_COOKIE['centre']
+        'prenom' => $_SESSION['firstName'],
+        'nom' => $_SESSION['lastName'],
+        'promotion' => $_SESSION['years'],
+        'centre' => $_SESSION['centre']
     ]);
 })->setName('ProfilPilot');
 
 $app->get('/companyMenu', function ($request, $response, $args) {
-
+    if (!StudentPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'companyMenu.twig', [
     ]);
 })->setName('companyMenu');
 
 $app->get('/showCompanyDetails', function ($request, $response, $args) {
+    if (!StudentPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'showCompanyDetails.twig', [
     ]);
 })->setName('Details company');
@@ -102,6 +110,9 @@ $app->get('/showCompanyDetails', function ($request, $response, $args) {
 //})->setName('Stats company');
 
 $app->get('/statsCompany/{page}', function ($request, $response, $args) use ($entityManager) {
+    if (!StudentPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 
     $statsCompany = StatsCompany($entityManager, $args['page']);
 
@@ -155,6 +166,7 @@ $app->get('/creationStudents', function ($request, $response, $args) {
 
 
 $app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use ($entityManager, $centers) {
+
     $httpMethod = $request->getMethod();
 
     if ($httpMethod === 'GET') {
@@ -251,6 +263,9 @@ $app->get('/application', function ($request, $response, $args) {
 })->setName('application');
 
 $app->get('/statsOffers', function ($request, $response, $args) {
+    if (!StudentPerm()) {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
     return $this->get('view')->render($response, 'statsOffers.twig', [
     ]);
 })->setName('Stats of Offers');

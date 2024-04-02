@@ -8,14 +8,14 @@ use Entity\Address;
 require_once __DIR__ . "/../doctrine/bootstrap.php";
 $centers = array("erreur", "Reims", "Lyon", "Paris", "Nantes", "Strasbourg", "Bordeaux", "Toulouse", "Rennes", "Lille", "Marseille", "Tunis", "Narbonne", "Clermont-Ferrand", "Aix-en-Provence", "Marseille", "Lorient", "Villeurbanne", "Brest", "Nancy", "Montpellier");
 
-//function StudentPerm()
-//{
-//    if (isset($_SESSION) && ($_SESSION['type'] == "Student" || $_SESSION['type'] == "Pilot" || $_SESSION['type'] == "Admin")) {
-//        return true;
-//    } else {
-//        return false;
-//    }
-//}
+function StudentPerm()
+{
+    if (isset($_SESSION) && ($_SESSION['type'] == "Student" || $_SESSION['type'] == "Pilot" || $_SESSION['type'] == "Admin")) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 function PilotPerm()
 {
