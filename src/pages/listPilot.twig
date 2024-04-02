@@ -3,6 +3,22 @@
 {% block title %}Stagehub - Liste des pilotes{% endblock %}
 
 {% block filter %}
+    <form id="filterForm">
+        <input type="text" id="searchKeyword" name="search" placeholder="Rechercher...">
+        <select id="localisation" name="localisation">
+            <option value="">Choisir une localisation</option>
+            <option value="Reims">Reims</option>
+            <option value="Reims">nancy</option>
+            <option value="Reims">stragboug</option>
+            <option value="Reims">paris</option>
+
+
+        </select>
+        <!-- Ajoutez d'autres filtres ici -->
+        <button type="submit" id="applyFilters" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Appliquer les filtres
+        </button>
+    </form>N
     <div class="flex-col">
         <!-- Sidebar -->
         <div class="ml-0 mt-0 bg-gray-200 p-4">

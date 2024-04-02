@@ -3,6 +3,31 @@
 {% block title %}Stagehub - Liste des entreprises{% endblock %}
 
 {% block filter %}
+    <form id="filterForm">
+        <input type="text" id="searchKeyword" name="search" placeholder=" domaine de stage ...">
+        <select id="localisation" name="localisation">
+            <option value="">Choisir une localisation</option>
+            <option value="Reims">Reims</option>
+            <option value="Reims">nancy</option>
+            <option value="Reims">stragboug</option>
+            <option value="Reims">paris</option>
+
+
+        </select>
+        <select id="localisation" name="promotion ">
+            <option value=""> secteur d'activité  </option>
+            <option value="Reims">Technologie et informatique </option>
+            <option value="Reims">industrie</option>
+            <option value="Reims">transport et logistique </option>
+            <option value="Reims">meszdias et divertissements</option>
+            <option value="Reims"> finance et asssurance</option>
+
+        </select>
+        <!-- Ajoutez d'autres filtres ici -->
+        <button type="submit" id="applyFilters" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Appliquer les filtres
+        </button>
+    </form>
     <div class="flex-col">
         <!-- Sidebar -->
         <div class="ml-0 mt-0 bg-gray-200 p-4">
@@ -10,30 +35,13 @@
             <h2 class="text-lg font-semibold mb-1">Affinez votre recherche</h2>
             <div class="space-y-2">
                 <!-- Example filter options -->
-                <div>
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">
-                        Localisation
-                    </label>
-                    <select id="Localisation" name="category" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500">
-                        <option value=""> Veuillez choisir une ville.. </option>
-                        <option value="1">Reims</option>
-                        <option value="2">Paris</option>
-                        <option value="3">Nancy</option>
-                    </select>
-                </div>
+
                 <!-- Add more filter options here -->
                 <div>
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">
-                        Domaine d'expertise
+
                     </label>
-                    <select id="Domaine d'expertise" name="category" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500">
-                        <option value="">Quelle domaine cherchez-vous ?</option>
-                        <option value="1">A1</option>
-                        <option value="2">A2</option>
-                        <option value="3">A3</option>
-                        <option value="3">A4</option>
-                        <option value="3">A5</option>
-                    </select>
+
 
                 </div>
             </div>
