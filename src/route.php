@@ -138,10 +138,7 @@ $app->get('/statsOffers', function ($request, $response, $args) {
 })->setName('Stats of Offers');
 
 $app->get('/listPilot', function ($request, $response, $args) use ($entityManager) {
-
-    $pilotdata = ListPilot($entityManager);
-
-    return $this->get('view')->render($response, 'listPilot.twig', ['data' => $pilotdata]);
+    return $this->get('view')->render($response, 'listPilot.twig', []);
 })->setName('list of pilot');
 
 $app->get('/creationPilot', function ($request, $response, $args) {
