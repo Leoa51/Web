@@ -338,13 +338,13 @@ $app->get('/fetch', function ($request, $response, $args) {
 })->setName('Profil of Admin');
 
 
-//$app->post('/newaddress', function (Request $request, Response $response) {
-//    $data = $request->getParsedBody();
-////    $this->get('address')->create($data);
-//    exec("php D:\Download\apps_travail\xampp\htdocs\site\bin\create_address.php api 1", $output, $status);
-//
-//    return $response;
-//});
+$app->post('/newaddress', function (Request $request, Response $response) {
+    $data = $request->getParsedBody();
+//    $this->get('address')->create($data);
+    exec("php D:\Download\apps_travail\xampp\htdocs\site\bin\create_address.php api 1", $output, $status);
+
+    return $response;
+});
 
 $app->map(['GET', 'POST'], '/testpost', function ($request, $response, $args) use ($entityManager) {
     $httpMethod = $request->getMethod();
@@ -352,9 +352,10 @@ $app->map(['GET', 'POST'], '/testpost', function ($request, $response, $args) us
     if ($httpMethod === 'GET') {
         return $this->get('view')->render($response, 'testpost.html', []);
     } elseif ($httpMethod === 'POST') {
-//        error_log("post");
-//        $Address = new \Entity\Address();
+        error_log("post");
+        $Address = new \Entity\Address();
 //
+
         $data = $request->getParsedBody();
 //        $a = "api";
 //        $b = "1";
@@ -386,6 +387,81 @@ $app->map(['GET', 'POST'], '/testpost', function ($request, $response, $args) us
 
 
 });
+
+
+$app->map(['GET', 'POST'], '/testcreation', function ($request, $response, $args) use ($entityManager) {
+    $httpMethod = $request->getMethod();
+
+    if ($httpMethod === 'GET') {
+        return $this->get('view')->render($response, 'testcreation.html', []);
+    } elseif ($httpMethod === 'POST') {
+        error_log("post");
+        $User = new \Entity\User();
+//
+
+        $data = $request->getParsedBody();
+
+
+        if (isset($data['firstName'])) {
+            $firstName = $data['firstName'];
+        }
+
+        if (isset($data['lastName'])) {
+            $lastName = $data['lastName'];
+        }
+
+        if (isset($data['type'])) {
+            $type = $data['type'];
+        }
+
+        if (isset($data['years'])) {
+            $years = $data['years'];
+        }
+
+        if (isset($data['login'])) {
+            $login = $data['login'];
+        }
+
+        if (isset($data['password'])) {
+            $password = $data['password'];
+        }
+
+        if (isset($data['del'])) {
+            $del = $data['del'];
+        }
+
+        if (isset($data['ID_Address'])) {
+            $ID_Address = $data['ID_Address'];
+        }
+
+        if (isset($data['ID_Campus'])) {
+            $ID_Campus = $data['ID_Campus'];
+        }
+
+
+        $User->setFirstname($firstName);
+        $User->setLastname($lastName);
+        $User->setType($type);
+        $User->setYears($years);
+        $User->setLogin($login);
+        $User->setPassword($password);
+        $User->setDel($del);
+        $User->setIDAddress($ID_Address);
+        $User->setIDCampus($ID_Campus);
+
+        try {
+            $entityManager->persist($User);
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+            return $response->withStatus(500);
+        }
+
+        return $this->get('view')->render($response, 'testcreation.html', []);
+
+    }
+});
+
 
 
 $app->options('/{routes:.+}', function ($request, $response, $args) {

@@ -57,13 +57,13 @@ class User
     #[ORM\JoinColumn(name: 'ID_Campus', referencedColumnName: 'ID_Campus')]
     private ?Campus $campus = null;
 
-    #[ORM\OneToMany(targetEntity: 'Editwishlist', mappedBy: 'user')]
-    private $editwishlists;
-
-    public function __construct()
-    {
-        $this->editwishlists = new ArrayCollection();
-    }
+//    #[ORM\OneToMany(targetEntity: 'Editwishlist', mappedBy: 'user')]
+//    private $editwishlists;
+//
+////    public function __construct()
+////    {
+////        $this->editwishlists = new ArrayCollection();
+//    }
 
 
 

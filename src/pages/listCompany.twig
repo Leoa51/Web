@@ -12,14 +12,17 @@
                 <!-- Example filter options -->
                 <div>
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">
+                        Nom
+                    </label>
+                    <input type="search" id="default-search" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500" placeholder="Qui recherchez-vous ?" required />
+
+                </div>
+                <div>
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">
                         Localisation
                     </label>
-                    <select id="Localisation" name="category" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500">
-                        <option value=""> Veuillez choisir une ville.. </option>
-                        <option value="1">Reims</option>
-                        <option value="2">Paris</option>
-                        <option value="3">Nancy</option>
-                    </select>
+                    <input type="search" id="default-search" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500" placeholder="Entrez le code postal" required />
+
                 </div>
                 <!-- Add more filter options here -->
                 <div>
@@ -34,7 +37,10 @@
                         <option value="3">A4</option>
                         <option value="3">A5</option>
                     </select>
+                </div>
 
+                <div class="text-right">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Rechercher</button>
                 </div>
             </div>
         </div>
