@@ -240,6 +240,12 @@ $app->get('/publishCompany', function ($request, $response, $args) {
     }
 })->setName('Publication of company');
 
+
+$app->get('/accessDenied', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'accessDenied.twig', [
+    ]);
+})->setName('Access denied to our site');
+
 $app->get('/profilStudents', function ($request, $response, $args) {
     if (SpecialPerm()) {
         return $this->get('view')->render($response, 'profilStudents.twig', [
@@ -306,6 +312,11 @@ $app->get('/contact', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'contact.twig', [
     ]);
 })->setName('Contact');
+
+$app->get('/offersMenu', function ($request, $response, $args) {
+    return $this->get('view')->render($response, 'offersMenu.twig', [
+    ]);
+})->setName('Menu offers');
 
 $app->get('/privacy', function ($request, $response, $args) {
     return $this->get('view')->render($response, 'privacy.twig', [

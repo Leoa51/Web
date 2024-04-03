@@ -1,0 +1,131 @@
+{% extends 'templates/headerFooterSearch.twig' %}
+
+{% block title %}Stagehub - Menu des offres{% endblock %}
+
+{% block filter %}
+    <div class="flex-col">
+
+        <div class="ml-0 mt-0 bg-gray-200 p-4">
+
+            <h2 class="text-lg font-semibold mb-1">Filter Options</h2>
+            <div class="space-y-2">
+
+                <div>
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="location">
+                        Localisation
+                    </label>
+                    <select id="location" name="location" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500">
+                        <option value="">Veuillez choisir une ville..</option>
+                        <option value="1">Reims</option>
+                        <option value="2">Paris</option>
+                        <option value="3">Nancy</option>
+                    </select>
+                </div>
+                <!-- Add more filter options here -->
+                <div>
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="expertise">
+                        Domaine d'expertise
+                    </label>
+                    <select id="expertise" name="expertise" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500">
+                        <option value="">Quelle domaine cherchez-vous ?</option>
+                        <option value="1">Info</option>
+                        <option value="2">Marketing</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <body>
+    <div class="container mx-auto px-4 py-8">
+        <div  class="bg-white shadow-md rounded-lg p-6 flex items-center">
+            <img src="https://mairiedelepin.fr/wp-content/uploads/2023/06/OFFRE-DE-STAGE-LOGO-FIN.png" alt="Offers Logo" class="w-24 h-24 rounded-full mr-6">
+            <div>
+                <h2 class="text-2xl font-semibold text-gray-800">Stage en cybersécurité</h2>
+                <p class="text-gray-600">Entreprise: Orange</p>
+                <p class="text-gray-600">Localité: Reims</p>
+                <p class="text-gray-600">Domaine d'expertise: Réseaux Telecom, vente</p>
+                <br>
+                <div class="flex items-center">
+                    <a href="/application" class="bg-blue-500 232 text-white font-bold py-2 px-4 rounded center">Voir l'offre</a>
+                    <input id="wishlist-checkbox" type="checkbox" class="w-5 h-5 ml-2 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="wishlist-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-black">Ajouter à la wishlist</label>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div  class="bg-white shadow-md rounded-lg p-6 flex items-center">
+            <img src="https://mairiedelepin.fr/wp-content/uploads/2023/06/OFFRE-DE-STAGE-LOGO-FIN.png" alt="Offers Logo" class="w-24 h-24 rounded-full mr-6">
+            <div>
+                <h2 class="text-2xl font-semibold text-gray-800">Stage developpement mobile</h2>
+                <p class="text-gray-600">Entreprise: Facebook</p>
+                <p class="text-gray-600">Localité: Reims</p>
+                <p class="text-gray-600">Domaine d'expertise: Développement Full-Stack</p>
+                <br>
+                <div class="flex items-center">
+                    <a href="/application" class="bg-blue-500 232 text-white font-bold py-2 px-4 rounded center">Voir l'offre</a>
+                    <input id="wishlist-checkbox1" type="checkbox" class="w-5 h-5 ml-2 text-green-500 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="wishlist-checkbox1" class="ml-2 text-sm font-medium text-black dark:text-black">Ajouter à la wishlist</label>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center space-x-4 mt-8 mb-8">
+            <a href="/statsCompany" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+                Stats des entreprises
+            </a>
+        </div>
+    </div>
+
+    <script>
+    const express = require('express');
+    const mysql = require('mysql');
+    const bodyParser = require('body-parser');
+    const cookieParser = require('cookie-parser');
+
+    const app = express();
+    app.use(bodyParser.json());
+    app.use(cookieParser());
+
+    const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'test'
+    });
+
+    connection.connect((err) => {
+    if (err) throw err;
+    console.log('Connected to the database');
+    });
+
+    app.put('/your-endpoint/:offerId', (req, res) => {
+    const offerId = req.params.offerId;
+    const userId = req.cookies.userId; // Remplacez 'userId' par le nom du cookie que vous utilisez pour stocker l'ID de l'utilisateur
+    const isInWishlist = req.body.isInWishlist;
+
+    if (!userId) {
+    return res.status(401).send('Vous devez être connecté pour accéder à cette ressource');
+    }
+
+    const query = `
+    UPDATE editwishlist
+    SET putWishlist = ${isInWishlist}
+    WHERE ID_User = ${userId} AND ID_Offers = ${offerId};
+    `;
+
+    connection.query(query, (error, results, fields) => {
+    if (error) throw error;
+    res.send('Wishlist mise à jour avec succès');
+    });
+    });
+
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+    });
+    </script>
+    </body>
+{% endblock %}

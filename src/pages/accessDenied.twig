@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StageHub - Accès refusé</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link href="manifest.json" rel="manifest">
+</head>
+
+<body class="bg-gray-100">
+<header class="bg-red-500 text-white">
+    <div class="container mx-auto px-6 py-24">
+        <div class="flex items-center justify-center">
+            <div>
+                <h1 class="text-5xl font-bold mb-6">Accès refusé</h1>
+                <p class="text-xl mb-8">Désolé, vous n'avez pas les autorisations nécessaires pour accéder à cette page.</p>
+                <a href="/login" class="inline-block px-6 py-3 bg-gray-400 text-white font-semibold rounded-lg hover:bg-gray-600">Retour à la page de connexion</a>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="container mx-auto px-6 py-16">
+    <div class="flex justify-center items-center">
+        <img src="logoStageHub.png" alt="Logo StageHub" class="w-480 h-128 mb-8">
+    </div>
+    <h2 class="text-4xl font-bold text-center mb-8">Comment ça marche ?</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div class="text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 mx-auto text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            <h3 class="text-xl font-semibold mb-2">Connectez-vous</h3>
+            <p class="text-gray-600">Vos comptes sont déjà créés, vous n'avez qu'à vous connecter grâce aux identifiants distribués</p>
+        </div>
+        <div class="text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 mx-auto text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <h3 class="text-xl font-semibold mb-2">Recherchez des stages</h3>
+            <p class="text-gray-600">Trouvez des offres de stages correspondant à vos critères</p>
+        </div>
+        <div class="text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 mx-auto text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+            </svg>
+            <h3 class="text-xl font-semibold mb-2">Postulez en ligne</h3>
+            <p class="text-gray-600">Envoyez votre candidature en quelques clics</p>
+        </div>
+    </div>
+</section>
+{% include 'templates/footer.twig' %}
+
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+            .then(function () {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            });
+    }
+</script>
+</body>
+
+</html>
