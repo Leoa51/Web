@@ -271,14 +271,12 @@ $app->get('/statsOffers', function ($request, $response, $args) {
 })->setName('Stats of Offers');
 
 $app->get('/listPilot', function ($request, $response, $args) use ($entityManager) {
-    if (AdminPerm()) {
-
-        $pilotdata = ListPilot($entityManager);
-
-        return $this->get('view')->render($response, 'listPilot.twig', ['data' => $pilotdata]);
-    } else {
+    if (!AdminPerm()) {
         return $response->withStatus(302)->withHeader('Location', '/');
     }
+    $pilotdata = ListPilot($entityManager);
+
+    return $this->get('view')->render($response, 'listPilot.twig', ['data' => $pilotdata]);
 })->setName('list of pilot');
 
 $app->get('/creationPilot', function ($request, $response, $args) {
