@@ -6,40 +6,42 @@
     <div class="container mx-auto px-4 py-8">
         <form class="bg-white shadow-md rounded-lg p-6">
         <h2 class="text-xl font-semibold mb-4">Informations du stage</h2>
-    <form action="/submit-internship" method="post">
+    <form action="/creationOffers" method="POST">
         <div class="mb-4">
             <label class="block text-gray-700 font-medium mb-2" for="company_name">Nom de l'entreprise</label>
-            <input id="company_name" name="company_name" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+            <input id="company" name="company" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
         </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-medium mb-2" for="skills">Compétences demandées</label>
-            <input id="skills" name="skills" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-medium mb-2" for="location">Localisation</label>
-            <input id="location" name="location" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-        </div>
+{#        <div class="mb-4">#}
+{#            <label class="block text-gray-700 font-medium mb-2" for="skills">Compétences demandées</label>#}
+{#            <input id="skills" name="skills" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">#}
+{#        </div>#}
+{#        <div class="mb-4">#}
+{#            <label class="block text-gray-700 font-medium mb-2" for="location">Localisation</label>#}
+{#            <input id="location" name="location" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">#}
+{#        </div>#}
         <div class="mb-4">
             <label class="block text-gray-700 font-medium mb-2" for="promotions">Promotions concernées</label>
-            <input id="promotions" name="promotions" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+            <input id="targetPromotion" name="targetPromotion" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 font-medium mb-2" for="duration">Durée du stage</label>
-            <input id="duration" name="duration" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+            <input id="durationOfInternship" name="durationOfInternship" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 font-medium mb-2" for="remuneration">Rémunération</label>
-            <input id="remuneration" name="remuneration" type="number" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+            <input id="payment" name="payment" type="number" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 font-medium mb-2" for="publication_date">Date de publication de l'offre</label>
-            <input id="publication_date" name="publication_date" type="date" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+            <input id="offerDate" name="offerDate" type="date" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 font-medium mb-2" for="available_places">Nombre de places disponibles</label>
-            <input id="available_places" name="available_places" type="number" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+            <input id="numberOfPlaces" name="numberOfPlaces" type="number" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
         </div>
-        <input class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" type="button" value="Soumettre" onclick="if(validateForm()) { window.location.href='/listOffers'; }">
+        <button class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="submit"> Soumettre
+        </button>
     </form>
 </div>
 
