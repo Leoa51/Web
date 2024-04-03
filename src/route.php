@@ -19,7 +19,7 @@ $app->get('/', function ($request, $response, $args) {
 
 $app->map(['GET', 'POST'], '/opinion', function ($request, $response, $args) use ($entityManager) {
     if (!StudentPerm()) {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
     $httpMethod = $request->getMethod();
     if ($httpMethod === 'GET') {
@@ -67,13 +67,13 @@ $app->get('/creationOffers', function ($request, $response, $args) {
         return $this->get('view')->render($response, 'creationOffers.twig', [
         ]);
     } else {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
 })->setName('CreationOffre');
 
 $app->get('/profilPilot', function ($request, $response, $args) {
     if (!PilotPerm()) {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
     return $this->get('view')->render($response, 'profilPilot.twig', [
         'prenom' => $_SESSION['firstName'],
@@ -85,7 +85,7 @@ $app->get('/profilPilot', function ($request, $response, $args) {
 
 $app->get('/companyMenu', function ($request, $response, $args) {
     if (!StudentPerm()) {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
     return $this->get('view')->render($response, 'companyMenu.twig', [
     ]);
@@ -93,7 +93,7 @@ $app->get('/companyMenu', function ($request, $response, $args) {
 
 $app->get('/showCompanyDetails', function ($request, $response, $args) {
     if (!StudentPerm()) {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
     return $this->get('view')->render($response, 'showCompanyDetails.twig', [
     ]);
@@ -111,7 +111,7 @@ $app->get('/showCompanyDetails', function ($request, $response, $args) {
 
 $app->get('/statsCompany/{page}', function ($request, $response, $args) use ($entityManager) {
     if (!StudentPerm()) {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
 
     $statsCompany = StatsCompany($entityManager, $args['page']);
@@ -126,7 +126,7 @@ $app->get('/statsCompany/{page}', function ($request, $response, $args) use ($en
 
 $app->get('/publishOffers', function ($request, $response, $args) {
     if (!PilotPerm()) {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
     return $this->get('view')->render($response, 'publishOffers.twig', [
     ]);
@@ -134,7 +134,7 @@ $app->get('/publishOffers', function ($request, $response, $args) {
 
 $app->get('/listOffers', function ($request, $response, $args) {
     if (!PilotPerm()) {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
     return $this->get('view')->render($response, 'listOffers.twig', [
     ]);
@@ -142,7 +142,7 @@ $app->get('/listOffers', function ($request, $response, $args) {
 
 $app->get('/listStudents', function ($request, $response, $args) {
     if (!PilotPerm()) {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
     return $this->get('view')->render($response, 'listStudents.twig', [
     ]);
@@ -150,7 +150,7 @@ $app->get('/listStudents', function ($request, $response, $args) {
 
 $app->get('/statsStudents', function ($request, $response, $args) {
     if (!PilotPerm()) {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
     return $this->get('view')->render($response, 'StatsStudents.twig', [
     ]);
@@ -158,7 +158,7 @@ $app->get('/statsStudents', function ($request, $response, $args) {
 
 $app->get('/creationStudents', function ($request, $response, $args) {
     if (!PilotPerm()) {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
     return $this->get('view')->render($response, 'creationStudents.twig', [
     ]);
@@ -227,7 +227,7 @@ $app->get('/listCompany', function ($request, $response, $args) {
         return $this->get('view')->render($response, 'listCompany.twig', [
         ]);
     } else {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
 })->setName('list of company');
 
@@ -236,7 +236,7 @@ $app->get('/publishCompany', function ($request, $response, $args) {
         return $this->get('view')->render($response, 'publishCompany.twig', [
         ]);
     } else {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
 })->setName('Publication of company');
 
@@ -255,7 +255,7 @@ $app->get('/profilStudents', function ($request, $response, $args) {
             'centre' => $_SESSION['centre']
         ]);
     } else {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
 })->setName('Profil of students');
 
@@ -264,13 +264,13 @@ $app->get('/application', function ($request, $response, $args) {
         return $this->get('view')->render($response, 'application.twig', [
         ]);
     } else {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
 })->setName('application');
 
 $app->get('/statsOffers', function ($request, $response, $args) {
     if (!StudentPerm()) {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
     return $this->get('view')->render($response, 'statsOffers.twig', [
     ]);
@@ -283,7 +283,7 @@ $app->get('/listPilot', function ($request, $response, $args) use ($entityManage
 
         return $this->get('view')->render($response, 'listPilot.twig', ['data' => $pilotdata]);
     } else {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
 })->setName('list of pilot');
 
@@ -292,7 +292,7 @@ $app->get('/creationPilot', function ($request, $response, $args) {
         return $this->get('view')->render($response, 'creationPilot.twig', [
         ]);
     } else {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
 })->setName('creation of pilot');
 
@@ -301,7 +301,7 @@ $app->get('/profilAdmin', function ($request, $response, $args) {
         return $this->get('view')->render($response, 'profilAdmin.twig', [
         ]);
     } else {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
 })->setName('Profil of Admin');
 
@@ -323,7 +323,7 @@ $app->get('/offersMenu', function ($request, $response, $args) {
             'type' => $_SESSION['type']
         ]);
     } else {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
 })->setName('Menu offers');
 
@@ -352,7 +352,7 @@ $app->get('/redirect', function ($request, $response, $args) {
     } elseif (isset($_SESSION['type']) && $_SESSION['type'] == "Student") {
         return $response->withStatus(302)->withHeader('Location', '/profilStudents');
     } else {
-        return $response->withStatus(302)->withHeader('Location', '/');
+        return $response->withStatus(302)->withHeader('Location', '/accessDenied');
     }
 });
 
