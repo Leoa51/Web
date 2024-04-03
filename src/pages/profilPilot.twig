@@ -3,13 +3,13 @@
 {% block title %}Stagehub - Profil Pilote{% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-8 mt-28">
+<div class="container mx-auto px-4 py-8 mt-28 mb-10">
     <div class="bg-white shadow-md rounded-lg p-6 flex items-center">
         <img src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-person_90382.png" alt="Profile" class="w-24 h-24 rounded-full mr-6">
         <div>
-            <h2 class="text-2xl font-semibold text-gray-800">Daoudi Zak</h2>
-            <p class="text-gray-600">Center: Reims</p>
-            <p class="text-gray-600">Promotion: A2</p>
+            <h2 class="text-2xl font-semibold text-gray-800"> {{ nom }} {{ prenom }}</h2>
+            <p class="text-gray-600">Centre: {{ centre }}</p>
+            <p class="text-gray-600">Promotion assignée : {{ promotion }}</p>
         </div>
     </div>
 
