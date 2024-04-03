@@ -11,6 +11,7 @@ exec("php ../bin/create_user.php John Doe 3 2 jhon@etudiant.com CESI2024 1 1", $
 //exec("php ../bin/create_opinion.php 1 opinion sender 3", $output, $status);
 
 
+
 out($output);
 
 
