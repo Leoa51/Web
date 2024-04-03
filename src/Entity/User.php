@@ -39,14 +39,14 @@ class User
     private ?bool $del = null;
 
     #[ORM\Column(type: 'integer', nullable: false)]
-    private Address $ID_Address;
+    private int $ID_Address;
 
     #[ORM\Column(type: 'integer', nullable: true)]
     private int $ID_Campus;
 
     #[ORM\OneToMany(targetEntity: 'Address', mappedBy: 'user')]
     #[ORM\JoinColumn(name: 'ID_Address', referencedColumnName: 'ID_Address')]
-    private ?Address $IDAddress = null;
+    private ?int $IDAddress = null;
 
     #[ORM\ManyToOne(targetEntity: 'Campus')]
     #[ORM\JoinColumn(name: 'ID_Campus', referencedColumnName: 'ID_Campus')]
@@ -169,7 +169,7 @@ class User
         return $this->ID_Address;
     }
 
-    public function setIDAddress(Address $ID_Address): void
+    public function setIDAddress(int $ID_Address): void
     {
 //        error_log('set ID_Address : ' . $ID_Address . "\n");
         $this->ID_Address = $ID_Address;

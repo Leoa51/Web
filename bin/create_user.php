@@ -16,17 +16,17 @@ $ID_Campus = $argv[8];
 
 echo $firstName . "\n" . $lastName . "\n" . $Type . "\n" . $years . "\n" . $login . "\n" . $password . "\n" . $ID_Address . "\n" . "idcampus : " . $ID_Campus . "\n";
 
-try {
-    $address = $entityManager->getRepository(Address::class)->find($ID_Address);
-//    echo "address : " . $address->getIDAddress() . " " . $address->getVille() . "\n";
-} catch (\Exception $e) {
-    echo "error \n";
-    echo $e->getMessage();
-    $holder = new Address();
-    $holder->setIDAddress(1);
-    $holder->setVille("");
-    $holder->setPostalCode(0);
-}
+//try {
+//    $address = $entityManager->getRepository(Address::class)->find($ID_Address);
+////    echo "address : " . $address->getIDAddress() . " " . $address->getVille() . "\n";
+//} catch (\Exception $e) {
+//    echo "error \n";
+//    echo $e->getMessage();
+//    $holder = new Address();
+//    $holder->setIDAddress(1);
+//    $holder->setVille("");
+//    $holder->setPostalCode(0);
+//}
 
 
 //$campus = $entityManager->getRepository(Campus::class)->find($ID_Campus);
@@ -39,7 +39,7 @@ $User->setType($Type);
 $User->setYears($years);
 $User->setLogin($login);
 $User->setPassword($password);
-$User->setIDAddress($address);
+$User->setIDAddress($ID_Address);
 $User->setIDCampus(1);
 $User->setDel(false);
 
