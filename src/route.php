@@ -503,54 +503,6 @@ $app->get('/fetch', function ($request, $response, $args) {
 })->setName('Profil of Admin');
 
 
-//$app->post('/newaddress', function (Request $request, Response $response) {
-//    $data = $request->getParsedBody();
-////    $this->get('address')->create($data);
-//    exec("php D:\Download\apps_travail\xampp\htdocs\site\bin\create_address.php api 1", $output, $status);
-//
-//    return $response;
-//});
-
-//$app->map(['GET', 'POST'], '/testpost', function ($request, $response, $args) use ($entityManager) {
-//    $httpMethod = $request->getMethod();
-//
-//    if ($httpMethod === 'GET') {
-//        return $this->get('view')->render($response, 'testpost.html', []);
-//    } elseif ($httpMethod === 'POST') {
-////        error_log("post");
-////        $Address = new \Entity\Address();
-////
-//        $data = $request->getParsedBody();
-////        $a = "api";
-////        $b = "1";
-//
-//        if (isset($data['a'])) {
-//            $a = $data['a'];
-//        }
-//        if (isset($data['b'])) {
-//            $b = $data['b'];
-//        }
-//
-//        $Address->setVille($a);
-//        $Address->setPostalCode($b);
-//
-//        try {
-//            error_log('Before persist');
-//            $entityManager->persist($Address);
-//            $entityManager->flush();
-//        } catch (\Exception $e) {
-//            error_log($e->getMessage());
-//            return $response->withStatus(500);
-//        }
-//
-//        return $this->get('view')->render($response, 'testpost.html', []);
-//
-//    }
-//
-//
-//});
-
-
 $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;
 });
@@ -564,6 +516,6 @@ $app->add(function ($request, $handler) {
 });
 
 
-//$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
-//    throw new HttpNotFoundException($request);
-//});
+$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
+    throw new HttpNotFoundException($request);
+});

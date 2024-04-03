@@ -22,7 +22,6 @@ function PilotPerm()
     if (isset($_SESSION) && ($_SESSION['type'] == "Pilot" || $_SESSION['type'] == "Admin")) {
         return true;
     } else {
-        echo "access denied"; //@todo retourner une erreur
         return false;
     }
 }
@@ -32,7 +31,6 @@ function AdminPerm()
     if (isset($_SESSION) && $_SESSION['type'] == "Admin") {
         return true;
     } else {
-        echo "access denied"; //@todo retourner une erreur
         return false;
     }
 }
@@ -42,7 +40,6 @@ function SpecialPerm()
     if (isset($_SESSION) && ($_SESSION['type'] == "Student" || $_SESSION['type'] == "Admin")) {
         return true;
     } else {
-        echo "access denied"; //@todo retourner une erreur
         return false;
     }
 }
