@@ -566,7 +566,7 @@ $app->map(['GET', 'POST'], '/testcreation', function ($request, $response, $args
 
 
 $app->map(['GET', 'POST'], '/creationPilot', function ($request, $response, $args) use ($entityManager) {
-    if (!StudentPerm()) {
+    if (!PilotPerm()) {
         return $response->withStatus(302)->withHeader('Location', '/');
     }
     $httpMethod = $request->getMethod();
@@ -578,7 +578,7 @@ $app->map(['GET', 'POST'], '/creationPilot', function ($request, $response, $arg
 
         $firstName = htmlspecialchars($data['firstName']);
         $lastName = htmlspecialchars($data['lastName']);
-        $type = htmlspecialchars($data['type']);
+//        $type = htmlspecialchars($data['type']);
         $years = htmlspecialchars($data['years']);
         $login = htmlspecialchars($data['login']);
         $password = htmlspecialchars($data['password']);
@@ -586,10 +586,11 @@ $app->map(['GET', 'POST'], '/creationPilot', function ($request, $response, $arg
         $User = new \Entity\User();
         $User->setFirstName($firstName); // Correction ici : $student au lieu de $User
         $User->setLastName($lastName);
-        $User->setType(2);
+        $User->setType(1);
         $User->setYears($years);
         $User->setLogin($login);
         $User->setPassword($password);
+        $User->setDel(false);
         $User->setIDAddress(1);
 
         try {
@@ -623,15 +624,18 @@ $app->map(['GET', 'POST'], '/creationStudents', function ($request, $response, $
         $years = htmlspecialchars($data['years']);
         $login = htmlspecialchars($data['login']);
         $password = htmlspecialchars($data['password']);
+        $ID_Address = 0;
 
         $User = new \Entity\User();
         $User->setFirstName($firstName); // Correction ici : $student au lieu de $User
         $User->setLastName($lastName);
-        $User->setType(1);
+        $User->setType(0);
         $User->setYears($years);
         $User->setLogin($login);
         $User->setPassword($password);
-        $User->setIDAddress(1);
+        $User->setDel(false);
+        $User->setIDAddress($ID_Address);
+
 
         try {
 
@@ -646,6 +650,7 @@ $app->map(['GET', 'POST'], '/creationStudents', function ($request, $response, $
         return $response->withStatus(302)->withHeader('Location', '/listStudents');
     }
 })->setName('creationStudents');
+
 
 $app->map(['GET', 'POST'], '/creationOffers', function ($request, $response, $args) use ($entityManager) {
     if (!PilotPerm()) {

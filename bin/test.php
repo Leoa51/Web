@@ -7,7 +7,7 @@
 //exec("php ../bin/create_offers.php 1 2 3 4 5/6/7 8 1 1", $output, $status);
 //exec("php ../bin/create_postulate.php 12 24 30 40", $output, $status);
 //exec("php ../bin/create_skills.php 19", $output, $status);
-exec("php ../bin/create_user.php John Doe 3 2 jhon@etudiant.com CESI2024 1 1", $output, $status);
+exec("php ../bin/create_user.php Aerts leo 1 A2 leo@cesi.fr password 1 1", $output, $status);
 //exec("php ../bin/create_opinion.php 1 opinion sender 3", $output, $status);
 
 
