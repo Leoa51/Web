@@ -216,7 +216,7 @@ $app->map(['GET', 'POST'], '/login', function ($request, $response, $args) use (
 
                 }
             }
-            return $this->get('view')->render($response, 'login.twig', []);
+            return $this->get('view')->render($response, 'accessDenied.twig', []);
         }
     }
 });
@@ -316,8 +316,15 @@ $app->get('/contact', function ($request, $response, $args) {
 })->setName('Contact');
 
 $app->get('/offersMenu', function ($request, $response, $args) {
-    return $this->get('view')->render($response, 'offersMenu.twig', [
-    ]);
+    if (SpecialPerm()) {
+        return $this->get('view')->render($response, 'offersMenu.twig', [
+            'entreprise' => $_SESSION['company'],
+            'localité' => $_SESSION['ID_Address'],
+            'type' => $_SESSION['type']
+        ]);
+    } else {
+        return $response->withStatus(302)->withHeader('Location', '/');
+    }
 })->setName('Menu offers');
 
 $app->get('/privacy', function ($request, $response, $args) {

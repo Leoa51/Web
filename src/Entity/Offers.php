@@ -52,7 +52,7 @@ class Offers
     private ?int $ID_Company = null;
 
     #[ORM\OneToMany(targetEntity: 'Postulate', mappedBy: 'offer')]
-    private $postulates;
+    private ?int $postulates;
 
     #[ORM\OneToMany(targetEntity: 'Editwishlist', mappedBy: 'offer')]
     private $editwishlists;
