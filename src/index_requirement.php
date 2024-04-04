@@ -381,7 +381,7 @@ function ListPilot($entityManager)
     $queryBuilder
         ->select('u')
         ->from('Entity\User', 'u')
-        ->where('u.type = 2');
+        ->where('u.type = 1');
 
     $query = $queryBuilder->getQuery();
     $users = $query->getResult();
