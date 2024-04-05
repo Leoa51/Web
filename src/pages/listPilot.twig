@@ -81,6 +81,14 @@
         </tr>
         </thead>
         <tbody>
+        {% for key,u in data %}
+        <tr class="border-b even:bg-gray-50 odd:bg-white">
+            <td class="px-4 py-2">{{ u['firstName'] }}</td>
+            <td class="px-4 py-2">{{ u['lastName'] }}</td>
+            <td class="px-4 py-2">{{ u['ville'] }}</td>
+            <td class="px-4 py-2">{{ u['years'] }}</td>
+        </tr>
+        {% endfor %}
 
 
         </tbody>

@@ -34,22 +34,24 @@ class Offers
     #[ORM\Column(type: 'boolean', nullable: true)]
     private ?bool $del = null;
 
-//    #[ORM\ManyToOne(targetEntity: 'Address')]
-//    #[ORM\JoinColumn(name: 'ID_Address', referencedColumnName: 'ID_Address')]
-//    private ?Address $ID_Address = null;
+    #[ORM\Column(type: 'integer', nullable: false)]
+    private int $ID_Address;
 
-    #[ORM\ManyToOne(targetEntity: 'Address')]
-    #[ORM\JoinColumn(name: 'ID_Address', referencedColumnName: 'ID_Address')]
-    private ?int $ID_Address = null;
-
-
-//    #[ORM\ManyToOne(targetEntity: 'Company')]
-//    #[ORM\JoinColumn(name: 'ID_Company', referencedColumnName: 'ID_Company')]
-//    private ?Company $ID_Company = null;
 
     #[ORM\ManyToOne(targetEntity: 'Company')]
     #[ORM\JoinColumn(name: 'ID_Company', referencedColumnName: 'ID_Company')]
     private ?int $ID_Company = null;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private int $ID_Campus;
+
+    #[ORM\OneToMany(targetEntity: 'Address', mappedBy: 'user')]
+    #[ORM\JoinColumn(name: 'ID_Address', referencedColumnName: 'ID_Address')]
+    private ?Address $IDAddress = null;
+
+    #[ORM\ManyToOne(targetEntity: 'Campus')]
+    #[ORM\JoinColumn(name: 'ID_Company', referencedColumnName: 'ID_Company')]
+    private ?int $IDCompany;
 
     #[ORM\OneToMany(targetEntity: 'Postulate', mappedBy: 'offer')]
     private $postulates;
@@ -69,7 +71,6 @@ class Offers
 
     public function setIDOffers(int $ID_Offers): void
     {
-        echo 'set ID_Offers : ' . $ID_Offers . "\n";
         $this->ID_Offers = $ID_Offers;
     }
 
@@ -80,7 +81,6 @@ class Offers
 
     public function setCompany(?string $company): void
     {
-        echo 'set company : ' . $company . "\n";
         $this->company = $company;
     }
 
@@ -91,7 +91,6 @@ class Offers
 
     public function setTargetPromotion(?string $targetPromotion): void
     {
-        echo 'set targetPromotion : ' . $targetPromotion . "\n";
         $this->targetPromotion = $targetPromotion;
     }
 
@@ -102,7 +101,6 @@ class Offers
 
     public function setDurationOfInternship(?string $durationOfInternship): void
     {
-        echo 'set durationOfInternship : ' . $durationOfInternship . "\n";
         $this->durationOfInternship = $durationOfInternship;
     }
 
@@ -113,7 +111,6 @@ class Offers
 
     public function setPayment(?float $payment): void
     {
-        echo 'set payment : ' . $payment . "\n";
         $this->payment = $payment;
     }
 
@@ -124,7 +121,6 @@ class Offers
 
     public function setOfferDate(?\DateTimeInterface $offerDate): void
     {
-        echo 'set offerDate : ' . $offerDate->format('d-m-Y') . "\n";
         $this->offerDate = $offerDate;
     }
 
@@ -135,7 +131,6 @@ class Offers
 
     public function setNumberOfPlaces(?int $numberOfPlaces): void
     {
-        echo 'set numberOfPlaces : ' . $numberOfPlaces . "\n";
         $this->numberOfPlaces = $numberOfPlaces;
     }
 
@@ -146,7 +141,6 @@ class Offers
 
     public function setDel(?bool $del): void
     {
-        echo 'set del : ' . $del . "\n";
         $this->del = $del;
     }
 
@@ -168,7 +162,6 @@ class Offers
 
     public function setIDAddress(?int $ID_Address): void
     {
-        echo 'set ID_Address : ' . $ID_Address . "\n";
         $this->ID_Address = $ID_Address;
     }
 
@@ -190,7 +183,6 @@ class Offers
 
     public function setIDCompany(?int $ID_Company): void
     {
-        echo 'set ID_Company : ' . $ID_Company . "\n";
         $this->ID_Company = $ID_Company;
     }
 

@@ -1,9 +1,10 @@
 <?php
 
+use Entity\User;
 use Entity\Company;
 use Entity\Offers;
 use Entity\Address;
-
+use Entity\Campus;
 
 require_once __DIR__ . "/../doctrine/bootstrap.php";
 $centers = array("erreur", "Reims", "Lyon", "Paris", "Nantes", "Strasbourg", "Bordeaux", "Toulouse", "Rennes", "Lille", "Marseille", "Tunis", "Narbonne", "Clermont-Ferrand", "Aix-en-Provence", "Marseille", "Lorient", "Villeurbanne", "Brest", "Nancy", "Montpellier");
@@ -377,39 +378,99 @@ function ListUser($entityManager, $ID_User, $firstname, $lastname, $type, $years
     return $userdata;
 }
 
-function ListPilot($entityManager)
+//function ListPilot($entityManager)
+//{
+//    $queryBuilder = $entityManager->createQueryBuilder();
+//    $queryBuilder
+//        ->select('u')
+//        ->from('Entity\User', 'u')
+//        ->where('u.type = 2');
+//
+//    $query = $queryBuilder->getQuery();
+//    $users = $query->getResult();
+//
+//    $data = [];
+//
+//    foreach ($users as $user) {
+//        try {
+//            $queryBuilder = $entityManager->createQueryBuilder();
+//            $queryBuilder
+//                ->select('a')
+//                ->from('Entity\Address', 'a')
+//                ->where('a.ID_address = :idAddress')
+//                ->setParameter('idAddress', $user->getIDAddress());
+//
+//            $query = $queryBuilder->getQuery();
+//            $address = $query->getResult();
+//            $ville = $address[0]->getVille();
+//        } catch (\Exception $e) {
+//            $ville = "null";
+//        }
+//        $data[] = [$user->getLastName(), $user->getFirstName(), $ville, $user->getYears()];
+//    }
+//
+//    return $data;
+//}
+
+function listPilot($entityManager)
 {
     $queryBuilder = $entityManager->createQueryBuilder();
     $queryBuilder
-        ->select('u')
-        ->from('Entity\User', 'u')
-        ->where('u.type = 2');
+        ->select('u.firstName', 'u.lastName', 'u.years', 'address.ville')
+        ->from(User::class, 'u')
+        ->leftJoin(Address::class, 'address', 'WITH', 'address.ID_Address = u.ID_Address')
+        ->where('u.del = 0')
+        ->andWhere('u.type = 1');
 
     $query = $queryBuilder->getQuery();
-    $users = $query->getResult();
+    $user = $query->getResult();
 
-    $data = [];
+    return ['u' => $user];
 
-    foreach ($users as $user) {
-        try {
-            $queryBuilder = $entityManager->createQueryBuilder();
-            $queryBuilder
-                ->select('a')
-                ->from('Entity\Address', 'a')
-                ->where('a.ID_address = :idAddress')
-                ->setParameter('idAddress', $user->getIDAddress());
-
-            $query = $queryBuilder->getQuery();
-            $address = $query->getResult();
-            $ville = $address[0]->getVille();
-        } catch (\Exception $e) {
-            $ville = "null";
-        }
-        $data[] = [$user->getLastName(), $user->getFirstName(), $ville, $user->getYears()];
-    }
-
-    return $data;
+//    return $user;
 }
+
+function listStudent($entityManager)
+{
+    $queryBuilder = $entityManager->createQueryBuilder();
+    $queryBuilder
+        ->select('u.firstName', 'u.lastName', 'u.years', 'address.ville')
+        ->from(User::class, 'u')
+        ->leftJoin(Address::class, 'address', 'WITH', 'address.ID_Address = u.ID_Address')
+        ->where('u.del = 0')
+        ->andWhere('u.type = 0');
+
+    $query = $queryBuilder->getQuery();
+    $user = $query->getResult();
+
+    return ['u' => $user];
+
+//    return $user;
+}
+
+function showListCompany($entityManager)
+{
+    $queryBuilder = $entityManager->createQueryBuilder();
+    $queryBuilder
+        ->select('company.name', 'company.activitySector', 'address.ville')
+        ->from(Company::class, 'company')
+        ->leftJoin(Offers::class, 'offers', 'WITH', 'offers.ID_Company = company.ID_Company')
+        ->leftJoin(Address::class, 'address', 'WITH', 'address.ID_Address = offers.ID_Address')
+        ->where('company.del = 0');
+
+    $query = $queryBuilder->getQuery();
+    $company = $query->getResult();
+
+    var_dump($company);
+
+    return ['company' => $company];
+
+//    return $companies;
+}
+
+
+
+
 
 
 

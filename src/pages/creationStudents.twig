@@ -7,7 +7,6 @@
         <form action="/creationStudents" method="POST">
         <form class="bg-white shadow-md rounded-lg p-6">
         <h2 class="text-xl font-semibold mt-16">Informations de l'étudiant</h2>
-        <form id="studentForm" action="/submit-internship" method="post" onsubmit="return validateForm()">
             <div class="mb-4">
                 <label class="block text-gray-700 font-medium mb-2" for="lastName">Nom</label>
                 <input id="lastName" name="lastName" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
@@ -42,33 +41,41 @@
     </div>
 
     <script>
-        function validateForm() {
-            var companyName = document.getElementById('lastName').value.trim();
-            var skills = document.getElementById('firstName').value.trim();
-            var location = document.getElementById('location').value.trim();
-            var promotions = document.getElementById('promotions').value.trim();
-            var login = document.getElementById('login').value.trim();
-            var password = document.getElementById('password').value.trim();
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.querySelector("form");
 
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
 
-            if (lastName === '' || firstName === '' || location === '' || promotions === '' || login === '' || password === '') {
-                alert('Veuillez remplir tous les champs.');
-                return false;
-            }
+                // Récupérer les valeurs des champs
+                const lastName = document.getElementById("lastName").value.trim();
+                const firstName = document.getElementById("firstName").value.trim();
+                const years = document.getElementById("years").value.trim();
+                const login = document.getElementById("login").value.trim();
+                const password = document.getElementById("password").value.trim();
 
-            // Autres validations éventuelles peuvent être ajoutées ici
+                // Vérifier si tous les champs sont remplis
+                if (lastName === "" || firstName === "" || years === "" || login === "" || password === "") {
+                    alert("Veuillez remplir tous les champs.");
+                    return;
+                }
 
-            return true;
-        }
+                // Autres validations peuvent être ajoutées ici
 
-        document.getElementById('togglePassword').addEventListener('change', function() {
-            const passwordInput = document.getElementById('password');
-            if (this.checked) {
-                passwordInput.type = 'text';
-            } else {
-                passwordInput.type = 'password';
-            }
+                // Si toutes les validations réussissent, soumettre le formulaire
+                form.submit();
+            });
+
+            // Optionnel : Ajouter une fonctionnalité pour afficher / masquer le mot de passe
+            const togglePassword = document.getElementById("togglePassword");
+            const passwordField = document.getElementById("password");
+
+            togglePassword.addEventListener("change", function() {
+                const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+                passwordField.setAttribute("type", type);
+            });
         });
+
     </script>
 
 {% endblock %}
