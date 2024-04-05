@@ -1,10 +1,13 @@
+
 <?php
 
+use Entity\User;
 use Entity\Company;
 use Entity\Offers;
 use Entity\Address;
-use Doctrine\ORM\EntityManagerInterface;
-
+use Entity\Campus;
+use Entity\Need;
+use Entity\Skill;
 
 require_once __DIR__ . "/../doctrine/bootstrap.php";
 $centers = array("erreur", "Reims", "Lyon", "Paris", "Nantes", "Strasbourg", "Bordeaux", "Toulouse", "Rennes", "Lille", "Marseille", "Tunis", "Narbonne", "Clermont-Ferrand", "Aix-en-Provence", "Marseille", "Lorient", "Villeurbanne", "Brest", "Nancy", "Montpellier");
@@ -79,7 +82,6 @@ function StatsCompany($entityManager, $page)
 }
 
 //$var = StatsCompany($entityManager, 1);
-//var_dump($var);
 
 function ListAddress($entityManager, $ville, $postalcode)
 {
@@ -193,87 +195,87 @@ function ListCompany($entityManager, $id, $name, $activitySector, $stats, $del, 
 
 }
 
-//function ListOffers($entityManager, $ID_Offers, $company, $targetPromotion, $durationOfInternship, $payment, $offerDate, $numberOfPlaces, $del, $ID_Address, $ID_Company)
-//{
-//    $queryBuilder = $entityManager->createQueryBuilder();
-//    $queryBuilder
-//        ->select('o')
-//        ->from('Entity\Offers', 'o');
-//
-//    if ($ID_Offers !== null) {
-//        error_log($ID_Offers . "\n");
-//        $queryBuilder
-//            ->where('o.ID_Offers = :IDOffers')
-//            ->setParameter('IDOffers', $ID_Offers);
-//    }
-//    if ($company !== null) {
-//        error_log($company . "\n");
-//        $queryBuilder
-//            ->andWhere('o.company = :company')
-//            ->setParameter('company', $company);
-//    }
-//    if ($targetPromotion !== null) {
-//        error_log($targetPromotion . "\n");
-//        $queryBuilder
-//            ->andWhere('o.targetPromotion = :targetPromotion')
-//            ->setParameter('targetPromotion', $targetPromotion);
-//    }
-//    if ($durationOfInternship !== null) {
-//        error_log($durationOfInternship . "\n");
-//        $queryBuilder
-//            ->andWhere('o.durationOfInternship = :durationOfInternship')
-//            ->setParameter('durationOfInternship', $durationOfInternship);
-//    }
-//    if ($payment !== null) {
-//        error_log($payment . "\n");
-//        $queryBuilder
-//            ->andWhere('o.payment = :payment')
-//            ->setParameter('payment', $payment);
-//    }
-//    if ($offerDate !== null) {
-//        error_log($offerDate . "\n");
-//        $queryBuilder
-//            ->andWhere('o.offerDate = :offerDate')
-//            ->setParameter('offerDate', $offerDate);
-//    }
-//    if ($numberOfPlaces !== null) {
-//        error_log($numberOfPlaces . "\n");
-//        $queryBuilder
-//            ->andWhere('o.numberOfPlaces = :numberOfPlaces')
-//            ->setParameter('numberOfPlaces', $numberOfPlaces);
-//    }
-//    if ($del !== null) {
-//        error_log($del . "\n");
-//        $queryBuilder
-//            ->andWhere('o.del = :del')
-//            ->setParameter('del', $del);
-//    }
-//    if ($ID_Address !== null) {
-//        error_log($ID_Address . "\n");
-//        $queryBuilder
-//            ->andWhere('o.ID_Address = :IDAddress')
-//            ->setParameter('IDAddress', $ID_Address);
-//    }
-//    if ($ID_Company !== null) {
-//        error_log($ID_Company . "\n");
-//        $queryBuilder
-//            ->andWhere('o.ID_Company = :IDCompany')
-//            ->setParameter('IDCompany', $ID_Company);
-//    }
-//
-//    $query = $queryBuilder->getQuery();
-//    $offers = $query->getResult();
-//
-//    $offersdata = [];
-//
-//
-//    foreach ($offers as $offer) {
-//        $offersdata[] = [$offer->getIDOffers(), $offer->getTargetPromotion(), $offer->getDurationOfInternship(), $offer->getPayment(), $offer->getOfferDate(), $offer->getNumberOfPlaces()];
-//    }
-//
-//    return $offersdata;
-//
-//}
+function ListOffers($entityManager, $ID_Offers, $company, $targetPromotion, $durationOfInternship, $payment, $offerDate, $numberOfPlaces, $del, $ID_Address, $ID_Company)
+{
+    $queryBuilder = $entityManager->createQueryBuilder();
+    $queryBuilder
+        ->select('o')
+        ->from('Entity\Offers', 'o');
+
+    if ($ID_Offers !== null) {
+        error_log($ID_Offers . "\n");
+        $queryBuilder
+            ->where('o.ID_Offers = :IDOffers')
+            ->setParameter('IDOffers', $ID_Offers);
+    }
+    if ($company !== null) {
+        error_log($company . "\n");
+        $queryBuilder
+            ->andWhere('o.company = :company')
+            ->setParameter('company', $company);
+    }
+    if ($targetPromotion !== null) {
+        error_log($targetPromotion . "\n");
+        $queryBuilder
+            ->andWhere('o.targetPromotion = :targetPromotion')
+            ->setParameter('targetPromotion', $targetPromotion);
+    }
+    if ($durationOfInternship !== null) {
+        error_log($durationOfInternship . "\n");
+        $queryBuilder
+            ->andWhere('o.durationOfInternship = :durationOfInternship')
+            ->setParameter('durationOfInternship', $durationOfInternship);
+    }
+    if ($payment !== null) {
+        error_log($payment . "\n");
+        $queryBuilder
+            ->andWhere('o.payment = :payment')
+            ->setParameter('payment', $payment);
+    }
+    if ($offerDate !== null) {
+        error_log($offerDate . "\n");
+        $queryBuilder
+            ->andWhere('o.offerDate = :offerDate')
+            ->setParameter('offerDate', $offerDate);
+    }
+    if ($numberOfPlaces !== null) {
+        error_log($numberOfPlaces . "\n");
+        $queryBuilder
+            ->andWhere('o.numberOfPlaces = :numberOfPlaces')
+            ->setParameter('numberOfPlaces', $numberOfPlaces);
+    }
+    if ($del !== null) {
+        error_log($del . "\n");
+        $queryBuilder
+            ->andWhere('o.del = :del')
+            ->setParameter('del', $del);
+    }
+    if ($ID_Address !== null) {
+        error_log($ID_Address . "\n");
+        $queryBuilder
+            ->andWhere('o.ID_Address = :IDAddress')
+            ->setParameter('IDAddress', $ID_Address);
+    }
+    if ($ID_Company !== null) {
+        error_log($ID_Company . "\n");
+        $queryBuilder
+            ->andWhere('o.ID_Company = :IDCompany')
+            ->setParameter('IDCompany', $ID_Company);
+    }
+
+    $query = $queryBuilder->getQuery();
+    $offers = $query->getResult();
+
+    $offersdata = [];
+
+
+    foreach ($offers as $offer) {
+        $offersdata[] = [$offer->getIDOffers(), $offer->getTargetPromotion(), $offer->getDurationOfInternship(), $offer->getPayment(), $offer->getOfferDate(), $offer->getNumberOfPlaces()];
+    }
+
+    return $offersdata;
+
+}
 
 function ListPostulate($entityManager)
 {
@@ -366,7 +368,6 @@ function ListUser($entityManager, $ID_User, $firstname, $lastname, $type, $years
             ->setParameter('IDCampus', $ID_Campus);
     }
 
-
     $query = $queryBuilder->getQuery();
     $users = $query->getResult();
 
@@ -379,46 +380,111 @@ function ListUser($entityManager, $ID_User, $firstname, $lastname, $type, $years
     return $userdata;
 }
 
-function ListOffers(EntityManagerInterface $entityManager): array
-{
-    $offerRepository = $entityManager->getRepository(\Entity\Offers::class);
-    $offersData = $offerRepository->findAll();
+//function ListPilot($entityManager)
+//{
+//    $queryBuilder = $entityManager->createQueryBuilder();
+//    $queryBuilder
+//        ->select('u')
+//        ->from('Entity\User', 'u')
+//        ->where('u.type = 2');
+//
+//    $query = $queryBuilder->getQuery();
+//    $users = $query->getResult();
+//
+//    $data = [];
+//
+//    foreach ($users as $user) {
+//        try {
+//            $queryBuilder = $entityManager->createQueryBuilder();
+//            $queryBuilder
+//                ->select('a')
+//                ->from('Entity\Address', 'a')
+//                ->where('a.ID_address = :idAddress')
+//                ->setParameter('idAddress', $user->getIDAddress());
+//
+//            $query = $queryBuilder->getQuery();
+//            $address = $query->getResult();
+//            $ville = $address[0]->getVille();
+//        } catch (\Exception $e) {
+//            $ville = "null";
+//        }
+//        $data[] = [$user->getLastName(), $user->getFirstName(), $ville, $user->getYears()];
+//    }
+//
+//    return $data;
+//}
 
-    return $offersData;
-}
-function ListPilot($entityManager)
+function listPilot($entityManager)
 {
     $queryBuilder = $entityManager->createQueryBuilder();
     $queryBuilder
-        ->select('u')
-        ->from('Entity\User', 'u')
-        ->where('u.type = 2');
+        ->select('u.firstName', 'u.lastName', 'u.years', 'address.ville')
+        ->from(User::class, 'u')
+        ->leftJoin(Address::class, 'address', 'WITH', 'address.ID_Address = u.ID_Address')
+        ->where('u.del = 0')
+        ->andWhere('u.type = 1');
 
     $query = $queryBuilder->getQuery();
-    $users = $query->getResult();
+    $user = $query->getResult();
 
-    $data = [];
+    return ['u' => $user];
 
-    foreach ($users as $user) {
-        try {
-            $queryBuilder = $entityManager->createQueryBuilder();
-            $queryBuilder
-                ->select('a')
-                ->from('Entity\Address', 'a')
-                ->where('a.ID_address = :idAddress')
-                ->setParameter('idAddress', $user->getIDAddress());
-
-            $query = $queryBuilder->getQuery();
-            $address = $query->getResult();
-            $ville = $address[0]->getVille();
-        } catch (\Exception $e) {
-            $ville = "null";
-        }
-        $data[] = [$user->getLastName(), $user->getFirstName(), $ville, $user->getYears()];
-    }
-
-
-    return $data;
-
+//    return $user;
 }
 
+function listStudent($entityManager)
+{
+    $queryBuilder = $entityManager->createQueryBuilder();
+    $queryBuilder
+        ->select('u.firstName', 'u.lastName', 'u.years', 'address.ville')
+        ->from(User::class, 'u')
+        ->leftJoin(Address::class, 'address', 'WITH', 'address.ID_Address = u.ID_Address')
+        ->where('u.del = 0')
+        ->andWhere('u.type = 0');
+
+    $query = $queryBuilder->getQuery();
+    $user = $query->getResult();
+
+    return ['u' => $user];
+
+//    return $user;
+}
+
+function showListCompany($entityManager)
+{
+    $queryBuilder = $entityManager->createQueryBuilder();
+    $queryBuilder
+        ->select('company.name', 'company.activitySector', 'address.ville')
+        ->from(Company::class, 'company')
+        ->leftJoin(Offers::class, 'offers', 'WITH', 'offers.ID_Company = company.ID_Company')
+        ->leftJoin(Address::class, 'address', 'WITH', 'address.ID_Address = offers.ID_Address')
+        ->where('company.del = 0');
+
+    $query = $queryBuilder->getQuery();
+    $company = $query->getResult();
+
+
+    return ['company' => $company];
+
+//    return $companies;
+}
+
+function showListOffers($entityManager)
+{
+    $queryBuilder = $entityManager->createQueryBuilder();
+    $queryBuilder
+        ->select('o.company', 'o.targetPromotion', 'o.durationOfInternship','o.payment','o.offerDate','o.numberOfPlaces','address.ville','s.nameSkills')
+        ->from(Offers::class, 'o')
+        ->leftJoin(Company::class, 'c', 'WITH', 'c.ID_Company = o.ID_Company')
+        ->leftJoin(Address::class, 'address', 'WITH', 'address.ID_Address = o.ID_Address')
+        ->leftJoin(Need::class, 'need', 'WITH', 'need.ID_Offers = o.ID_Offers')
+        ->leftJoin(Skill::class, 's', 'WITH', 's.nameSkills = need.nameSkills')
+        ->where('o.del = 0');
+
+    $query = $queryBuilder->getQuery();
+    $offers = $query->getResult();
+
+    return ['o' => $offers];
+
+//    return $user;
+}

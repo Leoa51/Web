@@ -5,18 +5,14 @@
 {% block filter %}
     <div class="flex-col ">
         <div class="ml-0 mt-0 bg-gray-200 p-4">
-            <h2 class="text-lg font-semibold mb-1">Filter Options</h2>
+            <h2 class="text-lg font-semibold mb-1">Affinez votre recherche</h2>
             <div class="space-y-2">
                 <div>
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">
                         Localisation
                     </label>
-                    <select id="Localisation" name="category" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500">
-                        <option value=""> Veuillez choisir une ville.. </option>
-                        <option value="1">Reims</option>
-                        <option value="2">Paris</option>
-                        <option value="3">Nancy</option>
-                    </select>
+                    <input type="search" id="default-search" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500" placeholder="Entrez le code postal" required />
+
                 </div>
 
                 <div>
@@ -46,79 +42,69 @@
                     </select>
                 </div>
 
-                <div>
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="category">
-                        Durée
-                    </label>
-                    <select id="Promotion" name="category" class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:border-indigo-500">
-                        <option value="">Quelle est la durée que vous recherchez ?</option>
-                        <option value="1">1 mois</option>
-                        <option value="2">2 mois</option>
-                        <option value="3">3 mois</option>
-                    </select>
-                </div>
             </div>
         </div>
     </div>
 {% endblock %}
 
 {% block content %}
-    <style>
+<style>
 
-            background-color: rgba(156, 163, 175);
-        }
-    </style>
-    <script>
-        function handleRowClick(event) {
-            const row = event.currentTarget;
-            const id = row.dataset.id;
+    background-color: rgba(156, 163, 175);
+    }
+</style>
+<script>
+    function handleRowClick(event) {
+        const row = event.currentTarget;
+        const id = row.dataset.id;
 
-            // Supprimer la classe "selected" de toutes les lignes
-            const rows = document.querySelectorAll("tr.selected");
-            rows.forEach((r) => r.classList.remove("selected"));
+        // Supprimer la classe "selected" de toutes les lignes
+        const rows = document.querySelectorAll("tr.selected");
+        rows.forEach((r) => r.classList.remove("selected"));
 
-            // Ajouter la classe "selected" à la ligne actuelle
-            row.classList.add("selected");
+        // Ajouter la classe "selected" à la ligne actuelle
+        row.classList.add("selected");
 
-            // Gérez la sélection ici en utilisant l'identifiant (id)
-            console.log(`La ligne ${id} a été sélectionnée.`);
-        }
-    </script>
-    <div class="container mx-auto px-4 py-8">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Liste des offres de stage</h2>
-        <table class="w-full text-left table-auto border-collapse">
-            <thead>
-            <tr class="bg-gray-100">
-                <th class="px-4 py-2 border">Nom de l'entreprise</th>
-                <th class="px-4 py-2 border">Compétences demandées</th>
-                <th class="px-4 py-2 border">Localisation</th>
-                <th class="px-4 py-2 border">Promotions concernées</th>
-                <th class="px-4 py-2 border">Durée du stage</th>
-                <th class="px-4 py-2 border">Rémunération</th>
-                <th class="px-4 py-2 border">Date de publication de l'offre</th>
-                <th class="px-4 py-2 border">Nombre de places disponibles</th>
+        // Gérez la sélection ici en utilisant l'identifiant (id)
+        console.log(`La ligne ${id} a été sélectionnée.`);
+    }
+</script>
+</head>
+<body>
+<div class="container mx-auto px-4 py-8">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Liste des offres de stage</h2>
+    <table class="w-full text-left table-auto border-collapse">
+        <thead>
+        <tr class="bg-gray-100">
+            <th class="px-4 py-2 border">Nom de l'entreprise</th>
+            <th class="px-4 py-2 border">Compétences demandées</th>
+            <th class="px-4 py-2 border">Localisation</th>
+            <th class="px-4 py-2 border">Promotions concernées</th>
+            <th class="px-4 py-2 border">Durée du stage</th>
+            <th class="px-4 py-2 border">Rémunération</th>
+            <th class="px-4 py-2 border">Date de publication de l'offre</th>
+            <th class="px-4 py-2 border">Nombre de places disponibles</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key,o in data %}
+            <tr class="border-b even:bg-gray-50 odd:bg-white">
+                <td class="px-4 py-2">{{ o['company'] }}</td>
+                <td class="px-4 py-2">{{ o['nameSkills'] }}</td>
+                <td class="px-4 py-2">{{ o['ville'] }}</td>
+                <td class="px-4 py-2">{{ o['targetPromotion'] }}</td>
+                <td class="px-4 py-2">{{ o['durationOfInternship'] }}</td>
+                <td class="px-4 py-2">{{ o['payment'] }}</td>
+                <td class="px-4 py-2">{{ o['offerDate']|date('Y-m-d') }}</td>
+                <td class="px-4 py-2">{{ o['numberOfPlaces'] }}</td>
             </tr>
-            </thead>
-            <tbody>
-            {% for offer in offers %}
-                <tr class="border-b even:bg-gray-50 odd:bg-white cursor-pointer">
-                    <td class="px-4 py-2 border">Orange</td>
-                    <td class="px-4 py-2 border">{{ offers.required_skills }}</td>
-                    <td class="px-4 py-2 border">{{ offers.location }}</td>
-                    <td class="px-4 py-2 border">{{ offers.targetPromotion }}</td>
-                    <td class="px-4 py-2 border">{{ offers.durationOfInternship }}</td>
-                    <td class="px-4 py-2 border">{{ offers.payment }}</td>
-                    <td class="px-4 py-2 border">{{ offers.offerDate }}</td>
-                    <td class="px-4 py-2 border">{{ offers.numberOfPlaces }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <div class="flex justify-center space-x-4 mt-8">
-            <a href="/publishOffers" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Créer une offre de stage</a>
-            <a href="#" class="bg-yellow-500 hover:bg-yellow-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Modifier une offre de stage</a>
-            <a href="#" class="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Supprimer une offre de stage</a>
-        </div>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="flex justify-center space-x-4 mt-8">
+        <a href="/publishOffers" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Créer une offre de stage</a>
+        <a href="#" class="bg-yellow-500 hover:bg-yellow-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Modifier une offre de stage</a>
+        <a href="#" class="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Supprimer une offre de stage</a>
     </div>
-
+</div>
 {% endblock %}
