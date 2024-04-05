@@ -7,9 +7,8 @@
 //exec("php ../bin/create_offers.php 1 2 3 4 5/6/7 8 1 1", $output, $status);
 //exec("php ../bin/create_postulate.php 12 24 30 40", $output, $status);
 //exec("php ../bin/create_skills.php 19", $output, $status);
-exec("php ../bin/create_user.php Zak Daoudi 2 4 daoudi@a password 1 1", $output, $status);
+//exec("php ../bin/create_user.php Zak Daoudi 2 4 daoudi@a password 1 1", $output, $status);
 //exec("php ../bin/create_opinion.php 1 opinion sender 3", $output, $status);
-
 
 
 out($output);
