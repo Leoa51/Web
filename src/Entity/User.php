@@ -164,14 +164,13 @@ class User
         $this->del = $del;
     }
 
-    public function getIDAddress(): int
+    public function getIDAddress(): ?int
     {
         return $this->ID_Address;
     }
 
     public function setIDAddress(int $ID_Address): void
     {
-//        error_log('set ID_Address : ' . $ID_Address . "\n");
         $this->ID_Address = $ID_Address;
     }
 

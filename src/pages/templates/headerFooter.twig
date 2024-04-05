@@ -10,11 +10,13 @@
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
 
 {% include 'templates/header.twig' %}
+
+{% block javascripts %}{% endblock %}
+
 {% block filter %}{% endblock %}
 
 
 {% block content %}{% endblock %}
-
 
 {% include 'templates/footer.twig' %}
 </body>

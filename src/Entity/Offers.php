@@ -11,7 +11,7 @@ class Offers
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue]
-    private int $ID_Offers;
+    private int|null $ID_Offers = null;
 
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private ?string $company = null;

@@ -362,7 +362,6 @@ function ListUser($entityManager, $ID_User, $firstname, $lastname, $type, $years
             ->setParameter('IDCampus', $ID_Campus);
     }
 
-
     $query = $queryBuilder->getQuery();
     $users = $query->getResult();
 
@@ -408,4 +407,8 @@ function ListPilot($entityManager)
 
     return $data;
 }
+
+
+
+
 
