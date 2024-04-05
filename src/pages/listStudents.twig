@@ -80,12 +80,12 @@
         </thead>
         <tbody>
 
-        {% for user in data %}
-            <tr class="border-b even:bg-gray-50 odd:bg-white cursor-pointer" data-id="1" onclick="handleRowClick(event)">
-                <td class="px-4 py-2 border">{{ user[0] }}</td>
-                <td class="px-4 py-2 border">{{ user[1] }}</td>
-                <td class="px-4 py-2 border">{{ user[2] }}</td>
-                <td class="px-4 py-2 border">{{ user[3] }}</td>
+        {% for key,u in data %}
+            <tr class="border-b even:bg-gray-50 odd:bg-white">
+                <td class="px-4 py-2">{{ u['firstName'] }}</td>
+                <td class="px-4 py-2">{{ u['lastName'] }}</td>
+                <td class="px-4 py-2">{{ u['ville'] }}</td>
+                <td class="px-4 py-2">{{ u['years'] }}</td>
             </tr>
         {% endfor %}
 

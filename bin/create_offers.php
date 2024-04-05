@@ -5,48 +5,39 @@ use Entity\Address;
 use Entity\Company;
 
 
+// Récupération des arguments en ligne de commande
 $company = $argv[1];
 $targetPromotion = $argv[2];
 $durationOfInternship = $argv[3];
 $payment = $argv[4];
-$offerDate = new \DateTime($argv[5]);
+$offerDate = $argv[5];
 $numberOfPlaces = $argv[6];
 $ID_Address = $argv[7];
 $ID_Company = $argv[8];
 
+// Affichage des arguments pour vérification
+echo $company . "\n" . $targetPromotion . "\n" . $durationOfInternship . "\n" . $payment . "\n" . $offerDate . "\n" . $numberOfPlaces . "\n" . $ID_Address . "\n" . "idcompany : " . $ID_Company . "\n";
 
-echo \DI\string($company . "\n");
-echo \DI\string($targetPromotion . "\n");
-echo \DI\string($durationOfInternship . "\n");
-echo \DI\string($payment . "\n");
-echo $offerDate->format('d-m-Y'). "\n";
-echo \DI\string($numberOfPlaces . "\n");
-echo \DI\string($ID_Address . "\n");
-echo \DI\string($ID_Company . "\n");
+// Création d'un objet DateTime pour la date d'offre
+$offerDateObj = new DateTime($offerDate);
 
-
-$address = $entityManager->getRepository(Address::class)->find($ID_Address);
-$companyEntity = $entityManager->getRepository(Company::class)->find($ID_Company);
-
-if ($address == null ) {
-    echo "Address not found\n";
-    exit();
-}
-if ($companyEntity == null) {
-    echo "Company not found\n";
-    exit();
-}
+// Création de l'entité Offers
 $Offers = new \Entity\Offers();
 $Offers->setCompany($company);
 $Offers->setTargetPromotion($targetPromotion);
 $Offers->setDurationOfInternship($durationOfInternship);
 $Offers->setPayment($payment);
-$Offers->setOfferDate($offerDate);
+$Offers->setOfferDate($offerDateObj); // Assignation de l'objet DateTime
 $Offers->setNumberOfPlaces($numberOfPlaces);
-$Offers->setIDAddress($address);
-$Offers->setIDCompany($companyEntity);
+$Offers->setIDAddress($ID_Address);
+$Offers->setIDCompany($ID_Company);
 
+// Persistance de l'entité Offers
 $entityManager->persist($Offers);
-$entityManager->flush();
-
-echo "Created Offers with ID " . $Offers->getIDOffers() . "\n";
+try {
+    $entityManager->flush();
+    echo "Created Offers with ID " . $Offers->getIDOffers() . "\n";
+} catch (\Exception $e) {
+    echo "error \n";
+    echo $e->getMessage();
+}
