@@ -39,7 +39,7 @@ class User
     private ?bool $del = null;
 
     #[ORM\Column(type: 'integer', nullable: false)]
-    private Address $ID_Address;
+    private int $ID_Address;
 
     #[ORM\Column(type: 'integer', nullable: true)]
     private int $ID_Campus;
@@ -164,14 +164,13 @@ class User
         $this->del = $del;
     }
 
-    public function getIDAddress(): int
+    public function getIDAddress(): ?int
     {
         return $this->ID_Address;
     }
 
-    public function setIDAddress(Address $ID_Address): void
+    public function setIDAddress(int $ID_Address): void
     {
-//        error_log('set ID_Address : ' . $ID_Address . "\n");
         $this->ID_Address = $ID_Address;
     }
 

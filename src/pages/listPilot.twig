@@ -1,13 +1,16 @@
+
 {% extends 'templates/headerFooterSearch.twig' %}
 
+
 {% block title %}Stagehub - Liste des pilotes{% endblock %}
+
 
 {% block filter %}
     <div class="flex-col">
         <!-- Sidebar -->
         <div class="ml-0 mt-0 bg-gray-200 p-4">
             <!-- Filter options -->
-            <h2 class="text-lg font-semibold mb-1">Filtres</h2>
+            <h2 class="text-lg font-semibold mb-1">Affinez votre recherche</h2>
             <div class="space-y-2">
                 <!-- Example filter options -->
                 <div>
@@ -43,28 +46,29 @@
 {% endblock %}
 
 {% block content %}
-    <style>
-        /* Ajoutez ce style pour mettre en surbrillance la ligne sélectionnée */
-        .selected {
-            background-color: rgba(156, 163, 175);
-        }
-    </style>
-    <script>
-        function handleRowClick(event) {
-            const row = event.currentTarget;
-            const id = row.dataset.id;
 
-            // Supprimer la classe "selected" de toutes les lignes
-            const rows = document.querySelectorAll("tr.selected");
-            rows.forEach((r) => r.classList.remove("selected"));
+<style>
+    /* Ajoutez ce style pour mettre en surbrillance la ligne sélectionnée */
+    .selected {
+        background-color: rgba(156, 163, 175);
+    }
+</style>
+<script>
+    function handleRowClick(event) {
+        const row = event.currentTarget;
+        const id = row.dataset.id;
 
-            // Ajouter la classe "selected" à la ligne actuelle
-            row.classList.add("selected");
+        // Supprimer la classe "selected" de toutes les lignes
+        const rows = document.querySelectorAll("tr.selected");
+        rows.forEach((r) => r.classList.remove("selected"));
 
-            // Gérez la sélection ici en utilisant l'identifiant (id)
-            console.log(`La ligne ${id} a été sélectionnée.`);
-        }
-    </script>
+        // Ajouter la classe "selected" à la ligne actuelle
+        row.classList.add("selected");
+
+        // Gérez la sélection ici en utilisant l'identifiant (id)
+        console.log(`La ligne ${id} a été sélectionnée.`);
+    }
+</script>
 <body>
 <div class="container mx-auto px-4 py-8">
     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Liste des pilotes</h2>
@@ -78,15 +82,15 @@
         </tr>
         </thead>
         <tbody>
-
-        {% for key,user in data %}
-            <tr class="border-b even:bg-gray-50 odd:bg-white cursor-pointer" data-id="1" onclick="handleRowClick(event)">
-                <td class="px-4 py-2 border">{{ user[0] }}</td>
-                <td class="px-4 py-2 border">{{ user[1] }}</td>
-                <td class="px-4 py-2 border">{{ user[2] }}</td>
-                <td class="px-4 py-2 border">{{ user[3] }}</td>
+        {% for key,u in data %}
+            <tr class="border-b even:bg-gray-50 odd:bg-white">
+                <td class="px-4 py-2">{{ u['firstName'] }}</td>
+                <td class="px-4 py-2">{{ u['lastName'] }}</td>
+                <td class="px-4 py-2">{{ u['ville'] }}</td>
+                <td class="px-4 py-2">{{ u['years'] }}</td>
             </tr>
         {% endfor %}
+
 
         </tbody>
     </table>
@@ -97,4 +101,3 @@
     </div>
 </div>
 {% endblock %}
-

@@ -1,49 +1,85 @@
+
 {% extends 'templates/headerfooter.twig' %}
 
 {% block title %}StageHub - Création d'un pilote{% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-8">
-    <form class="bg-white shadow-md rounded-lg p-6">
-    <h2 class="text-xl font-semibold mt-16">Informations du pilote</h2>
-    <form action="/submit-internship" method="post">
-        <div class="mb-4">
-            <label class="block text-gray-700 font-medium mb-2" for="company_name">Nom</label>
-            <input id="lastName" name="lastName" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-medium mb-2" for="skills">Prénom</label>
-            <input id="firstName" name="firstName" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-medium mb-2" for="location">Centre</label>
-            <input id="location" name="location" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-medium mb-2" for="promotions">Promotion assignées</label>
-            <input id="promotions" name="promotions" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-        </div>
-        <input class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" type="button" value="Soumettre" onclick="if(validateForm()) { window.location.href='/listPilot'; }">
-    </form>
-</div>
+    <div class="container mx-auto px-4 py-8">
+        <form action="/creationPilot" method="POST">
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h2 class="text-xl font-semibold mt-16">Informations du pilote</h2>
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-medium mb-2" for="company_name">Prénom</label>
+                    <input id="firstName" name="firstName" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-medium mb-2" for="skills">Nom</label>
+                    <input id="lastName" name="lastName" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-medium mb-2" for="promotions">Promotion assignées</label>
+                    <input id="years" name="years" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-medium mb-2" for="promotions">Ville</label>
+                    <input name="years" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-medium mb-2" for="promotions">E-mail</label>
+                    <input id="login" name="login" type="text" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                </div>
+                <div class="mb-4 relative">
+                    <label class="block text-gray-700 font-medium mb-2" for="promotions">Mot de passe</label>
+                    <input id="password" name="password" type="password" class="form-input appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
+                    <div class="absolute inset-y-0 right-0 flex items-center px-2">
+                        <input id="togglePassword" type="checkbox" class="form-checkbox px-3 py-1.5 text-indigo-600 transition duration-150 ease-in-out">
+                    </div>
+                </div>
+
+                <button class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        type="submit"> Soumettre
+                </button>
+        </form>
+    </div>
 
     <script>
-        function validateForm() {
-            var companyName = document.getElementById('lastName').value.trim();
-            var skills = document.getElementById('firstName').value.trim();
-            var location = document.getElementById('location').value.trim();
-            var promotions = document.getElementById('promotions').value.trim();
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.querySelector("form");
+
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                // Récupérer les valeurs des champs
+                const firstName = document.getElementById("firstName").value.trim();
+                const lastName = document.getElementById("lastName").value.trim();
+                const years = document.getElementById("years").value.trim();
+                const login = document.getElementById("login").value.trim();
+                const password = document.getElementById("password").value.trim();
+
+                // Vérifier si tous les champs sont remplis
+                if (firstName === "" || lastName === "" || years === "" || login === "" || password === "") {
+                    alert("Veuillez remplir tous les champs.");
+                    return;
+                }
+
+                // Autres validations peuvent être ajoutées ici
+
+                // Si toutes les validations sont passées, soumettre le formulaire
+                form.submit();
+            });
+
+            // Optionnel : Ajouter une fonctionnalité pour afficher / masquer le mot de passe
+            const togglePassword = document.getElementById("togglePassword");
+            const passwordField = document.getElementById("password");
+
+            togglePassword.addEventListener("change", function() {
+                const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+                passwordField.setAttribute("type", type);
+            });
+        });
 
 
-            if (lastName === '' || firstName === '' || location === '' || promotions === '') {
-                alert('Veuillez remplir tous les champs.');
-                return false;
-            }
-
-            // Autres validations éventuelles peuvent être ajoutées ici
-
-            return true;
-        }
     </script>
 
 {% endblock %}

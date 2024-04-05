@@ -40,19 +40,6 @@
     </script>
 </head>
 <body>
-aa
-<?php
-if (isset($_COOKIE['firstName'])) {
-    echo "oui";
-    echo $_COOKIE['firstName'];
-} else {
-    echo "non";
-}
-echo var_dump($_COOKIE);
-echo $_COOKIE['firstName'];
-
-?>
-
 <template id="template">
     <p id="nom"></p>
 </template>
